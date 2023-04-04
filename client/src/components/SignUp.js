@@ -10,8 +10,8 @@ const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-        firstName: data.get('firstName'),
-        lastName: data.get('lastName'),
+        fullName: data.get('fullName'),
+        username: data.get('username'),
         email: data.get('email'),
         password: data.get('password'),
     });
@@ -59,9 +59,9 @@ function SignUp() {
               margin='normal'
               required
               fullWidth
-              id='firstName'
-              label='First Name'
-              name='firstName'
+              id='fullName'
+              label='Full Name'
+              name='fullName'
               color='secondary'
               sx={{ input: {color: 'white'} }}
             />
@@ -69,9 +69,9 @@ function SignUp() {
               margin='normal'
               required
               fullWidth
-              id='lastName'
-              label='Last Name'
-              name='lastName'
+              id='username'
+              label='Username'
+              name='username'
               color='secondary'
               sx={{ input: {color: 'white'} }}
             />
