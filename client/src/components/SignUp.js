@@ -10,12 +10,14 @@ const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
+        firstName: data.get('firstName'),
+        lastName: data.get('lastName'),
         email: data.get('email'),
         password: data.get('password'),
     });
 };
 
-function Login() {
+function SignUp() {
     return (
         <Container
           sx={{ 
@@ -42,7 +44,7 @@ function Login() {
                 pb: 4,
               }}
           >
-            Login
+            Sign Up
           </Typography>
           <Box
             component='form'
@@ -53,6 +55,26 @@ function Login() {
               m: 'auto',
             }}
           >
+            <TextField 
+              margin='normal'
+              required
+              fullWidth
+              id='firstName'
+              label='First Name'
+              name='firstName'
+              color='secondary'
+              sx={{ input: {color: 'white'} }}
+            />
+            <TextField 
+              margin='normal'
+              required
+              fullWidth
+              id='lastName'
+              label='Last Name'
+              name='lastName'
+              color='secondary'
+              sx={{ input: {color: 'white'} }}
+            />
             <TextField 
               margin='normal'
               required
@@ -79,17 +101,11 @@ function Login() {
               variant='contained'
               sx={{ mt: 3 }}
             >
-                Log In
+              Sign Up
             </Button>
             <Box sx={{ mt: 2 }}>
-              <Link href='/signup' sx={{ color: '#ffffff', p: 2 }}>
-                Don't have an account? Sign Up
-              </Link>
-            </Box>
-            <Box sx={{ display: 'flex', mt: 2 }}>
-              <br />
-              <Link href='/home' sx={{ color: '#ffffff', mx: 'auto' }}>
-                Log In As Guest
+              <Link href='/login' sx={{ color: '#ffffff', p: 2 }}>
+                Already have an account? Log in
               </Link>
             </Box>
           </Box>
@@ -97,4 +113,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default SignUp;
