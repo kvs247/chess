@@ -41,9 +41,8 @@ function ActiveGames() {
           </Typography>
           {users.map((user) => {
             return (
-                <CardActionArea>
+                <CardActionArea key={user.username}>
                   <Box
-                    key={user.username}
                     sx={{
                       bgcolor: 'primary.main',
                       color: '#e1e1e1',

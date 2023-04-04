@@ -6,6 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import NavBar from './NavBar';
 import ActiveGames from './ActiveGames';
+import PlayArea from './PlayArea';
 
 function Home() {
     return (
@@ -23,9 +24,7 @@ function Home() {
           >
           <CssBaseline />
           <NavBar />
-          <Box bgcolor='primary.main'>
-            game
-          </Box>
+          <PlayArea />
           <ActiveGames />
         </Container>
     );
