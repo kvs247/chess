@@ -1,17 +1,18 @@
 import { Route, Switch } from 'react-router-dom';
 
 import Login from './components/Login';
+import Home from './components/Home';
 
 function App() {
   return (
     <>
       <Switch>
 
-        <Route exact path="/home">
-          <h1>Chess Is Hard</h1>
+        <Route path="/home">
+          <Home />
         </Route>
 
-        <Route exact path="/login">
+        <Route path="/login">
           <Login />
         </Route>
 
