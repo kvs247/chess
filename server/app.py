@@ -42,5 +42,14 @@ class SignUp(Resource):
             return make_response({'error': str(e)}, 400)
 api.add_resource(SignUp, '/signup')
 
+class AuthorizedSession(Resource):
+    def get(self):
+        try:
+            user = User.query.filter_by(id=session['user_id']).first()
+            return make_response(user.to_dict(), 200)
+        except Exception as e:
+            return make_response({'error': str(e)}, 400)
+api.add_resource(AuthorizedSession, '/authorized-session')
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

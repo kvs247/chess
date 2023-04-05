@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 
 import Login from './components/Login';
@@ -10,6 +10,15 @@ function App() {
     const history = useHistory();
 
     const [user, setUser] = useState({});
+
+    useEffect(() => {
+        fetch('/authorized-session')
+          .then(res => {
+              if (res.ok) {
+                  res.json().then(user => setUser(user));
+              };
+          });
+    }, []);
 
     // route is either '/login' or '/signup'
     const handleLoginSignUp = (event, route) => {
