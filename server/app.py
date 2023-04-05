@@ -1,6 +1,7 @@
 from flask import request, session, make_response, jsonify, abort
 from flask_restful import Resource
 
+from models import User
 from config import app, db, api
 
 class Test(Resource):
