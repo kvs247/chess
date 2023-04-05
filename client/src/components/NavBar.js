@@ -10,13 +10,12 @@ import about from '../assets/about.png';
 import logout from '../assets/logout.png';
 
 
-function NavBar({ onLogout, onClickPlay }) {
+function NavBar({ user, onLogout, onClickPlay }) {
   
     const history = useHistory();
 
     const MenuItem = (text, icon, route) => {
       
-        
         return (
             <CardActionArea>
               <Box 
@@ -74,7 +73,7 @@ function NavBar({ onLogout, onClickPlay }) {
           </CardActionArea>
           {MenuItem('Play Friends', playFriends, '/play')}
           {MenuItem('Play Computer', playComputer, '/play')}
-          {MenuItem('Social', social, '/social')}
+          {MenuItem('Social', social, `/users/${user.id}`)}
           {MenuItem('About', about, '/about')}
           {MenuItem('Logout', logout, '/login')}
         </Box>

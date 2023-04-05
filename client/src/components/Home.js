@@ -7,6 +7,7 @@ function Home({ user, onLogout, onClickPlay }) {
   return (
       <BaseContainer>
         <NavBar 
+          user={user}
           onLogout={onLogout} 
           onClickPlay={onClickPlay}
         />

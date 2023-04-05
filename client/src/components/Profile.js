@@ -7,11 +7,11 @@ import moment from 'moment';
 const length = '80%';
 
 
-function Profile({ user }) {
+function Profile({ user, profileData }) {
 
     let formattedDate = '';
-    if (user.date_joined) {
-      const yyyymmdd = user.date_joined.split(' ')[0].split('-')
+    if (profileData.date_joined) {
+      const yyyymmdd = profileData.date_joined.split(' ')[0].split('-')
       const date = new Date(yyyymmdd[0], yyyymmdd[1]-1, yyyymmdd[2])
       formattedDate = moment(date).format('MMMM D Y')
     };
@@ -34,7 +34,7 @@ function Profile({ user }) {
             <Box 
               component='img'
               alt=''
-              src={user.profile_image}
+              src={profileData.profile_image}
               sx={{
                 height: '80%',
                 mx: 2,
@@ -46,8 +46,8 @@ function Profile({ user }) {
                 m: 'auto',
               }}
             >
-              <Typography variant='h3' sx={{ mb: 5 }}>{user.username}</Typography>
-              <Typography variant='h4' sx={{ mb: 5 }}>{user.full_name}</Typography>
+              <Typography variant='h3' sx={{ mb: 5 }}>{profileData.username}</Typography>
+              <Typography variant='h4' sx={{ mb: 5 }}>{profileData.full_name}</Typography>
               <Grid container spacing={2}>
                 <Grid item xs={4}>
                   <Typography variant='h5'>Games</Typography>

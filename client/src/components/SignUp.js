@@ -6,17 +6,6 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
-const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-        fullName: data.get('fullName'),
-        username: data.get('username'),
-        email: data.get('email'),
-        password: data.get('password'),
-    });
-};
-
 function SignUp({ onSubmit }) {
     return (
         <Container

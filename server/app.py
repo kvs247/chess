@@ -12,6 +12,15 @@ class Users(Resource):
         )
 api.add_resource(Users, '/users')
 
+class UserById(Resource):
+    def get(self, id):
+        try:
+            user = User.query.filter_by(id=id).first()
+            return make_response(user.to_dict(), 200)
+        except Exception as e:
+            return make_response({'error': str(e)}, 400)
+api.add_resource(UserById, '/users/<int:id>')
+
 class Login(Resource):
     def post(self):
         data = request.json

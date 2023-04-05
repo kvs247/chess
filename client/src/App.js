@@ -74,7 +74,7 @@ function App() {
               <Play playComputer={playComputer}/>
             </Route>
 
-            <Route path='/social'>
+            <Route path='/users/:id'>
               <Social 
                 user={user}
                 onLogout={handleLogout}
