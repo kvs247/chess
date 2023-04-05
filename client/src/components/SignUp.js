@@ -17,7 +17,7 @@ const handleSubmit = (event) => {
     });
 };
 
-function SignUp() {
+function SignUp({ onSubmit }) {
     return (
         <Container
           sx={{ 
@@ -48,7 +48,7 @@ function SignUp() {
           </Typography>
           <Box
             component='form'
-            onSubmit={handleSubmit}
+            onSubmit={(e) => onSubmit(e, '/signup')}
             textAlign='center'
             sx={{
               width: '25%',

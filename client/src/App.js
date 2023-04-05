@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 
 import Login from './components/Login';
 import SignUp from './components/SignUp';
@@ -7,7 +7,31 @@ import Home from './components/Home';
 
 function App() {
 
+    const history = useHistory();
+
     const [user, setUser] = useState({});
+
+    // route is either '/login' or '/signup'
+    const handleLoginSignUp = (event, route) => {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      const dataObj = Object.fromEntries(data.entries());
+      fetch(route, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(dataObj)
+      })
+        .then(res => {
+          if (res.ok) {
+              res.json().then(user => setUser(user));
+              history.push('/home');
+          } else {
+              res.json().then(errors => console.log(errors));
+          };
+        });
+  };
 
     return (
         <>
@@ -18,11 +42,11 @@ function App() {
             </Route>
 
             <Route path="/login">
-              <Login setUser={setUser}/>
+              <Login onSubmit={handleLoginSignUp} />
             </Route>
 
             <Route path="/signup">
-              <SignUp />
+              <SignUp onSubmit={handleLoginSignUp} />
             </Route>
 
           </Switch>

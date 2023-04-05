@@ -1,5 +1,3 @@
-import { useHistory } from 'react-router-dom';
-
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -9,31 +7,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
 
-function Login({ setUser }) {
-
-    const history = useHistory();
-  
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        const dataObj = Object.fromEntries(data.entries());
-        fetch('/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dataObj)
-        })
-          .then(res => {
-            if (res.ok) {
-                res.json().then(user => setUser(user));
-                history.push('/home');
-            } else {
-                res.json().then(errors => console.log(errors));
-            };
-          });
-    };
-
+function Login({ onSubmit }) {
     return (
         <Container
           sx={{ 
@@ -64,7 +38,7 @@ function Login({ setUser }) {
           </Typography>
           <Box
             component='form'
-            onSubmit={handleSubmit}
+            onSubmit={(e) => onSubmit(e, '/login')}
             textAlign='center'
             sx={{
               width: '25%',

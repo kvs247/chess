@@ -15,21 +15,32 @@ api.add_resource(Users, '/users')
 class Login(Resource):
     def post(self):
         data = request.json
-        print(data)
         try:
             user = User.query.filter_by(email=data['email']).first()
             if user.authenticate(data['password']):
                 session['user_id'] = user.id
-                return make_response(
-                    user.to_dict(),
-                    200
-                )
+                return make_response(user.to_dict(), 200)
         except Exception as e:
-            return make_response(
-                {'error': str(e)},
-                400
-            )
+            return make_response({'error': str(e)}, 400)
 api.add_resource(Login, '/login')
+
+class SignUp(Resource):
+    def post(self):
+        data = request.json
+        try:
+            user = User(
+                full_name=data['fullName'],
+                username=data['username'],
+                email=data['email'],
+                profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/ian.jpeg?raw=true',
+                password_hash=data['password']
+            )
+            db.session.add(user)
+            db.session.commit()
+            return make_response(user.to_dict(), 201)
+        except Exception as e:
+            return make_response({'error': str(e)}, 400)
+api.add_resource(SignUp, '/signup')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
