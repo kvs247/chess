@@ -11,7 +11,7 @@ import about from '../assets/about.png';
 import logout from '../assets/logout.png';
 
 
-function NavBar({ onLogout }) {
+function NavBar({ onLogout, onClickPlay }) {
 
     const MenuItem = (text, icon, route) => {
       
@@ -21,7 +21,16 @@ function NavBar({ onLogout }) {
             <CardActionArea>
               <Box 
                 onClick={() => {
-                  if (text === 'Logout') onLogout();
+                  switch (text) {
+                    case 'Play Friends':
+                      onClickPlay(false);
+                      break;
+                    case 'Play Computer':
+                      onClickPlay(true);
+                      break;
+                    case 'Logout':
+                      onLogout();
+                  };
                   history.push(route);
                 }}
                 sx={{ 
@@ -61,8 +70,8 @@ function NavBar({ onLogout }) {
           >
             Chess Is Hard
           </Typography>
-          {MenuItem('Play Friends', playFriends, '/playfriends')}
-          {MenuItem('Play Computer', playComputer, '/playcomputer')}
+          {MenuItem('Play Friends', playFriends, '/play')}
+          {MenuItem('Play Computer', playComputer, '/play')}
           {MenuItem('Social', social, '/social')}
           {MenuItem('About', about, '/about')}
           {MenuItem('Logout', logout, '/login')}
