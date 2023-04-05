@@ -12,15 +12,59 @@ with app.app_context():
             full_name='Kyle Schneider',
             username='Kye_Schnei',
             email='kyles@fake.com',
-            profile_image='data:image/jpeg;base64,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',
-            password_hash='kylesux'
+            profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/woody.jpg?raw=true',
+            password_hash='password'
         ),
-        # User(
-        #     full_name='Magnus Carlsen',
-        #     username='DrDrunkenstein',
-        #     email='magnus@fake.com'
-        #     profile_image='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Magnus_Carlsen_2013.jpg/220px-Magnus_Carlsen_2013.jpg',
-        # )
+        User(
+            full_name='Topher Ludlow',
+            username='topherLud',
+            email='topher@fake.com',
+            profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/topher.jpg?raw=true',
+            password_hash='password'
+        ),
+        User(
+            full_name='Bobby Fischer',
+            username='',
+            email='bobby@fake.com',
+            profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/bobby.jpg?raw=true',
+        ),
+        User(
+            full_name='Garry Kasparov',
+            username='',
+            email='garry@fake.com',
+            profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/garry.jpg?raw=true',
+        ),
+        User(
+            full_name='Hans Niemann',
+            username='',
+            email='hans@fake.com',
+            profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/hans.jpg?raw=true',
+        ),
+        User(
+            full_name='Hikaru Nakamura',
+            username='',
+            email='hikaru@fake.com',
+            profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/hikaru.png?raw=true',
+        ),
+        User(
+            full_name='Levy Rozman',
+            username='',
+            email='levy@fake.com',
+            profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/levy.png?raw=true',
+        ),
+        User(
+            full_name='Magnus Carlsen',
+            username='DrDrunkenstein',
+            email='magnus@fake.com',
+            profile_image='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Magnus_Carlsen_2013.jpg/220px-Magnus_Carlsen_2013.jpg',
+        ),
+        User(
+            full_name='Ian Nepomniachtchi',
+            username='',
+            email='ian@fake.com',
+            profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/garry.jpg?raw=true',
+        )
+
     ]
 
     print('Seeding database...')
