@@ -3,7 +3,6 @@ import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import guest from '../assets/profile-image.png';
-import magnus from '../assets/carlsen.jpg'
 
 const length = '80vh';
 
@@ -33,7 +32,7 @@ const playerBox = (username, photo) => {
   );
 };
 
-function PlayArea() {
+function PlayArea({ user }) {
     return (
         <Box 
           bgcolor='primary.main' 
@@ -49,7 +48,7 @@ function PlayArea() {
               width: length,
             }}
           />
-          {playerBox('DrDrunkenstein', magnus)}
+          {playerBox(user.username, user.profile_image)}
         </Box>
     );
 }

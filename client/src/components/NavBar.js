@@ -10,37 +10,42 @@ import social from '../assets/social.png';
 import about from '../assets/about.png';
 import logout from '../assets/logout.png';
 
-const MenuItem = (text, icon, route) => {
-  
-    const history = useHistory();
-    
-    return (
-        <CardActionArea>
-          <Box 
-            onClick={() => history.push(route)}
-            sx={{ 
-            color: '#e1e1e1', 
-            display: 'flex', 
-            alignItems: 'center',
-            pointer: 'cursor', 
-          }}
-          >
-          <Box
-            component='img'
-            alt=''
-            src={icon}
-            sx={{
-              width: 50,
-              m: 2,
-            }}
-          />
-            {`${text}`}
-          </Box>
-        </CardActionArea>
-    );
-};
 
-function NavBar() {
+function NavBar({ onLogout }) {
+
+    const MenuItem = (text, icon, route) => {
+      
+        const history = useHistory();
+        
+        return (
+            <CardActionArea>
+              <Box 
+                onClick={() => {
+                  if (text === 'Logout') onLogout();
+                  history.push(route);
+                }}
+                sx={{ 
+                color: '#e1e1e1', 
+                display: 'flex', 
+                alignItems: 'center',
+                pointer: 'cursor', 
+              }}
+              >
+              <Box
+                component='img'
+                alt=''
+                src={icon}
+                sx={{
+                  width: 50,
+                  m: 2,
+                }}
+              />
+                {`${text}`}
+              </Box>
+            </CardActionArea>
+        );
+    };
+
     return (
         <Box 
         bgcolor='secondary.main'

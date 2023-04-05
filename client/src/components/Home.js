@@ -8,7 +8,7 @@ import NavBar from './NavBar';
 import ActiveGames from './ActiveGames';
 import PlayArea from './PlayArea';
 
-function Home() {
+function Home({ user, onLogout }) {
     return (
         <Container 
           disableGutters
@@ -23,8 +23,8 @@ function Home() {
           }}
         >
           <CssBaseline />
-          <NavBar />
-          <PlayArea />
+          <NavBar onLogout={onLogout} />
+          <PlayArea user={user} />
           <ActiveGames />
         </Container>
     );

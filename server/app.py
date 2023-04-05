@@ -42,6 +42,12 @@ class SignUp(Resource):
             return make_response({'error': str(e)}, 400)
 api.add_resource(SignUp, '/signup')
 
+class Logout(Resource):
+    def delete(self):
+        session['user_id'] = None
+        return make_response({}, 204)
+api.add_resource(Logout, '/logout')
+
 class AuthorizedSession(Resource):
     def get(self):
         try:

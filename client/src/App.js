@@ -11,15 +11,16 @@ function App() {
 
     const [user, setUser] = useState({});
 
+    
     useEffect(() => {
-        fetch('/authorized-session')
-          .then(res => {
-              if (res.ok) {
-                  res.json().then(user => setUser(user));
-              };
-          });
+      fetch('/authorized-session')
+      .then(res => {
+        if (res.ok) {
+          res.json().then(user => setUser(user));
+        };
+      });
     }, []);
-
+    
     // route is either '/login' or '/signup'
     const handleLoginSignUp = (event, route) => {
       event.preventDefault();
@@ -28,26 +29,36 @@ function App() {
       fetch(route, {
           method: 'POST',
           headers: {
-              'Content-Type': 'application/json'
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify(dataObj)
-      })
+        })
         .then(res => {
           if (res.ok) {
-              res.json().then(user => setUser(user));
-              history.push('/home');
+            res.json().then(user => setUser(user));
+            history.push('/home');
           } else {
-              res.json().then(errors => console.log(errors));
+            res.json().then(errors => console.log(errors));
           };
         });
-  };
+      };
+      
+    const handleLogout = () => {
+        fetch('/logout', { method: 'DELETE' })
+        .then(res => {
+            if (res.ok) setUser({});
+        });
+    };
 
     return (
         <>
           <Switch>
 
             <Route path="/home">
-              <Home />
+              <Home 
+                user={user} 
+                onLogout={handleLogout}
+              />
             </Route>
 
             <Route path="/login">
