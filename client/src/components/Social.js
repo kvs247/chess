@@ -5,12 +5,19 @@ import NavBar from './NavBar';
 
 import Profile from './Profile';
 import ActiveGames from './ActiveGames';
+import UserList from './UserList';
 
 function Social({ user, onLogout, onClickPlay }) {
 
-    const [profileData, setProfileData] = useState({});
+  const { id } = useParams();
 
-    const { id } = useParams();
+  const [profileData, setProfileData] = useState({});
+  const [showFriends, setShowFriends] = useState(true);
+
+  const handleClickButton = () => {
+      console.log('fire!')
+      setShowFriends(!showFriends);
+  };
 
     useEffect(() => {
       fetch(`/users/${id}`)
@@ -26,7 +33,7 @@ function Social({ user, onLogout, onClickPlay }) {
             onClickPlay={onClickPlay}
           />
           <Profile user={user} profileData={profileData}/>
-          <ActiveGames />
+          <UserList onClickButton={handleClickButton}/>
         </BaseContainer>
     );
 }

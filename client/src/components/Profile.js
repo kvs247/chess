@@ -28,7 +28,6 @@ function Profile({ user, profileData }) {
             height='40vh'
             sx={{
               display:'flex'
-
             }}
           >
             <Box 
@@ -74,10 +73,10 @@ function Profile({ user, profileData }) {
           <Box
             bgcolor='secondary.main'
             width={length}
-            mt={5}
             height='40vh'
+            sx={{ mt: 3}}
           >
-            <Typography variant='h4'>Profile</Typography>
+            <Typography variant='h4' sx={{ p: 2}}>Completed Games</Typography>
           </Box>
         </Box>
     );
