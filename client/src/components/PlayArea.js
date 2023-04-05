@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import CssBaseline from '@mui/material/CssBaseline';
 
 import guest from '../assets/profile-image.png';
 
@@ -39,7 +38,6 @@ function PlayArea({ user }) {
           align='center' 
           my='auto'
         >
-          <CssBaseline />
           {playerBox('Opponent', guest)}
           <Box
             sx={{

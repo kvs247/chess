@@ -1,6 +1,8 @@
+import Container from '@mui/material/Container';
+
 function About() {
     return (
-        <h1>about</h1>
+        <Container></Container>
     );
 }
 
