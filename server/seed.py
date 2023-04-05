@@ -24,45 +24,52 @@ with app.app_context():
         ),
         User(
             full_name='Bobby Fischer',
-            username='',
+            username='BobbyIsTheBest',
             email='bobby@fake.com',
             profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/bobby.jpg?raw=true',
+            password_hash='password'
         ),
         User(
             full_name='Garry Kasparov',
-            username='',
+            username='KasparovKingKiller',
             email='garry@fake.com',
             profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/garry.jpg?raw=true',
+            password_hash='password'
         ),
         User(
             full_name='Hans Niemann',
-            username='',
+            username='I am not a cheater',
             email='hans@fake.com',
             profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/hans.jpg?raw=true',
+            password_hash='password'
         ),
         User(
             full_name='Hikaru Nakamura',
-            username='',
+            username='Hikaru',
             email='hikaru@fake.com',
             profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/hikaru.png?raw=true',
+            password_hash='password'
         ),
         User(
             full_name='Levy Rozman',
-            username='',
+            username='Gotham Chess',
             email='levy@fake.com',
             profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/levy.png?raw=true',
+            password_hash='password'
         ),
         User(
             full_name='Magnus Carlsen',
             username='DrDrunkenstein',
             email='magnus@fake.com',
-            profile_image='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Magnus_Carlsen_2013.jpg/220px-Magnus_Carlsen_2013.jpg',
+            profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/magnus.jpg?raw=true',
+            password_hash='password'
         ),
         User(
             full_name='Ian Nepomniachtchi',
-            username='',
+            username='NepoTheNimbleNight',
             email='ian@fake.com',
-            profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/garry.jpg?raw=true',
+            profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/ian.jpeg?raw=true',
+            password_hash='password'
         )
 
     ]
