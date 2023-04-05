@@ -8,6 +8,10 @@ import NavBar from './NavBar';
 import ActiveGames from './ActiveGames';
 import PlayArea from './PlayArea';
 
+fetch('http://localhost:5555/test')
+  .then((res) => res.json())
+  .then((data) => console.log(data));
+
 function Home() {
     return (
         <Container 
@@ -21,7 +25,7 @@ function Home() {
             gridTemplateColumns: '15% 70% 15%',
             padding: 0
           }}
-          >
+        >
           <CssBaseline />
           <NavBar />
           <PlayArea />

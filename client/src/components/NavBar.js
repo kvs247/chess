@@ -2,6 +2,7 @@ import { useHistory } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
+import CssBaseline from '@mui/material/CssBaseline';
 
 import playFriends from '../assets/play-friends.png';
 import playComputer from '../assets/play-computer.png';
@@ -44,6 +45,7 @@ function NavBar() {
         <Box 
         bgcolor='secondary.main'
         >
+          <CssBaseline />
           <Typography 
             variant='h5' 
             align='center'

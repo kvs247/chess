@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
+import CssBaseline from '@mui/material/CssBaseline';
 
 import magnus from '../assets/carlsen.jpg'
 import hikaru from '../assets/hikaru.png'
@@ -29,6 +30,7 @@ const users = [
 function ActiveGames() {
     return (
         <Box bgcolor='secondary.main' align='center'>
+          <CssBaseline />
           <Typography
             variant='h5'
             align='center'

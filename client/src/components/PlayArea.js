@@ -1,17 +1,21 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import CssBaseline from '@mui/material/CssBaseline';
 
 import guest from '../assets/profile-image.png';
 import magnus from '../assets/carlsen.jpg'
+
+const length = '80vh';
 
 const playerBox = (username, photo) => {
   return (
     <Box
       sx={{
-        width: '85vh',
+        width: length,
         display: 'flex',
         alignItems: 'center',
-        my: 1
+        my: 1,
+        color: '#e1e1e1',
       }}
     >
       <Box 
@@ -20,6 +24,8 @@ const playerBox = (username, photo) => {
         alt=''
         sx={{
           width: 50,
+          mr: 1,
+          borderRadius: '5px',
         }}
       />
       {`${username}`}
@@ -34,12 +40,13 @@ function PlayArea() {
           align='center' 
           my='auto'
         >
+          <CssBaseline />
           {playerBox('Opponent', guest)}
           <Box
             sx={{
               bgcolor: 'purple',
-              height: '85vh',
-              width: '85vh',
+              height: length,
+              width: length,
             }}
           />
           {playerBox('DrDrunkenstein', magnus)}
