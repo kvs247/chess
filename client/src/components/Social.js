@@ -1,6 +1,19 @@
-function Social({ user }) {
+import BaseContainer from './BaseContainer';
+import NavBar from './NavBar';
+
+import Profile from './Profile';
+import ActiveGames from './ActiveGames';
+
+function Social({ user, onLogout, onClickPlay }) {
     return (
-        <h1>{`social for ${user.full_name}`}</h1>
+        <BaseContainer>
+          <NavBar 
+            onLogout={onLogout} 
+            onClickPlay={onClickPlay}
+          />
+          <Profile user={user}/>
+          <ActiveGames />
+        </BaseContainer>
     );
 }
 

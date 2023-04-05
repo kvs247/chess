@@ -14,6 +14,7 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String(), unique=True)
     email = db.Column(db.String(), unique=True)
     profile_image = db.Column(db.String())
+    date_joined = db.Column(db.DateTime(), server_default=db.func.now())
     _password_hash = db.Column(db.String())
 
     @hybrid_property

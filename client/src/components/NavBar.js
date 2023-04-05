@@ -11,10 +11,11 @@ import logout from '../assets/logout.png';
 
 
 function NavBar({ onLogout, onClickPlay }) {
+  
+    const history = useHistory();
 
     const MenuItem = (text, icon, route) => {
       
-        const history = useHistory();
         
         return (
             <CardActionArea>
@@ -58,16 +59,19 @@ function NavBar({ onLogout, onClickPlay }) {
         <Box 
         bgcolor='secondary.main'
         >
-          <Typography 
-            variant='h5' 
-            align='center'
-            sx={{
-              mt: 1,
-              mb: 3
-            }}
-          >
-            Chess Is Hard
-          </Typography>
+          <CardActionArea>
+            <Typography 
+              variant='h5' 
+              align='center'
+              sx={{
+                mt: 1,
+                mb: 3
+              }}
+              onClick={() => history.push('/home')}
+            >
+              Chess Is Hard
+            </Typography>
+          </CardActionArea>
           {MenuItem('Play Friends', playFriends, '/play')}
           {MenuItem('Play Computer', playComputer, '/play')}
           {MenuItem('Social', social, '/social')}

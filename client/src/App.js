@@ -75,7 +75,11 @@ function App() {
             </Route>
 
             <Route path='/social'>
-              <Social user={user}/>
+              <Social 
+                user={user}
+                onLogout={handleLogout}
+                onClickPlay={handleClickPlay}
+              />
             </Route>
 
             <Route path='/about'>

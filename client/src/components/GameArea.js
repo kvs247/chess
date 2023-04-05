@@ -31,7 +31,7 @@ const playerBox = (username, photo) => {
   );
 };
 
-function PlayArea({ user }) {
+function GameArea({ user }) {
     return (
         <Box 
           bgcolor='primary.main' 
@@ -51,4 +51,4 @@ function PlayArea({ user }) {
     );
 }
 
-export default PlayArea
+export default GameArea
