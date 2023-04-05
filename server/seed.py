@@ -11,7 +11,7 @@ with app.app_context():
         User(
             full_name='Kyle Schneider',
             username='Kye_Schnei',
-            email='kyles@fake.com',
+            email='kyle@fake.com',
             profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/woody.jpg?raw=true',
             password_hash='password'
         ),

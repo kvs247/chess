@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Login from './components/Login';
@@ -5,25 +6,28 @@ import SignUp from './components/SignUp';
 import Home from './components/Home';
 
 function App() {
-  return (
-    <>
-      <Switch>
 
-        <Route path="/home">
-          <Home />
-        </Route>
+    const [user, setUser] = useState({});
 
-        <Route path="/login">
-          <Login />
-        </Route>
+    return (
+        <>
+          <Switch>
 
-        <Route path="/signup">
-          <SignUp />
-        </Route>
+            <Route path="/home">
+              <Home />
+            </Route>
 
-      </Switch>
-    </>
-  );
+            <Route path="/login">
+              <Login setUser={setUser}/>
+            </Route>
+
+            <Route path="/signup">
+              <SignUp />
+            </Route>
+
+          </Switch>
+        </>
+    );
 }
 
 export default App;
