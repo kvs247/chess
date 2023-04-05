@@ -32,7 +32,7 @@ class SignUp(Resource):
                 full_name=data['fullName'],
                 username=data['username'],
                 email=data['email'],
-                profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/ian.jpeg?raw=true',
+                profile_image='https://github.com/kschneider0/chess/blob/main/server/assets/default.png?raw=true',
                 password_hash=data['password']
             )
             db.session.add(user)

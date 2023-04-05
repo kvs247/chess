@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 
 import Login from './components/Login';
 import SignUp from './components/SignUp';
@@ -9,6 +9,9 @@ function App() {
 
     const history = useHistory();
 
+    const initialUserState = {
+        
+    };
     const [user, setUser] = useState({});
 
     
@@ -68,6 +71,8 @@ function App() {
             <Route path="/signup">
               <SignUp onSubmit={handleLoginSignUp} />
             </Route>
+
+            <Redirect from='/' to='/login' />
 
           </Switch>
         </>
