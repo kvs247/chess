@@ -2,7 +2,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 
-import moment from 'moment';
+import readPGN from '../Util/pngHandler.js'
 
 function CompletedGames({ games }) {
 
@@ -10,31 +10,19 @@ function CompletedGames({ games }) {
 
     const formattedGames = games.map(game => {
 
-        const whiteUsernameRegex = /White "(.*)"/; 
-        const whiteUsername = whiteUsernameRegex.exec(game.pgn)[1];
-        const blackUsernameRegex = /Black "(.*)"/; 
-        const blackUsername = blackUsernameRegex.exec(game.pgn)[1];
-
-        const moves = game.pgn.split('\n').slice(-1)[0];
-        
-        const result = moves.split(' ').slice(-1)[0];
+        console.log('game', game)
+        const pgnObj = readPGN(game.pgn);
 
         const movesRegex = /\d+\./g;
-        const moveInts = moves.match(movesRegex).map(str => parseInt(str.slice(0,-1)));
+        const moveInts = pgnObj['moveList'].match(movesRegex).map(str => parseInt(str.slice(0,-1)));
         const numMoves = Math.max(...moveInts);
 
-        const dateRegex = /EndDate "(.*)"/;
-        const dateRaw = dateRegex.exec(game.pgn)[1];
-        const yyyymmdd = dateRaw.split('-');
-        const date = new Date(yyyymmdd[0], yyyymmdd[1]-1, yyyymmdd[2]);
-        const formattedDate = moment(date).format('MMMM D Y');
-
         return {
-            whiteUsername: whiteUsername,
-            blackUsername: blackUsername,
-            result: result,
+            whiteUsername: pgnObj['whiteUsername'],
+            blackUsername: pgnObj['blackUsername'],
+            result: pgnObj['result'],
             moves: numMoves,
-            date: formattedDate
+            date: pgnObj['date']
         };
     });
 
