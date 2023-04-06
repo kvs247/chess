@@ -1,15 +1,19 @@
-import datetime
+import glob
 import random
 import re
-from faker import Faker
 
 from app import app
 from models import db, User, Friendship, Game
-from seed_data import user_dicts, friendship_pairs, game_pgns
+from pgn_handler import read_pgn
 
-fake = Faker()
-start_date = datetime.date(2005, 1, 1)
-end_date = datetime.date.today()
+from data.users import user_dicts
+from data.friendships import friendship_pairs
+
+pgn_files = glob.glob('./data/PGNs/*.pgn')
+pgn_strs = []
+for f in pgn_files:
+    with open(f) as f:
+        pgn_strs.append(f.read())
 
 with app.app_context():
 
@@ -42,12 +46,17 @@ with app.app_context():
     db.session.add_all(friendships)
 
     # Create games
+    print('Creating games...')
     games = []
-    for pgn in game_pgns:
-        white_username = re.search(r'White "(.*)"', pgn).group(1)
+    for pgn in pgn_strs:
+        pgn_dict = read_pgn(pgn)
+
+        white_username = pgn_dict['white_username']
         white_user_id = User.query.filter_by(username=white_username).first().id
-        black_username = re.search(r'Black "(.*)"', pgn).group(1)
+        
+        black_username = pgn_dict['black_username']
         black_user_id = User.query.filter_by(username=black_username).first().id
+
         game = Game(
             white_user_id=white_user_id,
             black_user_id=black_user_id,

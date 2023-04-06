@@ -1,7 +1,8 @@
 import datetime
-from faker import Faker
+import faker
 
-fake = Faker()
+fake = faker.Faker()
+
 start_date = datetime.date(2005, 1, 1)
 end_date = datetime.date(2015, 12, 31)
 
@@ -126,26 +127,4 @@ user_dicts = [
         'date_joined': fake.date_between(start_date=start_date, end_date=end_date),
         'password_hash': 'password'
     }
-]
-
-friendship_pairs = [
-    (1, 10), (1, 13), (1, 3), (1, 14), (1, 8),  
-    (2, 4), (2, 12), (2, 11), (2, 6), (2, 15),  
-    (3, 1), (3, 9), (3, 12), (3, 7), (3, 5),  
-    (4, 2), (4, 10), (4, 9), (4, 7), (4, 13),  
-    (5, 8), (5, 14), (5, 11), (5, 12), (5, 6),  
-    (6, 2), (6, 7), (6, 13), (6, 8), (6, 15),  
-    (7, 3), (7, 4), (7, 12), (7, 6), (7, 15),  
-    (8, 1), (8, 5), (8, 10), (8, 6), (8, 14),  
-    (9, 4), (9, 3), (9, 15), (9, 13), (9, 10),  
-    (10, 1), (10, 9), (10, 4), (10, 14), (10, 11),  
-    (11, 2), (11, 5), (11, 13), (11, 10), (11, 15),  
-    (12, 2), (12, 5), (12, 7), (12, 3), (12, 9),  
-    (13, 1), (13, 4), (13, 6), (13, 11), (13, 9),  
-    (14, 1), (14, 10), (14, 8), (14, 5), (14, 15),  
-    (15, 2), (15, 6), (15, 7), (15, 11), (15, 9)
-]
-
-game_pgns = [
-    '[White \"topherLud\"]\n[Black \"Kye_Schnei\"]\n[Result \"0-1\"]\n[EndDate \"2023-03-24\"]\n[Termination \"Kye_Schnei won by resignation\"]\n1. e4 e5 2. Nf3 Nc6 3. Nc3 Bc5 4. Ne2 d6 5. h3 Nf6 6. Ng3 Be6 7. d3 O-O 8. Bg5 d5 9. Qd2 h6 10. Bh4 d4 11. Nh5 Be7 12. g4 Nxh5 13. gxh5 Bxh4 14. O-O-O Be7 15. Rg1 Bxa2 16. Be2 Qd6 17. Rg3 f6 18. Rdg1 Rf7 19. Qxh6 Bf8 20. Nh4 Ne7 21. Bg4 gxh6 22. Bf5+ Kh8 23. Ng6+ Nxg6 24. Bxg6 Rg7 25. Rg4 Be7 26. Bf7 Rxg4 27. Rxg4 Bxf7 0-1',
 ]
