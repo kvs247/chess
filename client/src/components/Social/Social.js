@@ -14,6 +14,7 @@ function Social({ user, onLogout, onClickPlay }) {
     const [profileData, setProfileData] = useState({});
     const [users, setUsers] = useState([]);
     const [friends, setFriends] = useState([]);
+    const [games, setGames] = useState([]);
     const [showFriends, setShowFriends] = useState(true);
 
     const handleClickButton = () => {
@@ -26,6 +27,10 @@ function Social({ user, onLogout, onClickPlay }) {
         .then(data => {
           setUsers(data);
       });
+
+      fetch('/games')
+        .then(res => res.json())
+        .then(data => setGames(data));
     }, []);   
 
     useEffect(() => {
@@ -35,6 +40,10 @@ function Social({ user, onLogout, onClickPlay }) {
       setFriends(users.filter(u => profileData.friend_ids.includes(u.id)));
     }, [id]);    
 
+    const filteredGames = games.filter(u => {
+      return u.white_user_id == id || u.black_user_id == id;
+    });
+
     return (
         <BaseContainer>
           <NavBar 
@@ -42,7 +51,11 @@ function Social({ user, onLogout, onClickPlay }) {
             onLogout={onLogout} 
             onClickPlay={onClickPlay}
           />
-          <Profile user={user} profileData={profileData}/>
+          <Profile 
+            user={user}   
+            profileData={profileData}
+            games={filteredGames}
+          />
           {showFriends ? 
           <UserList users={users} onClickButton={handleClickButton}/>
           :

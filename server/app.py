@@ -1,7 +1,7 @@
 from flask import request, session, make_response, jsonify, abort
 from flask_restful import Resource
 
-from models import User
+from models import User, Game
 from config import app, db, api
 
 class Users(Resource):
@@ -20,6 +20,14 @@ class UserById(Resource):
         except Exception as e:
             return make_response({'error': str(e)}, 400)
 api.add_resource(UserById, '/users/<int:id>')
+
+class Games(Resource):
+    def get(self):
+        return make_response(
+            [g.to_dict() for g in Game.query.all()],
+            200
+        )
+api.add_resource(Games, '/games')
 
 class Login(Resource):
     def post(self):

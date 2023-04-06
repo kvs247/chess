@@ -4,10 +4,12 @@ import Grid from '@mui/material/Grid';
 
 import moment from 'moment';
 
+import CompletedGames from './CompletedGames.js';
+
 const length = '80%';
 
 
-function Profile({ user, profileData }) {
+function Profile({ user, profileData, games }) {
 
     let formattedDate = '';
     if (profileData.date_joined) {
@@ -74,10 +76,13 @@ function Profile({ user, profileData }) {
             bgcolor='secondary.main'
             width={length}
             height='40vh'
-            sx={{ mt: 3}}
+            sx={{ mt: 3, p: 2}}
+            overflow='auto'
           >
             <Typography variant='h4' sx={{ p: 2}}>Completed Games</Typography>
+            <CompletedGames games={games} />
           </Box>
+           
         </Box>
     );
 }

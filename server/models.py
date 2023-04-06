@@ -23,8 +23,8 @@ class User(db.Model, SerializerMixin):
         friends_duplicated = [f.friend_id for f in self.friendships]
         return list(set(friends_duplicated))
 
-    white_games = db.relationship('Game', foreign_keys='Game.white_user_id', backref='white')
-    black_games = db.relationship('Game', foreign_keys='Game.black_user_id', backref='black')
+    white_games = db.relationship('Game', foreign_keys='Game.white_user_id', backref='white_user')
+    black_games = db.relationship('Game', foreign_keys='Game.black_user_id', backref='black_user')
 
     @property
     def game_ids(self):
@@ -57,7 +57,7 @@ class Friendship(db.Model, SerializerMixin):
 class Game(db.Model, SerializerMixin):
     __tablename__ = 'games'
 
-    serialize_rules = ()
+    serialize_rules = ('-white_user', '-black_user')
 
     id = db.Column(db.Integer, primary_key=True)
     white_user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
