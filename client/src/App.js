@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 
 import Login from './components/Auth/Login.js';
-import SignUp from './components/Home/SignUp.js';
+import SignUp from './components/Auth/SignUp.js';
 import Home from './components/Home/Home.js';
 import Play from './components/Play.js';
 import Social from './components/Social/Social.js';
-import About from './components/About.js';
+import About from './components/About/About.js';
 
 function App() {
 
@@ -83,7 +83,11 @@ function App() {
             </Route>
 
             <Route path='/about'>
-              <About />
+              <About 
+                user={user} 
+                onLogout={handleLogout}
+                onClickPlay={handleClickPlay}
+              />
             </Route>            
 
             <Route path="/login">
