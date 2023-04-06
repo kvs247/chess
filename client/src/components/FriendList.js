@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 
 import BaseUserList from './BaseUserList';
 
-function UserList({ users, onClickButton }) {
+function FriendList({ users, onClickButton }) {
     return (
         <BaseUserList users={users}>
           <Typography
@@ -14,18 +14,16 @@ function UserList({ users, onClickButton }) {
               mb: 3,
             }}
           >
-            Users
+            Friends
           </Typography>
           <Button
             variant='contained'
             onClick={onClickButton}
           >
-            Show Friends
+            Show Users
           </Button>
         </BaseUserList>
     );
 }
 
-export default UserList;
-
-
+export default FriendList;

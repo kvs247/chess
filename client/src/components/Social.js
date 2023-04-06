@@ -6,24 +6,46 @@ import NavBar from './NavBar';
 import Profile from './Profile';
 import ActiveGames from './ActiveGames';
 import UserList from './UserList';
+import FriendList from './FriendList';
 
 function Social({ user, onLogout, onClickPlay }) {
 
   const { id } = useParams();
 
   const [profileData, setProfileData] = useState({});
+  const [users, setUsers] = useState([]);
+  const [friends, setFriends] = useState([]);
   const [showFriends, setShowFriends] = useState(true);
 
   const handleClickButton = () => {
-      console.log('fire!')
       setShowFriends(!showFriends);
   };
 
     useEffect(() => {
+
       fetch(`/users/${id}`)
         .then(res => res.json())
         .then(data => setProfileData(data));
-    }, []);    
+
+      fetch('/users')
+        .then(res => res.json())
+        .then(data => {
+          setUsers(data);
+      });
+
+    }, [id]);    
+
+    useEffect(() => {
+      fetch('/users')
+        .then(res => res.json())
+        .then(data => {
+          setUsers(data);
+        });
+    }, [])
+
+    useEffect(() => {
+      setFriends(users.filter(u => profileData.friend_ids.includes(u.id)));
+    }, [users]);
 
     return (
         <BaseContainer>
@@ -33,7 +55,11 @@ function Social({ user, onLogout, onClickPlay }) {
             onClickPlay={onClickPlay}
           />
           <Profile user={user} profileData={profileData}/>
-          <UserList onClickButton={handleClickButton}/>
+          {showFriends ? 
+          <UserList users={users} onClickButton={handleClickButton}/>
+          :
+          <FriendList users={friends} onClickButton={handleClickButton}/>
+          }
         </BaseContainer>
     );
 }
