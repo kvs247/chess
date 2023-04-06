@@ -7,7 +7,7 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-_password_hash', '-friendships')
+    serialize_rules = ('-_password_hash', '-friendships', 'friend_ids')
 
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String())
@@ -16,7 +16,11 @@ class User(db.Model, SerializerMixin):
     profile_image = db.Column(db.String())
     date_joined = db.Column(db.DateTime(), server_default=db.func.now())
 
-    friendships = db.relationship('Friendship', foreign_keys='Friendship.friend_id', backref='user')
+    friendships = db.relationship('Friendship', foreign_keys='Friendship.user_id', backref='user')
+    @property
+    def friend_ids(self):
+        friends_duplicated = [f.friend_id for f in self.friendships]
+        return list(set(friends_duplicated))
 
     _password_hash = db.Column(db.String())
 
