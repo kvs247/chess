@@ -9,42 +9,31 @@ import FriendList from './FriendList';
 
 function Social({ user, onLogout, onClickPlay }) {
 
-  const { id } = useParams();
+    const { id } = useParams();
 
-  const [profileData, setProfileData] = useState({});
-  const [users, setUsers] = useState([]);
-  const [friends, setFriends] = useState([]);
-  const [showFriends, setShowFriends] = useState(true);
+    const [profileData, setProfileData] = useState({});
+    const [users, setUsers] = useState([]);
+    const [friends, setFriends] = useState([]);
+    const [showFriends, setShowFriends] = useState(true);
 
-  const handleClickButton = () => {
-      setShowFriends(!showFriends);
-  };
+    const handleClickButton = () => {
+        setShowFriends(!showFriends);
+    };
 
     useEffect(() => {
-
-      fetch(`/users/${id}`)
-        .then(res => res.json())
-        .then(data => setProfileData(data));
-
       fetch('/users')
         .then(res => res.json())
         .then(data => {
           setUsers(data);
       });
-
-    }, [id]);    
+    }, []);   
 
     useEffect(() => {
-      fetch('/users')
+      fetch(`/users/${id}`)
         .then(res => res.json())
-        .then(data => {
-          setUsers(data);
-        });
-    }, [])
-
-    useEffect(() => {
+        .then(data => setProfileData(data));
       setFriends(users.filter(u => profileData.friend_ids.includes(u.id)));
-    }, [users]);
+    }, [id]);    
 
     return (
         <BaseContainer>
