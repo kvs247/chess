@@ -3,8 +3,8 @@ import random
 from faker import Faker
 
 from app import app
-from models import db, User
-from user_data import user_data
+from models import db, User, Friendship
+from seed_data import user_dicts, friendship_pairs
 
 fake = Faker()
 start_date = datetime.date(2005, 1, 1)
@@ -26,13 +26,20 @@ with app.app_context():
             password_hash=user_dict['password_hash']
         )
     users = []
-    for user in user_data:
+    for user in user_dicts:
         users.append(make_user(user))
     random.shuffle(users)
+
+    # Create friendships
+    print('Creating friendships...')
+    friendships = []
+    for (user_id, friend_id) in friendship_pairs:
+        friendships.append(Friendship(user_id=user_id, friend_id=friend_id))
 
     # Seed database
     print('Seeding database...')
     db.session.add_all(users)
+    db.session.add_all(friendships)
     db.session.commit()
 
     print('Done')

@@ -7,7 +7,7 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-_password_hash',)
+    serialize_rules = ('-_password_hash', '-friendships')
 
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String())
@@ -15,6 +15,9 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.String(), unique=True)
     profile_image = db.Column(db.String())
     date_joined = db.Column(db.DateTime(), server_default=db.func.now())
+
+    friendships = db.relationship('Friendship', foreign_keys='Friendship.friend_id', backref='user')
+
     _password_hash = db.Column(db.String())
 
     @hybrid_property
@@ -28,3 +31,13 @@ class User(db.Model, SerializerMixin):
 
     def authenticate(self, password):
         return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
+    
+    
+class Friendship(db.Model, SerializerMixin):
+    __tablename__ = 'friendships'
+
+    serialize_rules = ()
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    friend_id = db.Column(db.Integer, db.ForeignKey('users.id'))
