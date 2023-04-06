@@ -1,7 +1,7 @@
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
-import BaseUserList from './BaseUserList';
+import BaseUserList from '../BaseUserList';
 
 function UserList({ users, onClickButton }) {
     return (

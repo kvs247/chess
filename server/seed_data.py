@@ -17,7 +17,7 @@ user_dicts = [
     {
         'full_name': 'Topher Ludlow',
         'username': 'topherLud',
-        'email': 'toper@fake.com',
+        'email': 'topher@fake.com',
         'profile_image': 'https://github.com/kschneider0/chess/blob/main/server/assets/topher.jpg?raw=true',
         'date_joined': datetime.date(2020, 11, 10),
         'password_hash': 'password'

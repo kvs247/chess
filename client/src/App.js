@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 
-import Login from './components/Login';
-import SignUp from './components/SignUp';
-import Home from './components/Home';
-import Play from './components/Play';
-import Social from './components/Social';
-import About from './components/About';
+import Login from './components/Auth/Login.js';
+import SignUp from './components/Home/SignUp.js';
+import Home from './components/Home/Home.js';
+import Play from './components/Play.js';
+import Social from './components/Social/Social.js';
+import About from './components/About.js';
 
 function App() {
 

@@ -2,10 +2,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 
-import magnus from '../assets/carlsen.jpg'
-import hikaru from '../assets/hikaru.png'
-import nepo from '../assets/nepo.jpeg'
-import fischer from '../assets/fischer.jpg'
+import magnus from '../../assets/carlsen.jpg'
+import hikaru from '../../assets/hikaru.png'
+import nepo from '../../assets/nepo.jpeg'
+import fischer from '../../assets/fischer.jpg'
 
 const users = [
     {

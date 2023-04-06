@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import guest from '../assets/profile-image.png';
+import guest from '../../assets/profile-image.png';
 
 const length = '80vh';
 

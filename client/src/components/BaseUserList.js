@@ -16,7 +16,6 @@ function BaseUserList({ children, users }) {
 
     const handleClickUser = (user) => {
         history.push(`/users/${user.id}`);
-        // window.location.reload();
     };
 
     // search functionality

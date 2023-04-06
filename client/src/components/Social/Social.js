@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import BaseContainer from './BaseContainer';
-import NavBar from './NavBar';
+import BaseContainer from '../BaseContainer';
+import NavBar from '../NavBar';
 
 import Profile from './Profile';
-import ActiveGames from './ActiveGames';
 import UserList from './UserList';
 import FriendList from './FriendList';
 
