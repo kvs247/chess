@@ -6,8 +6,10 @@ import readPGN from '../Util/pngHandler.js'
 
 function CompletedGames({ games }) {
 
-    //will need to filter for completed games
-    const formattedGames = games.map(game => {
+  
+  //will need to filter for completed games
+    const reversedGames = games.slice().reverse();
+    const formattedGames = reversedGames.map(game => {
       
         const pgnObj = readPGN(game.pgn);
 
@@ -23,27 +25,6 @@ function CompletedGames({ games }) {
             date: pgnObj['date']
         };
     });
-
-    const testGames = [
-        {
-          id: 1,
-          date: 'Mar 24, 2023',
-          whiteUsername: 'John Doe',
-          blackUsername: 'Jane Smith',
-          result: '1-0',
-          moves: 39,
-        },
-        {
-          id: 2,
-          date: 'Mar 22, 2023',
-          whiteUsername: 'Bob Johnson',
-          blackUsername: 'Alice Lee',
-          result: '0-1',
-          moves: 9,
-        },
-        // add more game entries
-      ];
-
 
     return (
       <Grid container spacing={3}>
