@@ -63,6 +63,7 @@ with app.app_context():
             pgn=pgn
         )
         games.append(game)
+    games.sort(key=lambda g: read_pgn(g.pgn)['date'])
     db.session.add_all(games)
 
     db.session.commit()

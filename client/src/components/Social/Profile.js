@@ -42,11 +42,7 @@ function Profile({ user, profileData, games }) {
                   my: 'auto',
                 }}
               />
-              <Box
-                sx={{
-                  m: 'auto',
-                }}
-              >
+              <Box sx={{ m: 'auto'}}>
                 <Typography variant='h3' sx={{ mb: 5 }}>{profileData.username}</Typography>
                 <Typography variant='h4' sx={{ mb: 5 }}>{profileData.full_name}</Typography>
                 <Grid container spacing={2}>
