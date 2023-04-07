@@ -7,10 +7,8 @@ import readPGN from '../Util/pngHandler.js'
 function CompletedGames({ games }) {
 
     //will need to filter for completed games
-
     const formattedGames = games.map(game => {
-
-        console.log('game', game)
+      
         const pgnObj = readPGN(game.pgn);
 
         const movesRegex = /\d+\./g;

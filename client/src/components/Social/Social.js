@@ -20,24 +20,39 @@ function Social({ user, onLogout, onClickPlay }) {
     const handleClickButton = () => {
         setShowFriends(!showFriends);
     };
-
-    useEffect(() => {
+    
+    const getUsers = () => {
       fetch('/users')
         .then(res => res.json())
         .then(data => {
+          const thisPageUser = data.filter(u => u.id == id)[0];
           setUsers(data);
+          setProfileData(thisPageUser);
+          setFriends(data.filter(u => thisPageUser.friend_ids.includes(u.id)));
       });
+    };
 
+    const getGames = () => {
       fetch('/games')
         .then(res => res.json())
         .then(data => setGames(data));
+    };
+
+    useEffect(() => {
+
+      getUsers();
+
+      getGames();
+
     }, []);   
 
     useEffect(() => {
-      fetch(`/users/${id}`)
-        .then(res => res.json())
-        .then(data => setProfileData(data));
-      setFriends(users.filter(u => profileData.friend_ids.includes(u.id)));
+      // fetch(`/users/${id}`)
+      //   .then(res => res.json())
+      //   .then(data => setProfileData(data));
+      const thisPageUser = users.filter(u => u.id == id)[0];
+      setProfileData(thisPageUser);
+      setFriends(users.filter(u => thisPageUser.friend_ids.includes(u.id)));
     }, [id]);    
 
     const filteredGames = games.filter(u => {
