@@ -4,15 +4,28 @@ import Grid from '@mui/material/Grid';
 
 import moment from 'moment';
 
+import readPGN from '../Util/pngHandler.js'
+
 import CompletedGames from './CompletedGames.js';
 
 const length = '80%';
 
-
 function Profile({ user, profileData, games }) {
-
-    // only render if profileData is not empty
-    if (profileData?.date_joined) {
+  
+  
+  // only render if profileData is not empty
+  if (profileData?.date_joined) {
+    
+      const numGames = games.length;
+      const wonGames = games.filter(g => {
+          const pgnObj = readPGN(g.pgn);
+          const isWhite = pgnObj['whiteUsername'] === profileData.username;
+          const isBlack = pgnObj['blackUsername'] === profileData.username;
+          const whiteWon = pgnObj['result'] === '1-0';
+          const blackWon = pgnObj['result'] === '0-1';
+          return ((whiteWon && isWhite) || (blackWon && isBlack));
+        });
+        const numWon = wonGames.length;
 
       const yyyymmdd = profileData.date_joined.split(' ')[0].split('-')
       const date = new Date(yyyymmdd[0], yyyymmdd[1]-1, yyyymmdd[2])
@@ -56,10 +69,10 @@ function Profile({ user, profileData, games }) {
                     <Typography variant='h5'>Joined</Typography>
                   </Grid>
                   <Grid item xs={4}>
-                    <Typography variant='h5'>3253</Typography>
+                    <Typography variant='h5'>{numGames}</Typography>
                   </Grid>
                   <Grid item xs={4}>
-                    <Typography variant='h5'>1378</Typography>
+                    <Typography variant='h5'>{numWon}</Typography>
                   </Grid>
                   <Grid item xs={4}>
                     <Typography variant='h5'>{formattedDate}</Typography>

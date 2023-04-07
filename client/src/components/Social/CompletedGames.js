@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import readPGN from '../Util/pngHandler.js'
 
 function CompletedGames({ games }) {
-
   
   //will need to filter for completed games
     const reversedGames = games.slice().reverse();
