@@ -63,3 +63,4 @@ class Game(db.Model, SerializerMixin):
     white_user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     black_user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     pgn = db.Column(db.String())
+    fen = db.Column(db.String())

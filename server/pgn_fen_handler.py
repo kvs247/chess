@@ -54,6 +54,69 @@ def knight_moves(index):
 
     return possible_moves
 
+def rook_moves(index, fen, whites_turn):
+    possible_moves = []
+    file, rank = util.index_to_filerank(index)
+    fen_list = util.fen_to_list(fen)
+
+    # up
+    for i in range(rank + 1, 9):
+        index = util.filerank_to_index(file, i)
+        if not fen_list[index]:
+            possible_moves.append(index)
+        elif whites_turn and fen_list[index] == 'R':
+            possible_moves.append(index)
+            break
+        elif not whites_turn and fen_list[index] == 'r':
+            possible_moves.append(index)
+            break
+        elif fen_list[index]:
+            break
+
+    # down
+    for i in range(rank - 1, 0, -1):
+        index = util.filerank_to_index(file, i)
+        if not fen_list[index]:
+            possible_moves.append(index)
+        elif whites_turn and fen_list[index] == 'R':
+            possible_moves.append(index)
+            break
+        elif not whites_turn and fen_list[index] == 'r':
+            possible_moves.append(index)
+            break
+        elif fen_list[index]:
+            break
+
+    # right
+    for i in range(file + 1, 9):
+        index = util.filerank_to_index(i, rank)
+        if not fen_list[index]:
+            possible_moves.append(index)
+        elif whites_turn and fen_list[index] == 'R':
+            possible_moves.append(index)
+            break
+        elif not whites_turn and fen_list[index] == 'r':
+            possible_moves.append(index)
+            break
+        elif fen_list[index]:
+            break
+
+    # left
+    for i in range(file - 1, 0, -1):
+        index = util.filerank_to_index(i, rank)
+        if not fen_list[index]:
+            possible_moves.append(index)
+        elif whites_turn and fen_list[index] == 'R':
+            possible_moves.append(index)
+            break
+        elif not whites_turn and fen_list[index] == 'r':
+            possible_moves.append(index)
+            break
+        elif fen_list[index]:
+            break
+
+    return possible_moves
+
 def algebraic_to_index(fen, whites_turn, move):
     fen_list = util.fen_to_list(fen)
 
@@ -146,9 +209,9 @@ def algebraic_to_index(fen, whites_turn, move):
     
     # rook
     if piece.upper() == 'R':
+        possible_indexes = rook_moves(to_index, fen, whites_turn)
         for index in piece_indexes:
-            file, rank = util.index_to_filerank(index)
-            if file == to_file or rank == to_rank:
+            if index in possible_indexes:
                 return index, to_index
             
 def update_fen(fen, from_index, to_index):
@@ -165,8 +228,10 @@ def pgn_to_fen(pgn):
     move_list = pgn_dict['move_list']
     move_list = move_list.split(' ')
     move_list = [m for m in move_list if m[0].isalpha()]
+
     
     whites_turn = True
+    i = 1
     for move in  move_list:
         from_index, to_index = algebraic_to_index(fen, whites_turn, move)
         fen = update_fen(fen, from_index, to_index) + ' w KQkq - 0 1'
@@ -182,46 +247,43 @@ def pgn_to_fen(pgn):
 
         whites_turn = not whites_turn
 
+        i += 1
+
     return fen
 
-# pgn = '''[Event "?"]
-# [Site "?"]
-# [Date "????.??.??"]
-# [Round "?"]
-# [White "?"]
-# [Black "?"]
-# [Result "*"]
+if __name__ == '__main__':
+    # pgn = '''[Event "?"]
+    # [Site "?"]
+    # [Date "????.??.??"]
+    # [Round "?"]
+    # [White "?"]
+    # [Black "?"]
+    # [Result "*"]
 
-# 1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 b5 5. Bb3 Nf6 6. Qe2 Nxe4 7. Qxe4 Bc5 8.
-# Nxe5 Nxe5 9. Qxe5+ Kf8 10. d3 Qg5 11. Bxg5 Bxf2+ 12. Kxf2 Bb7 13. Nc3 Bxg2 14.
-# Kxg2 Re8 15. Rhe1 Rxe5 16. Rxe5 d6 17. Rae1 dxe5 18. Rxe5 *'''
+    # 1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 b5 5. Bb3 Nf6 6. Qe2 Nxe4 7. Qxe4 Bc5 8.
+    # Nxe5 Nxe5 9. Qxe5+ Kf8 10. d3 Qg5 11. Bxg5 Bxf2+ 12. Kxf2 Bb7 13. Nc3 Bxg2 14.
+    # Kxg2 Re8 15. Rhe1 Rxe5 16. Rxe5 d6 17. Rae1 dxe5 18. Rxe5 *'''
 
-pgn = '''
-[Event "Ultimate Blitz Challenge"]
-[Site "St. Louis, MO USA"]
-[Date "2016.04.29"]
-[EventDate "2016.04.28"]
-[Round "16.2"]
-[Result "1/2-1/2"]
-[White "SoSneaky"]
-[Black "KasparovKingKiller"]
-[ECO "A41"]
-[WhiteElo "?"]
-[BlackElo "?"]
-[PlyCount "91"]
+    pgn = '''[Event "Kasparov - Anand PCA World Championship Match"]
+    [Site "New York, NY USA"]
+    [Date "1995.09.19"]
+    [EventDate "?"]
+    [Round "6"]
+    [Result "1/2-1/2"]
+    [White "KasparovKingKiller"]
+    [Black "Vishy"]
+    [ECO "C80"]
+    [WhiteElo "?"]
+    [BlackElo "?"]
+    [PlyCount "55"]
 
-1. Nf3 g6 2. e4 Bg7 3. d4 d6 4. c4 Bg4 5. Be2 Nc6 6. Nbd2 e5
-7. d5 Nce7 8. O-O Nf6 9. c5 O-O 10. cxd6 cxd6 11. h3 Bd7
-12. Re1 b5 13. Bf1 Nc8 14. b3 Rb8 15. a4 a6 16. axb5 axb5
-17. Ba3 Ne8 18. Bb4 f5 19. Ra6 Bh6 20. exf5 Bxf5 21. g4 Bd7
-22. Ne4 Bf4 23. Bg2 Qe7 24. Qc2 Kh8 25. Qb2 Kg8 26. Qa3 h5
-27. Nxd6 Ncxd6 28. Bxd6 Nxd6 29. Qxd6 Qxd6 30. Rxd6 hxg4
-31. hxg4 e4 32. Rxd7 exf3 33. Bxf3 Bd2 34. Re2 Rxf3 35. Rxd2
-Rxb3 36. d6 Rf3 37. Rc7 b4 38. Kg2 Rff8 39. Re2 Rfd8 40. Re6
-b3 41. Rxg6+ Kh8 42. Rh6+ Kg8 43. Rg6+ Kf8 44. Rh6 Kg8
-45. Rg6+ Kf8 46. Rh6 1/2-1/2
-'''
+    1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.O-O Nxe4 6.d4 b5 7.Bb3
+    d5 8.dxe5 Be6 9.Nbd2 Nc5 10.c3 d4 11.Ng5 dxc3 12.Nxe6 fxe6
+    13.bxc3 Qd3 14.Nf3 O-O-O 15.Qe1 Nxb3 16.axb3 Kb7 17.Be3 Be7
+    18.Bg5 h6 19.Bxe7 Nxe7 20.Nd4 Rxd4 21.cxd4 Qxb3 22.Qe3 Qxe3
+    23.fxe3 Nd5 24.Kf2 Kb6 25.Ke2 a5 26.Rf7 a4 27.Kd2 c5 28.e4
+    1/2-1/2'''
 
-pgn = '[Event "Ultimate Blitz Challenge"]\n[Site "St. Louis, MO USA"]\n[Date "2016.04.29"]\n[EventDate "2016.04.28"]\n[Round "16.2"]\n[Result "1/2-1/2"]\n[White "SoSneaky"]\n[Black "KasparovKingKiller"]\n[ECO "A41"]\n[WhiteElo "?"]\n[BlackElo "?"]\n[PlyCount "91"]\n\n1. Nf3 g6 2. e4 Bg7 3. d4 d6 4. c4 Bg4 5. Be2 Nc6 6. Nbd2 e5\n7. d5 Nce7 8. O-O Nf6 9. c5 O-O 10. cxd6 cxd6 11. h3 Bd7\n12. Re1 b5 13. Bf1 Nc8 14. b3 Rb8 15. a4 a6 16. axb5 axb5\n17. Ba3 Ne8 18. Bb4 f5 19. Ra6 Bh6 20. exf5 Bxf5 21. g4 Bd7\n22. Ne4 Bf4 23. Bg2 Qe7 24. Qc2 Kh8 25. Qb2 Kg8 26. Qa3 h5\n27. Nxd6 Ncxd6 28. Bxd6 Nxd6 29. Qxd6 Qxd6 30. Rxd6 hxg4\n31. hxg4 e4 32. Rxd7 exf3 33. Bxf3 Bd2 34. Re2 Rxf3 35. Rxd2\nRxb3 36. d6 Rf3 37. Rc7 b4 38. Kg2 Rff8 39. Re2 Rfd8 40. Ree6\nb3 41. Rxg6+ Kh8 42. Rh6+ Kg8 43. Rg6+ Kf8 44. Rh6 Kg8\n45. Rg6+ Kf8 46. Rh6 1/2-1/2'
+    pgn = '[Event "Reykjavik Rapid"]\n[Site "Reykjavik ISL"]\n[Date "2004.03.18"]\n[EventDate "2004.03.17"]\n[Round "1.2"]\n[Result "1-0"]\n[White "KasparovKingKiller"]\n[Black "DrDrunkenstein"]\n[ECO "E92"]\n[WhiteElo "2831"]\n[BlackElo "2484"]\n[PlyCount "63"]\n\n1. c4 Nf6 2. Nc3 g6 3. e4 d6 4. d4 Bg7 5. Nf3 O-O 6. Be2 e5\n7. Be3 exd4 8. Nxd4 c6 9. f3 Re8 10. Bf2 d5 11. exd5 cxd5\n12. c5 Nc6 13. O-O Nh5 14. Qd2 Be5 15. g3 Bh3 16. Rfe1 Ng7\n17. Rad1 Rc8 18. Ndb5 a6 19. Nd6 Bxd6 20. cxd6 d4\n21. Ne4 Bf5 22. d7 Bxd7 23. Bxd4 Nxd4 24. Qxd4 Nf5\n25. Qxd7 Qb6+ 26. Kh1 Red8 27. Qa4 Rxd1 28. Qxd1 Qxb2\n29. Qb1 Rc2 30. Qxb2 Rxb2\n31. Bc4 Nd4 32. Re3 1-0'
 
-print(pgn_to_fen(pgn))
+    print(pgn_to_fen(pgn))
