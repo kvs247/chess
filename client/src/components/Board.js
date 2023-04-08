@@ -1,17 +1,27 @@
 import Box from '@mui/material/Box';
 import Draggable from 'react-draggable';
 
+import piecePngObj from './Util/piecePNGs';
+
 const lightSquare = '#c4c4c4';
 const darkSquare = '#005c28';
 
 const fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
 const fenToArray = (fen) => {
-    const piecesString = fen.split(' ')[0].replace('/', '');
-    console.log(piecesString)
+    const piecesString = fen.split(' ')[0].replace(/\//g, '');
+    const piecesArrayNums = piecesString.split('');
+    const piecesArray = piecesArrayNums.map(piece => {
+        if (parseInt(piece)) {
+            return [...Array(parseInt(piece)).fill(null)];
+        };
+        return piece;
+    }).flat();
+
+    return piecesArray;
 };
 
-console.log('yo', fenToArray(fen));
+const fenArray = fenToArray(fen);
 
 function Board({ length }) {
 
@@ -31,6 +41,12 @@ function Board({ length }) {
               width = '100%'
               height = '100%'
             >
+              <Box 
+                component='img'
+                src={piecePngObj[`${fenArray[i]}`]}
+                alt=''
+                sx={{ width: '100%' }}
+              />
             </Box>
           );
     };
