@@ -71,7 +71,7 @@ function BaseUserList({ children, users }) {
                   </Box>
                 </CardActionArea>
             );
-          }) : <h1>wrong</h1>}
+          }) : null}
         </Box>
     );
 }
