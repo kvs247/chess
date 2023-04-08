@@ -1,9 +1,10 @@
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+
+import Board from '../Board.js';
 
 import guest from '../../assets/profile-image.png';
 
-const length = '80vh';
+const length = '70vh';
 
 const playerBox = (username, photo) => {
   return (
@@ -39,13 +40,7 @@ function GameArea({ user }) {
           my='auto'
         >
           {playerBox('Opponent', guest)}
-          <Box
-            sx={{
-              bgcolor: 'purple',
-              height: length,
-              width: length,
-            }}
-          />
+          <Board length={length}/>
           {playerBox(user.username, user.profile_image)}
         </Box>
     );

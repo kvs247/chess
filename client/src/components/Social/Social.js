@@ -47,9 +47,6 @@ function Social({ user, onLogout, onClickPlay }) {
     }, []);   
 
     useEffect(() => {
-      // fetch(`/users/${id}`)
-      //   .then(res => res.json())
-      //   .then(data => setProfileData(data));
       const thisPageUser = users.filter(u => u.id == id)[0];
       setProfileData(thisPageUser);
       setFriends(users.filter(u => thisPageUser.friend_ids.includes(u.id)));
