@@ -118,14 +118,28 @@ def rook_moves(index, fen, whites_turn):
     return possible_moves
 
 def algebraic_to_index(fen, whites_turn, move):
-    fen_list = util.fen_to_list(fen)
+    # convert algebraic notation to index
+    # returns (from_index, to_index)
+    # UNLESS promotion, then (promotion_type, to_index)
 
-    # special case for promotion (=)
+    fen_list = util.fen_to_list(fen)
 
     # remove check, checkmate and capture
     move = move.replace('+', '')
     move = move.replace('#', '')
     move = move.replace('x', '')
+
+    # promotion
+    if '=' in move:
+        to_file = ord(move[0]) - 96
+        to_rank = int(move[1])
+        to_index = util.filerank_to_index(to_file, to_rank)
+
+        promotion_type = move[3]
+        if not whites_turn:
+            promotion_type = promotion_type.lower()
+
+        return promotion_type, to_index
 
     # castling
     if move == 'O-O':
@@ -222,6 +236,16 @@ def update_fen(fen, from_index, to_index):
     fen = util.list_to_fen(fen_list)
     return fen
 
+def update_fen_promotion(fen, to_index, promotion_type, whites_turn):
+    fen_list = util.fen_to_list(fen)
+    if whites_turn:
+        fen_list[to_index + 8] = None
+    else:
+        fen_list[to_index - 8] = None
+    fen_list[to_index] = promotion_type
+    fen = util.list_to_fen(fen_list)
+    return fen
+
 def pgn_to_fen(pgn):
     fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
     pgn_dict = pgn_to_dict(pgn)
@@ -229,22 +253,32 @@ def pgn_to_fen(pgn):
     move_list = move_list.split(' ')
     move_list = [m for m in move_list if m[0].isalpha()]
 
-    
     whites_turn = True
     i = 1
     for move in  move_list:
         from_index, to_index = algebraic_to_index(fen, whites_turn, move)
-        fen = update_fen(fen, from_index, to_index) + ' w KQkq - 0 1'
+        # promotion
+        if type(from_index) == str:
+            fen = update_fen_promotion(fen, to_index, from_index, whites_turn)
+            whites_turn = not whites_turn
+            continue
+        fen_list = util.fen_to_list(fen)
         # castling
         if from_index == 60 and to_index == 62:
-            fen = update_fen(fen, 63, 61) + ' w KQkq - 0 1'
+            if fen_list[60] == 'K':
+                fen = update_fen(fen, 63, 61) + ' w KQkq - 0 1'
         if from_index == 60 and to_index == 58:
-            fen = update_fen(fen, 56, 59) + ' w KQkq - 0 1'
+            if fen_list[60] == 'K':
+                fen = update_fen(fen, 56, 59) + ' w KQkq - 0 1'
         if from_index == 4 and to_index == 6:
-            fen = update_fen(fen, 7, 5) + ' w KQkq - 0 1'
+            if fen_list[4] == 'k':
+                fen = update_fen(fen, 7, 5) + ' w KQkq - 0 1'
         if from_index == 4 and to_index == 2:
-            fen = update_fen(fen, 0, 3) + ' w KQkq - 0 1'
+            if fen_list[4] == 'k':
+                fen = update_fen(fen, 0, 3) + ' w KQkq - 0 1'
 
+        fen = update_fen(fen, from_index, to_index) + ' w KQkq - 0 1'
+        
         whites_turn = not whites_turn
 
         i += 1
