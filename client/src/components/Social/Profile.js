@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 
 import moment from 'moment';
 
-import readPGN from '../Util/pngHandler.js'
+import { pgnToObj } from '../Util/pgnFenHandler.js'
 
 import CompletedGames from './CompletedGames.js';
 
@@ -18,7 +18,7 @@ function Profile({ user, profileData, games }) {
     
       const numGames = games.length;
       const wonGames = games.filter(g => {
-          const pgnObj = readPGN(g.pgn);
+          const pgnObj = pgnToObj(g.pgn);
           const isWhite = pgnObj['whiteUsername'] === profileData.username;
           const isBlack = pgnObj['blackUsername'] === profileData.username;
           const whiteWon = pgnObj['result'] === '1-0';

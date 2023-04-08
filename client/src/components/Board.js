@@ -3,21 +3,10 @@ import Draggable from 'react-draggable';
 import Box from '@mui/material/Box';
 
 import piecePngObj from './Util/piecePNGs';
+import { fenToArray } from './Util/pgnFenHandler.js'
 
 const lightSquare = '#c4c4c4';
 const darkSquare = '#005c28';
-
-function fenToArray(fen) {
-  const piecesString = fen.split(' ')[0].replace(/\//g, '');
-  const piecesArrayNums = piecesString.split('');
-  const piecesArray = piecesArrayNums.map(piece => {
-    if (parseInt(piece)) {
-      return [...Array(parseInt(piece)).fill(null)];
-    };
-    return piece;
-  }).flat();
-  return piecesArray;
-}
 
 const fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 const fenArray = fenToArray(fen);

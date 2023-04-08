@@ -2,7 +2,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 
-import readPGN from '../Util/pngHandler.js'
+import { pgnToObj } from '../Util/pgnFenHandler.js'
 
 function CompletedGames({ games }) {
   
@@ -10,7 +10,7 @@ function CompletedGames({ games }) {
     const reversedGames = games.slice().reverse();
     const formattedGames = reversedGames.map(game => {
       
-        const pgnObj = readPGN(game.pgn);
+        const pgnObj = pgnToObj(game.pgn);
 
         const movesRegex = /\d+\./g;
         const moveInts = pgnObj['moveList'].match(movesRegex).map(str => parseInt(str.slice(0,-1)));

@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-function readPGN(pgn) {
+export function pgnToObj(pgn) {
     const pgnObj = {};
 
     const dateRegex = /Date "(.*)"/;
@@ -30,4 +30,14 @@ function readPGN(pgn) {
     return pgnObj;
 }
 
-export default readPGN;
+export function fenToArray(fen) {
+    const piecesString = fen.split(' ')[0].replace(/\//g, '');
+    const piecesArrayNums = piecesString.split('');
+    const piecesArray = piecesArrayNums.map(piece => {
+      if (parseInt(piece)) {
+        return [...Array(parseInt(piece)).fill(null)];
+      };
+      return piece;
+    }).flat();
+    return piecesArray;
+  }

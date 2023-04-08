@@ -4,7 +4,7 @@ import re
 
 from app import app
 from models import db, User, Friendship, Game
-from pgn_handler import read_pgn
+from pgn_fen_handler import pgn_to_dict
 
 from data.users import user_dicts
 from data.friendships import friendship_pairs
@@ -49,7 +49,7 @@ with app.app_context():
     print('Creating games...')
     games = []
     for pgn in pgn_strs:
-        pgn_dict = read_pgn(pgn)
+        pgn_dict = pgn_to_dict(pgn)
 
         white_username = pgn_dict['white_username']
         white_user_id = User.query.filter_by(username=white_username).first().id
@@ -63,7 +63,7 @@ with app.app_context():
             pgn=pgn
         )
         games.append(game)
-    games.sort(key=lambda g: read_pgn(g.pgn)['date'])
+    games.sort(key=lambda g: pgn_to_dict(g.pgn)['date'])
     db.session.add_all(games)
 
     db.session.commit()
