@@ -1,10 +1,17 @@
 import BaseContainer from '../BaseContainer';
 import NavBar from '../NavBar';
-import ActiveGames from '../ActiveGames';
+import GameArea from '../GameArea';
 
-function Play({ playComputer }) {
+function Play({ user, onLogout, onClickPlay, playComputer }) {
     return (
-        <h1>{playComputer ? 'play computer' : 'play friend'}</h1>
+        <BaseContainer>
+            <NavBar 
+              user={user}
+              onLogout={onLogout}
+              onClickPlay={onClickPlay}
+            />
+            <GameArea user={user} staticBoard={false}/>
+        </BaseContainer>
 
     );
 }

@@ -1,8 +1,8 @@
 import Box from '@mui/material/Box';
 
-import Board from '../Board.js';
+import Board from './Board.js';
 
-import guest from '../../assets/profile-image.png';
+import guest from '../assets/profile-image.png';
 
 const length = '75vh';
 
@@ -32,7 +32,7 @@ const playerBox = (username, photo) => {
   );
 };
 
-function GameArea({ user }) {
+function GameArea({ user, staticBoard }) {
     return (
         <Box 
           bgcolor='primary.main' 
@@ -40,7 +40,7 @@ function GameArea({ user }) {
           my='auto'
         >
           {playerBox('Opponent', guest)}
-          <Board length={length}/>
+          <Board length={length} staticBoard={staticBoard}/>
           {playerBox(user.username, user.profile_image)}
         </Box>
     );

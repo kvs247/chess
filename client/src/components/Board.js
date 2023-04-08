@@ -31,11 +31,10 @@ function getInitialPositions() {
 }
 const initialPositions = getInitialPositions();
 
-function Board({ length }) {
+function Board({ length, staticBoard }) {
 
     const [positions, setPositions] = useState(initialPositions);
 
-    const staticBoard = false;
     const squareLength = (window.innerHeight * (length.replace('vh', '') / 100)) / 8;
     const squares = [];
 

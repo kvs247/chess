@@ -1,7 +1,7 @@
 import BaseContainer from '../BaseContainer';
 import NavBar from '../NavBar';
-import ActiveGames from '../ActiveGames';
-import GameArea from './GameArea';
+import ActiveGames from './ActiveGames';
+import GameArea from '../GameArea';
 
 function Home({ user, onLogout, onClickPlay }) {
   return (
@@ -11,7 +11,7 @@ function Home({ user, onLogout, onClickPlay }) {
           onLogout={onLogout} 
           onClickPlay={onClickPlay}
         />
-        <GameArea user={user} />
+        <GameArea user={user} staticBoard={true} />
         <ActiveGames />
       </BaseContainer>
   );

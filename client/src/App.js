@@ -92,7 +92,12 @@ function App() {
             </Route>
 
             <Route path='/play'>
-              <Play playComputer={playComputer}/>
+              <Play 
+                user={user}
+                onLogout={handleLogout}
+                onClickPlay={handleClickPlay}
+                playComputer={playComputer}
+              />
             </Route>
 
             <Route path='/users/:id'>
