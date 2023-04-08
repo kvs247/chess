@@ -43,7 +43,7 @@ function Social({ user, onLogout, onClickPlay }) {
       getUsers();
 
       getGames();
-
+      
     }, []);   
 
     useEffect(() => {
