@@ -2,27 +2,22 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 
-import magnus from '../../assets/carlsen.jpg'
-import hikaru from '../../assets/hikaru.png'
-import nepo from '../../assets/nepo.jpeg'
-import fischer from '../../assets/fischer.jpg'
-
 const users = [
     {
       username: 'Magnus Carlsen',
-      photo: magnus
+      photo: 'magnus'
     },
     {
       username: 'Hikaru Nakamura',
-      photo: hikaru
+      photo: 'hikaru'
     },
     {
       username: 'Ian Nepomniachtchi',
-      photo: nepo
+      photo: 'nepo'
     },
     {
       username: 'Bobby Fischer',
-      photo: fischer
+      photo: 'fischer'
     }
 ]
 
@@ -55,7 +50,7 @@ function ActiveGames() {
                     <Box
                       component='img'
                       alt=''
-                      src={user.photo}
+                      src={''}
                       sx={{
                         width: 50,
                         mr: 2,

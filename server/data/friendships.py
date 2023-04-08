@@ -2,8 +2,6 @@ import random
 
 num_players = 12
 
-print(random.randint(1, num_players))
-
 def get_pair(num_players, friendship_pairs):
     int1 = random.randint(1, num_players)
     int2 = random.randint(1, num_players)

@@ -4,7 +4,7 @@ import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import Login from './components/Auth/Login.js';
 import SignUp from './components/Auth/SignUp.js';
 import Home from './components/Home/Home.js';
-import Play from './components/Play.js';
+import Play from './components/Play/Play.js';
 import Social from './components/Social/Social.js';
 import About from './components/About/About.js';
 
@@ -14,16 +14,37 @@ function App() {
 
     const initialUserState = {};
     const [user, setUser] = useState(initialUserState);
+    const [users, setUsers] = useState([]);
+    const [games, setGames] = useState([]);
     const [playComputer, setPlayComputer] = useState(true);
+
+    const authorize = () => {
+        fetch('/authorized-session')
+        .then(res => {
+          if (res.ok) {
+            res.json().then(user => setUser(user));
+          };
+        });
+    };
+
+    const getUsers = () => {
+        fetch('/users')
+          .then(res => res.json())
+          .then(data => setUsers(data));
+    };
     
+    const getGames = () => {
+        fetch('/games')
+          .then(res => res.json())
+          .then(data => setGames(data));
+    };
+
     useEffect(() => {
-      fetch('/authorized-session')
-      .then(res => {
-        if (res.ok) {
-          res.json().then(user => setUser(user));
-        };
-      });
+      authorize();
+      getUsers();
+      getGames();
     }, []);
+
     
     // route is either '/login' or '/signup'
     const handleLoginSignUp = (event, route) => {
@@ -77,6 +98,8 @@ function App() {
             <Route path='/users/:id'>
               <Social 
                 user={user}
+                users={users}
+                games={games}
                 onLogout={handleLogout}
                 onClickPlay={handleClickPlay}
               />

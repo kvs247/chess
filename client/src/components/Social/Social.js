@@ -7,49 +7,30 @@ import Profile from './Profile';
 import UserList from './UserList';
 import FriendList from './FriendList';
 
-function Social({ user, onLogout, onClickPlay }) {
+function Social({ user, users, games, onLogout, onClickPlay }) {
 
     const { id } = useParams();
 
     const [profileData, setProfileData] = useState({});
-    const [users, setUsers] = useState([]);
     const [friends, setFriends] = useState([]);
-    const [games, setGames] = useState([]);
     const [showFriends, setShowFriends] = useState(true);
 
     const handleClickButton = () => {
         setShowFriends(!showFriends);
     };
-    
-    const getUsers = () => {
-      fetch('/users')
-        .then(res => res.json())
-        .then(data => {
-          const thisPageUser = data.filter(u => u.id == id)[0];
-          setUsers(data);
-          setProfileData(thisPageUser);
-          setFriends(data.filter(u => thisPageUser.friend_ids.includes(u.id)));
-      });
-    };
 
-    const getGames = () => {
-      fetch('/games')
-        .then(res => res.json())
-        .then(data => setGames(data));
+    const updateStates = () => {
+        const thisPageUser = users.filter(u => u.id == id)[0];
+        setProfileData(thisPageUser);
+        setFriends(users.filter(u => thisPageUser.friend_ids.includes(u.id)));
     };
 
     useEffect(() => {
-
-      getUsers();
-
-      getGames();
-      
-    }, []);   
+        updateStates();
+    }, [users]);   
 
     useEffect(() => {
-      const thisPageUser = users.filter(u => u.id == id)[0];
-      setProfileData(thisPageUser);
-      setFriends(users.filter(u => thisPageUser.friend_ids.includes(u.id)));
+      updateStates();
     }, [id]);    
 
     const filteredGames = games.filter(u => {
