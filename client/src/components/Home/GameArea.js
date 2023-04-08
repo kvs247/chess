@@ -4,7 +4,7 @@ import Board from '../Board.js';
 
 import guest from '../../assets/profile-image.png';
 
-const length = '70vh';
+const length = '75vh';
 
 const playerBox = (username, photo) => {
   return (

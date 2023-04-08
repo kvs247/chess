@@ -38,14 +38,20 @@ function Board({ length }) {
             <Box 
               key={i}
               bgcolor={color}
-              width = '100%'
-              height = '100%'
+              sx={{
+                width: "100%",
+                height: "100%",
+                backgroundColor: color,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
               <Box 
                 component='img'
                 src={piecePngObj[`${fenArray[i]}`]}
                 alt=''
-                sx={{ width: '100%' }}
+                sx={{ maxWidth: "100%", maxHeight: "100%" }}
               />
             </Box>
           );
@@ -54,7 +60,6 @@ function Board({ length }) {
     return (
         <Box
           sx={{
-            backgroundColor: 'blue',
             height: length,
             width: length,
             display: 'grid',
