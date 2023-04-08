@@ -63,8 +63,19 @@ def algebraic_to_index(fen, whites_turn, move):
     move = move.replace('+', '')
     move = move.replace('#', '')
     move = move.replace('x', '')
-    
-    # print(move)
+
+    # castling
+    if move == 'O-O':
+        if whites_turn:
+            return 60, 62
+        else:
+            return 4, 6
+    elif move == 'O-O-O':
+        if whites_turn:
+            return 60, 58
+        else:
+            return 4, 2
+
     to_rank = int(move[-1])
     to_file = ord(move[-2]) - 96
     to_index = util.filerank_to_index(to_file, to_rank)
@@ -91,7 +102,7 @@ def algebraic_to_index(fen, whites_turn, move):
                 return to_index - 8, to_index
             elif fen_list[to_index - 16] == 'p':
                 return to_index - 16, to_index
-    print(move)
+
     piece = move[0]
     if not whites_turn:
         piece = piece.lower()
@@ -159,28 +170,58 @@ def pgn_to_fen(pgn):
     for move in  move_list:
         from_index, to_index = algebraic_to_index(fen, whites_turn, move)
         fen = update_fen(fen, from_index, to_index) + ' w KQkq - 0 1'
+        # castling
+        if from_index == 60 and to_index == 62:
+            fen = update_fen(fen, 63, 61) + ' w KQkq - 0 1'
+        if from_index == 60 and to_index == 58:
+            fen = update_fen(fen, 56, 59) + ' w KQkq - 0 1'
+        if from_index == 4 and to_index == 6:
+            fen = update_fen(fen, 7, 5) + ' w KQkq - 0 1'
+        if from_index == 4 and to_index == 2:
+            fen = update_fen(fen, 0, 3) + ' w KQkq - 0 1'
+
         whites_turn = not whites_turn
 
     return fen
 
-pgn = '''[Event "?"]
-[Site "?"]
-[Date "????.??.??"]
-[Round "?"]
-[White "?"]
-[Black "?"]
-[Result "*"]
+# pgn = '''[Event "?"]
+# [Site "?"]
+# [Date "????.??.??"]
+# [Round "?"]
+# [White "?"]
+# [Black "?"]
+# [Result "*"]
 
-1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 b5 5. Bb3 Nf6 6. Qe2 Nxe4 7. Qxe4 Bc5 8.
-Nxe5 Nxe5 9. Qxe5+ Kf8 10. d3 Qg5 11. Bxg5 Bxf2+ 12. Kxf2 Bb7 13. Nc3 Bxg2 14.
-Kxg2 Re8 15. Rhe1 Rxe5 16. Rxe5 d6 17. Rae1 dxe5 18. Rxe5 *'''
+# 1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 b5 5. Bb3 Nf6 6. Qe2 Nxe4 7. Qxe4 Bc5 8.
+# Nxe5 Nxe5 9. Qxe5+ Kf8 10. d3 Qg5 11. Bxg5 Bxf2+ 12. Kxf2 Bb7 13. Nc3 Bxg2 14.
+# Kxg2 Re8 15. Rhe1 Rxe5 16. Rxe5 d6 17. Rae1 dxe5 18. Rxe5 *'''
+
+pgn = '''
+[Event "Ultimate Blitz Challenge"]
+[Site "St. Louis, MO USA"]
+[Date "2016.04.29"]
+[EventDate "2016.04.28"]
+[Round "16.2"]
+[Result "1/2-1/2"]
+[White "SoSneaky"]
+[Black "KasparovKingKiller"]
+[ECO "A41"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "91"]
+
+1. Nf3 g6 2. e4 Bg7 3. d4 d6 4. c4 Bg4 5. Be2 Nc6 6. Nbd2 e5
+7. d5 Nce7 8. O-O Nf6 9. c5 O-O 10. cxd6 cxd6 11. h3 Bd7
+12. Re1 b5 13. Bf1 Nc8 14. b3 Rb8 15. a4 a6 16. axb5 axb5
+17. Ba3 Ne8 18. Bb4 f5 19. Ra6 Bh6 20. exf5 Bxf5 21. g4 Bd7
+22. Ne4 Bf4 23. Bg2 Qe7 24. Qc2 Kh8 25. Qb2 Kg8 26. Qa3 h5
+27. Nxd6 Ncxd6 28. Bxd6 Nxd6 29. Qxd6 Qxd6 30. Rxd6 hxg4
+31. hxg4 e4 32. Rxd7 exf3 33. Bxf3 Bd2 34. Re2 Rxf3 35. Rxd2
+Rxb3 36. d6 Rf3 37. Rc7 b4 38. Kg2 Rff8 39. Re2 Rfd8 40. Re6
+b3 41. Rxg6+ Kh8 42. Rh6+ Kg8 43. Rg6+ Kf8 44. Rh6 Kg8
+45. Rg6+ Kf8 46. Rh6 1/2-1/2
+'''
+
 pgn = '[Event "Ultimate Blitz Challenge"]\n[Site "St. Louis, MO USA"]\n[Date "2016.04.29"]\n[EventDate "2016.04.28"]\n[Round "16.2"]\n[Result "1/2-1/2"]\n[White "SoSneaky"]\n[Black "KasparovKingKiller"]\n[ECO "A41"]\n[WhiteElo "?"]\n[BlackElo "?"]\n[PlyCount "91"]\n\n1. Nf3 g6 2. e4 Bg7 3. d4 d6 4. c4 Bg4 5. Be2 Nc6 6. Nbd2 e5\n7. d5 Nce7 8. O-O Nf6 9. c5 O-O 10. cxd6 cxd6 11. h3 Bd7\n12. Re1 b5 13. Bf1 Nc8 14. b3 Rb8 15. a4 a6 16. axb5 axb5\n17. Ba3 Ne8 18. Bb4 f5 19. Ra6 Bh6 20. exf5 Bxf5 21. g4 Bd7\n22. Ne4 Bf4 23. Bg2 Qe7 24. Qc2 Kh8 25. Qb2 Kg8 26. Qa3 h5\n27. Nxd6 Ncxd6 28. Bxd6 Nxd6 29. Qxd6 Qxd6 30. Rxd6 hxg4\n31. hxg4 e4 32. Rxd7 exf3 33. Bxf3 Bd2 34. Re2 Rxf3 35. Rxd2\nRxb3 36. d6 Rf3 37. Rc7 b4 38. Kg2 Rff8 39. Re2 Rfd8 40. Ree6\nb3 41. Rxg6+ Kh8 42. Rh6+ Kg8 43. Rg6+ Kf8 44. Rh6 Kg8\n45. Rg6+ Kf8 46. Rh6 1/2-1/2'
-
-fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
-# # fen = 'rnbqkbnr/pppppppp/8/8/P6P/R7/1PPPPPP1/RNBQKBN1 w Qkq - 5 5'
-# fen = 'rnbqkbnr/pppppppp/8/8/P6P/R6R/1PPPPPP1/1NBQKBN1 w kq - 5 5'
-
-# x = algebraic_to_index(fen, True, 'Rhe3')
-# print(x)
 
 print(pgn_to_fen(pgn))
