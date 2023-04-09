@@ -1,6 +1,15 @@
 import re
+# import sys
+# import os
 
-import util
+# # add parent dir for running file directly
+# parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+# sys.path.append(parent_dir)
+
+try:
+    import util
+except ImportError:
+    from chess import util
 
 def pgn_to_dict(pgn):
     pgn_dict = {}
@@ -23,8 +32,6 @@ def pgn_to_dict(pgn):
     pgn_dict['move_list'] = move_list
 
     return pgn_dict
-
-
 
 def is_light_square(index):
     file, rank = util.index_to_filerank(index)
@@ -256,10 +263,10 @@ def pgn_to_fen(pgn):
     move_list = [m for m in move_list if m[0].isalpha()]
 
     whites_turn = True
-    castle = 'KQkq'
-    halfmove = 0
-    fullmove = 1
-    enpeasent = '-'
+    castling_rights = 'KQkq'
+    half_move = 0
+    full_move = 1
+    en_passant = '-'
     for move in  move_list:
         # print(fen)
         promotion = False
@@ -281,50 +288,50 @@ def pgn_to_fen(pgn):
         if from_index == 60 and to_index == 62:
             if fen_list[60] == 'K':
                 fen = update_fen(fen, 63, 61)
-                castle = castle.replace('K', '')
-                castle = castle.replace('Q', '')
+                castling_rights = castling_rights.replace('K', '')
+                castling_rights = castling_rights.replace('Q', '')
         if from_index == 60 and to_index == 58:
             if fen_list[60] == 'K':
                 fen = update_fen(fen, 56, 59)
-                castle = castle.replace('K', '')
-                castle = castle.replace('Q', '')
+                castling_rights = castling_rights.replace('K', '')
+                castling_rights = castling_rights.replace('Q', '')
         if from_index == 4 and to_index == 6:
             if fen_list[4] == 'k':
                 fen = update_fen(fen, 7, 5)
-                castle = castle.replace('k', '')
-                castle = castle.replace('q', '')
+                castling_rights = castling_rights.replace('k', '')
+                castling_rights = castling_rights.replace('q', '')
         if from_index == 4 and to_index == 2:
             if fen_list[4] == 'k':
                 fen = update_fen(fen, 0, 3)
-                castle = castle.replace('k', '')
-                castle = castle.replace('q', '')
+                castling_rights = castling_rights.replace('k', '')
+                castling_rights = castling_rights.replace('q', '')
 
         # castling rights   
         if piece == 'K':
-            castle = castle.replace('K', '')
-            castle = castle.replace('Q', '')
+            castling_rights = castling_rights.replace('K', '')
+            castling_rights = castling_rights.replace('Q', '')
         if piece == 'k':
-            castle = castle.replace('k', '')
-            castle = castle.replace('q', '')
+            castling_rights = castling_rights.replace('k', '')
+            castling_rights = castling_rights.replace('q', '')
         if piece == 'R' and from_index == 56:
-            castle = castle.replace('Q', '')
+            castling_rights = castling_rights.replace('Q', '')
         if piece == 'R' and from_index == 63:
-            castle = castle.replace('K', '')
+            castling_rights = castling_rights.replace('K', '')
         if piece == 'r' and from_index == 0:
-            castle = castle.replace('q', '')
+            castling_rights = castling_rights.replace('q', '')
         if piece == 'r' and from_index == 7:
-            castle = castle.replace('k', '')
+            castling_rights = castling_rights.replace('k', '')
 
-        # apply enpeasent
-        if enpeasent != '-':
-            enpeasent_file = ord(enpeasent[0]) - 96
-            enpeasent_rank = int(enpeasent[1])
-            enpeasent_index = util.filerank_to_index(enpeasent_file, enpeasent_rank)
-            if piece == 'P' and to_index == enpeasent_index:
-                fen_list[enpeasent_index + 8] = None
+        # apply en passant
+        if en_passant != '-':
+            en_peasent_file = ord(en_passant[0]) - 96
+            en_peasent_rank = int(en_passant[1])
+            en_peasent_index = util.filerank_to_index(en_peasent_file, en_peasent_rank)
+            if piece == 'P' and to_index == en_peasent_index:
+                fen_list[en_peasent_index + 8] = None
                 fen = util.list_to_fen(fen_list)
-            if piece == 'p' and to_index == enpeasent_index:
-                fen_list[enpeasent_index - 8] = None
+            if piece == 'p' and to_index == en_peasent_index:
+                fen_list[en_peasent_index - 8] = None
                 fen = util.list_to_fen(fen_list)
 
         # update fen
@@ -334,29 +341,29 @@ def pgn_to_fen(pgn):
         whites_turn = not whites_turn
         turn = 'w' if whites_turn else 'b'
         # set castling rights
-        if castle == '':
-            castle = '-'
+        if castling_rights == '':
+            castling_rights = '-'
         # set full move
         if turn == 'w':
-            fullmove += 1
+            full_move += 1
         # set halfmove
         if piece == 'p' or piece == 'P':
-            halfmove = 0
+            half_move = 0
         if target_piece != None:
-            halfmove = 0
-        # set enpeasent
-        enpeasent = '-'
+            half_move = 0
+        # set en passant
+        en_passant = '-'
         if not promotion:
             if piece == 'p' or piece == 'P':
                 if abs(from_index - to_index) == 16 or abs(to_index - from_index) == 16:
                     index = min(from_index, to_index) + 8
                     file, rank = util.index_to_filerank(index)
                     file = chr(file + 96)
-                    enpeasent = f'{file}{rank}'
+                    en_passant = f'{file}{rank}'
 
-        fen += f' {turn} {castle} {enpeasent} {halfmove} {fullmove}' 
+        fen += f' {turn} {castling_rights} {en_passant} {half_move} {full_move}' 
 
-        halfmove += 1
+        half_move += 1
 
     return fen
 

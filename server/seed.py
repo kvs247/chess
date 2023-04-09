@@ -1,10 +1,14 @@
 import glob
 import random
 import re
+import sys
+import os
+
+# sys.path.append('./chess')
 
 from app import app
 from models import db, User, Friendship, Game
-from pgn_fen_handler import pgn_to_dict, pgn_to_fen
+from chess.pgn_to_fen import pgn_to_dict, pgn_to_fen
 
 from data.users import user_dicts
 from data.friendships import friendship_pairs

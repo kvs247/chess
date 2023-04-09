@@ -17,9 +17,9 @@ function getInitialPositions() {
   }
   const initialPositions = getInitialPositions();
   
-  function Board({ length, staticBoard, fen }) {
+  function Board({ length, staticBoard, fen, onMove }) {
     
-    if (!fen) fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+    if (!fen) fen = ' w KQkq - 0 1'
     const fenArray = fenToArray(fen);
 
     const [positions, setPositions] = useState(initialPositions);
@@ -27,11 +27,12 @@ function getInitialPositions() {
     const squareLength = (window.innerHeight * (length.replace('vh', '') / 100)) / 8;
     const squares = [];
 
+    // Draggable handlers
     const onStart = () => {
         setPositions(initialPositions);
     };
 
-    const onStop = (i) => {
+    const onStop = async (i) => {
         const deltaX = positions[i].x;
         const deltaY = positions[i].y;
 
@@ -39,6 +40,8 @@ function getInitialPositions() {
         const toIndex = i + Math.round(deltaX / squareLength) + Math.round(deltaY / squareLength) * 8;
 
         console.log(fromIndex, toIndex);
+        const response = await onMove(fromIndex, toIndex);
+        console.log(response)
     };
 
     const handleDrag = (e, ui, id) => {
@@ -50,7 +53,7 @@ function getInitialPositions() {
       });
     };
 
-
+    // Create board squares
     for (let i = 0; i < 64; i++) {
 
         const row = Math.floor(i / 8);

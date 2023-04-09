@@ -3,6 +3,8 @@ from flask_restful import Resource
 
 from models import User, Game
 from config import app, db, api
+from chess.chess_logic import Chess
+
 
 class Users(Resource):
     def get(self):
@@ -36,6 +38,18 @@ class GameById(Resource):
             return make_response(game.to_dict(), 200)
         except Exception as e:
             return make_response({'error': str(e)}, 404)
+        
+    def patch(self, id):
+        request_data = request.json
+        from_index = request_data['fromIndex']
+        to_index = request_data['toIndex']
+
+        game_data = Game.query.filter_by(id=id).first()
+        chess = Chess(game_data.fen)
+        print(chess.fen_list)
+
+        print(request_data)
+        return make_response({'response': 'maybe idk'}, 200)
 api.add_resource(GameById, '/games/<int:id>')
 
 class Login(Resource):
