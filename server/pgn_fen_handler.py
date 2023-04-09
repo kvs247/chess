@@ -255,9 +255,11 @@ def pgn_to_fen(pgn):
 
     whites_turn = True
     castle = 'KQkq'
-    i = 1
+    halfmove = 0
+    fullmove = 1
     for move in  move_list:
         promotion = False
+        enpeasent = '-'
         from_index, to_index = algebraic_to_index(fen, whites_turn, move)
         # promotion
         if type(from_index) == str:
@@ -266,8 +268,10 @@ def pgn_to_fen(pgn):
         fen_list = util.fen_to_list(fen)
         if not promotion:
             piece = fen_list[from_index]
+            target_piece = fen_list[to_index]
         else:
-            piece = fen_list[to_index]
+            piece = 'P' if whites_turn else 'p'
+            target_piece = None
         # castling  
         if from_index == 60 and to_index == 62:
             if fen_list[60] == 'K':
@@ -310,11 +314,22 @@ def pgn_to_fen(pgn):
         turn = 'w' if whites_turn else 'b'
         if castle == '':
             castle = '-'
-        fen += f' {turn} {castle} - 0 {i}' 
+        if turn == 'b':
+            fullmove += 1
+        if piece == 'p' or piece == 'P':
+            halfmove = 0
+        if target_piece != None:
+            halfmove = 0
+        if piece == 'p' or 'P':
+            if abs(from_index - to_index) == 16 or abs(to_index - from_index) == 16:
+                index = min(from_index, to_index) + 8
+                file, rank = util.index_to_filerank(index)
+                file = chr(file + 96)
+                enpeasent = f'{file}{rank}'
+        fen += f' {turn} {castle} {enpeasent} {halfmove} {fullmove}' 
         print(fen)
         whites_turn = not whites_turn
-
-        i += 1
+        halfmove += 1
 
     return fen
 
@@ -331,6 +346,7 @@ if __name__ == '__main__':
     # Nxe5 Nxe5 9. Qxe5+ Kf8 10. d3 Qg5 11. Bxg5 Bxf2+ 12. Kxf2 Bb7 13. Nc3 Bxg2 14.
     # Kxg2 Re8 15. Rhe1 Rxe5 16. Rxe5 d6 17. Rae1 dxe5 18. Rxe5 *'''
 
-    pgn = '[Event "?"]\n[Site "?"]\n[Date "????.??.??"]\n[Round "?"]\n[White "?"]\n[Black "?"]\n[Result "*"]\n\n1. a4 a5 2. b4 axb4 3. a5 Ra6 4. Na3 Rh6 5. a6 b3 6. a7 b2 7. a8=Q b1=Q 8. Bb2 *'
+    pgn = '[Event \"?\"]\n[Site \"?\"]\n[Date \"????.??.??\"]\n[Round \"?\"]\n[White \"?\"]\n[Black \"?\"]\n[Result \"*\"]\n\n1. a4 e5 2. a5 b5 3. axb6 e4 4. f4 exf3 *'
    
     x = pgn_to_fen(pgn)
+    print('\n', x)
