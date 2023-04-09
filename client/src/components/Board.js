@@ -39,8 +39,17 @@ function getInitialPositions() {
         const fromIndex = i;
         const toIndex = i + Math.round(deltaX / squareLength) + Math.round(deltaY / squareLength) * 8;
 
-        console.log(fromIndex, toIndex);
         const response = await onMove(fromIndex, toIndex);
+        if (response !== fen) {
+            console.log('valid')
+        } else {
+            console.log('invalid')
+            setPositions((positions) => {
+                const newPositions = { ...positions };
+                newPositions[i] = { x: 0, y: 0 };
+                return newPositions
+            });
+        };
         console.log(response)
     };
 
@@ -90,6 +99,7 @@ function getInitialPositions() {
                   onStart={onStart}
                   onStop={() => onStop(i)}
                   onDrag={(e, ui) => handleDrag(e, ui, i)}
+                  position={positions[i]}
                 >
                   {pieceImg}
                 </Draggable>

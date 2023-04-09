@@ -8,7 +8,18 @@ class Chess:
 
     def move(self, from_index, to_index):
         piece = self.fen_list[from_index]
-        color = 'w' if piece.isupper() else 'b'
+        color = self.fen.split(' ')[1]
+
+        # correct color
+        print('color', color)
+        print('piece', piece)
+        if color == 'w' and piece.islower():
+            return None
+        print('color==b', color == 'b')
+        print('piece.isupper()', piece.isupper())
+        if color == 'b' and piece.isupper():
+            print('fire')
+            return None
 
         # knight
         if piece.upper() == 'N':

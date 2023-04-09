@@ -36,18 +36,18 @@ const playerBox = (username, photo) => {
 function GameArea({ user, staticBoard, gameId }) {
 
     const handleMove = async (fromIndex, toIndex) => {
-        const responseFen = await fetch(`/games/${gameId}`, {
+        const response = await fetch(`/games/${gameId}`, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({ fromIndex, toIndex })
-          })
-          .then(res => res.json())    
+          }) 
+          .then(res => res.json())
         
         setRerender(true)
 
-        return responseFen;
+        return response;
     };
 
     const [rerender, setRerender] = useState(false);

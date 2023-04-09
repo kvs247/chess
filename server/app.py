@@ -48,18 +48,17 @@ class GameById(Resource):
         chess = Chess(game.fen)
 
         move = chess.move(from_index, to_index)
+        print('move', move)
         
         if move:
-            print(game.pgn)
             new_pgn = game.pgn[:-1] + move + ' ' + game.pgn[-1]
-            print(new_pgn)
             game.pgn = new_pgn
             game.fen = pgn_to_fen(new_pgn)
             db.session.add(game)
             db.session.commit()
-            return make_response({}, 200)
+        
+        return make_response(jsonify(game.fen), 200)
 
-        return make_response({'response': 'maybe idk'}, 200)
 api.add_resource(GameById, '/games/<int:id>')
 
 class Login(Resource):
