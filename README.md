@@ -4,7 +4,6 @@
 - error messages at login/signup (formik?)
 - add white/black king icons to Completed Games section
 - fix drag and drop positioning
-- sort users by date joined in db
 
 ## things i could do
 - improve "Don't have an account?" text on Login page - currently jumps to two lines often

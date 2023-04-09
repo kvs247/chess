@@ -259,6 +259,7 @@ def pgn_to_fen(pgn):
     fullmove = 1
     enpeasent = '-'
     for move in  move_list:
+        # print(fen)
         promotion = False
         from_index, to_index = algebraic_to_index(fen, whites_turn, move)
 
@@ -328,12 +329,13 @@ def pgn_to_fen(pgn):
         if not promotion:
             fen = update_fen(fen, from_index, to_index)
         # set player turn
+        whites_turn = not whites_turn
         turn = 'w' if whites_turn else 'b'
         # set castling rights
         if castle == '':
             castle = '-'
         # set full move
-        if turn == 'b':
+        if turn == 'w':
             fullmove += 1
         # set halfmove
         if piece == 'p' or piece == 'P':
@@ -343,7 +345,7 @@ def pgn_to_fen(pgn):
         # set enpeasent
         enpeasent = '-'
         if not promotion:
-            if piece == 'p' or 'P':
+            if piece == 'p' or piece == 'P':
                 if abs(from_index - to_index) == 16 or abs(to_index - from_index) == 16:
                     index = min(from_index, to_index) + 8
                     file, rank = util.index_to_filerank(index)
@@ -351,7 +353,6 @@ def pgn_to_fen(pgn):
                     enpeasent = f'{file}{rank}'
 
         fen += f' {turn} {castle} {enpeasent} {halfmove} {fullmove}' 
-        whites_turn = not whites_turn
 
         halfmove += 1
 
@@ -370,7 +371,7 @@ if __name__ == '__main__':
     # Nxe5 Nxe5 9. Qxe5+ Kf8 10. d3 Qg5 11. Bxg5 Bxf2+ 12. Kxf2 Bb7 13. Nc3 Bxg2 14.
     # Kxg2 Re8 15. Rhe1 Rxe5 16. Rxe5 d6 17. Rae1 dxe5 18. Rxe5 *'''
 
-    pgn = '[Event \"St. Louis Rapid & Blitz (Blitz)\"]\n[Site \"St Louis, MO USA\"]\n[Date \"2017.08.17\"]\n[EventDate \"2017.08.13\"]\n[Round \"7\"]\n[Result \"0-1\"]\n[White \"Garry Kasparov\"]\n[Black \"Levon Aronian\"]\n[ECO \"E32\"]\n[WhiteElo \"2812\"]\n[BlackElo \"2799\"]\n[PlyCount \"72\"]\n\n1. d4 Nf6 2. c4 e6 3. Nc3 Bb4 4. Qc2 O-O 5. a3 Bxc3+ 6. Qxc3\nd5 7. Nf3 dxc4 8. Qxc4 b6 9. h4 Bb7 10. Bg5 Qd5 11. Rc1 Nbd7\n12. Qxd5 Bxd5 13. Ne5 c5 14. Bxf6 Nxf6 15. dxc5 bxc5 16. f3\nRab8 17. e4 Ba2 18. Rc2 Bb1 19. Rd2 Rfd8 20. Rxd8+ Rxd8\n21. Bb5 Nh5 22. g4 Nf4 23. Kf2 f6 24. Nc6 Rd2+ 25. Ke3 Rxb2\n26. Kxf4 Rxb5 27. Rd1 h6 28. h5 Rb3 29. e5 Bd3 30. a4 c4\n31. Nxa7 Ra3 32. Nb5 Rxa4 33. Ke3 fxe5 34. Nd6 Ra3 35. Kf2 Kf8\n36. Nb5 Rb3 0-1'
-   
+    pgn = '[Event \"Reykjavik Rapid\"]\n[Site \"Reykjavik ISL\"]\n[Date \"2004.03.18\"]\n[EventDate \"2004.03.17\"]\n[Round \"1.2\"]\n[Result \"1-0\"]\n[White \"KasparovKingKiller\"]\n[Black \"DrDrunkenstein\"]\n[ECO \"E92\"]\n[WhiteElo \"2831\"]\n[BlackElo \"2484\"]\n[PlyCount \"63\"]\n\n1. c4 Nf6 2. Nc3 g6 3. e4 d6 4. d4 Bg7 5. Nf3 O-O 6. Be2 e5\n7. Be3 exd4 8. Nxd4 c6 9. f3 Re8 10. Bf2 d5 11. exd5 cxd5\n12. c5 Nc6 13. O-O Nh5 14. Qd2 Be5 15. g3 Bh3 16. Rfe1 Ng7\n17. Rad1 Rc8 18. Ndb5 a6 19. Nd6 Bxd6 20. cxd6 d4 21. Ne4 Bf5\n22. d7 Bxd7 23. Bxd4 Nxd4 24. Qxd4 Nf5 25. Qxd7 Qb6+ 26. Kh1\nRed8 27. Qa4 Rxd1 28. Qxd1 Qxb2 29. Qb1 Rc2 30. Qxb2 Rxb2\n31. Bc4 Nd4 32. Re3 1-0'   
     x = pgn_to_fen(pgn)
+    print('final position:')
     print(x)
