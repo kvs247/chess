@@ -257,10 +257,11 @@ def pgn_to_fen(pgn):
     castle = 'KQkq'
     halfmove = 0
     fullmove = 1
+    enpeasent = '-'
     for move in  move_list:
         promotion = False
-        enpeasent = '-'
         from_index, to_index = algebraic_to_index(fen, whites_turn, move)
+
         # promotion
         if type(from_index) == str:
             fen = update_fen_promotion(fen, to_index, from_index, whites_turn)
@@ -272,6 +273,7 @@ def pgn_to_fen(pgn):
         else:
             piece = 'P' if whites_turn else 'p'
             target_piece = None
+
         # castling  
         if from_index == 60 and to_index == 62:
             if fen_list[60] == 'K':
@@ -293,6 +295,7 @@ def pgn_to_fen(pgn):
                 fen = update_fen(fen, 0, 3)
                 castle = castle.replace('k', '')
                 castle = castle.replace('q', '')
+
         # castling rights   
         if piece == 'K':
             castle = castle.replace('K', '')
@@ -308,27 +311,47 @@ def pgn_to_fen(pgn):
             castle = castle.replace('q', '')
         if piece == 'r' and from_index == 7:
             castle = castle.replace('k', '')
+
+        # apply enpeasent
+        if enpeasent != '-':
+            enpeasent_file = ord(enpeasent[0]) - 96
+            enpeasent_rank = int(enpeasent[1])
+            enpeasent_index = util.filerank_to_index(enpeasent_file, enpeasent_rank)
+            if piece == 'P' and to_index == enpeasent_index:
+                fen_list[enpeasent_index + 8] = None
+                fen = util.list_to_fen(fen_list)
+            if piece == 'p' and to_index == enpeasent_index:
+                fen_list[enpeasent_index - 8] = None
+                fen = util.list_to_fen(fen_list)
+
         # update fen
         if not promotion:
             fen = update_fen(fen, from_index, to_index)
+        # set player turn
         turn = 'w' if whites_turn else 'b'
+        # set castling rights
         if castle == '':
             castle = '-'
+        # set full move
         if turn == 'b':
             fullmove += 1
+        # set halfmove
         if piece == 'p' or piece == 'P':
             halfmove = 0
         if target_piece != None:
             halfmove = 0
+        # set enpeasent
+        enpeasent = '-'
         if piece == 'p' or 'P':
             if abs(from_index - to_index) == 16 or abs(to_index - from_index) == 16:
                 index = min(from_index, to_index) + 8
                 file, rank = util.index_to_filerank(index)
                 file = chr(file + 96)
                 enpeasent = f'{file}{rank}'
+
         fen += f' {turn} {castle} {enpeasent} {halfmove} {fullmove}' 
-        print(fen)
         whites_turn = not whites_turn
+
         halfmove += 1
 
     return fen
@@ -346,7 +369,8 @@ if __name__ == '__main__':
     # Nxe5 Nxe5 9. Qxe5+ Kf8 10. d3 Qg5 11. Bxg5 Bxf2+ 12. Kxf2 Bb7 13. Nc3 Bxg2 14.
     # Kxg2 Re8 15. Rhe1 Rxe5 16. Rxe5 d6 17. Rae1 dxe5 18. Rxe5 *'''
 
-    pgn = '[Event \"?\"]\n[Site \"?\"]\n[Date \"????.??.??\"]\n[Round \"?\"]\n[White \"?\"]\n[Black \"?\"]\n[Result \"*\"]\n\n1. a4 e5 2. a5 b5 3. axb6 e4 4. f4 exf3 *'
+    pgn = '[Event \"?\"]\n[Site \"?\"]\n[Date \"????.??.??\"]\n[Round \"?\"]\n[White \"?\"]\n[Black \"?\"]\n[Result \"*\"]\n\n1. Nh3 d5 2. Ng1 d4 3. e4 dxe3 *'
    
     x = pgn_to_fen(pgn)
-    print('\n', x)
+    print('\n')
+    print(x)
