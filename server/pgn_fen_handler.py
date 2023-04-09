@@ -254,31 +254,64 @@ def pgn_to_fen(pgn):
     move_list = [m for m in move_list if m[0].isalpha()]
 
     whites_turn = True
+    castle = 'KQkq'
     i = 1
     for move in  move_list:
+        promotion = False
         from_index, to_index = algebraic_to_index(fen, whites_turn, move)
         # promotion
         if type(from_index) == str:
             fen = update_fen_promotion(fen, to_index, from_index, whites_turn)
-            whites_turn = not whites_turn
-            continue
+            promotion = True
         fen_list = util.fen_to_list(fen)
-        # castling
+        if not promotion:
+            piece = fen_list[from_index]
+        else:
+            piece = fen_list[to_index]
+        # castling  
         if from_index == 60 and to_index == 62:
             if fen_list[60] == 'K':
-                fen = update_fen(fen, 63, 61) + ' w KQkq - 0 1'
+                fen = update_fen(fen, 63, 61)
+                castle = castle.replace('K', '')
+                castle = castle.replace('Q', '')
         if from_index == 60 and to_index == 58:
             if fen_list[60] == 'K':
-                fen = update_fen(fen, 56, 59) + ' w KQkq - 0 1'
+                fen = update_fen(fen, 56, 59)
+                castle = castle.replace('K', '')
+                castle = castle.replace('Q', '')
         if from_index == 4 and to_index == 6:
             if fen_list[4] == 'k':
-                fen = update_fen(fen, 7, 5) + ' w KQkq - 0 1'
+                fen = update_fen(fen, 7, 5)
+                castle = castle.replace('k', '')
+                castle = castle.replace('q', '')
         if from_index == 4 and to_index == 2:
             if fen_list[4] == 'k':
-                fen = update_fen(fen, 0, 3) + ' w KQkq - 0 1'
-
-        fen = update_fen(fen, from_index, to_index) + ' w KQkq - 0 1'
-        
+                fen = update_fen(fen, 0, 3)
+                castle = castle.replace('k', '')
+                castle = castle.replace('q', '')
+        # castling rights   
+        if piece == 'K':
+            castle = castle.replace('K', '')
+            castle = castle.replace('Q', '')
+        if piece == 'k':
+            castle = castle.replace('k', '')
+            castle = castle.replace('q', '')
+        if piece == 'R' and from_index == 56:
+            castle = castle.replace('Q', '')
+        if piece == 'R' and from_index == 63:
+            castle = castle.replace('K', '')
+        if piece == 'r' and from_index == 0:
+            castle = castle.replace('q', '')
+        if piece == 'r' and from_index == 7:
+            castle = castle.replace('k', '')
+        # update fen
+        if not promotion:
+            fen = update_fen(fen, from_index, to_index)
+        turn = 'w' if whites_turn else 'b'
+        if castle == '':
+            castle = '-'
+        fen += f' {turn} {castle} - 0 {i}' 
+        print(fen)
         whites_turn = not whites_turn
 
         i += 1
@@ -298,26 +331,6 @@ if __name__ == '__main__':
     # Nxe5 Nxe5 9. Qxe5+ Kf8 10. d3 Qg5 11. Bxg5 Bxf2+ 12. Kxf2 Bb7 13. Nc3 Bxg2 14.
     # Kxg2 Re8 15. Rhe1 Rxe5 16. Rxe5 d6 17. Rae1 dxe5 18. Rxe5 *'''
 
-    pgn = '''[Event "Kasparov - Anand PCA World Championship Match"]
-    [Site "New York, NY USA"]
-    [Date "1995.09.19"]
-    [EventDate "?"]
-    [Round "6"]
-    [Result "1/2-1/2"]
-    [White "KasparovKingKiller"]
-    [Black "Vishy"]
-    [ECO "C80"]
-    [WhiteElo "?"]
-    [BlackElo "?"]
-    [PlyCount "55"]
-
-    1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.O-O Nxe4 6.d4 b5 7.Bb3
-    d5 8.dxe5 Be6 9.Nbd2 Nc5 10.c3 d4 11.Ng5 dxc3 12.Nxe6 fxe6
-    13.bxc3 Qd3 14.Nf3 O-O-O 15.Qe1 Nxb3 16.axb3 Kb7 17.Be3 Be7
-    18.Bg5 h6 19.Bxe7 Nxe7 20.Nd4 Rxd4 21.cxd4 Qxb3 22.Qe3 Qxe3
-    23.fxe3 Nd5 24.Kf2 Kb6 25.Ke2 a5 26.Rf7 a4 27.Kd2 c5 28.e4
-    1/2-1/2'''
-
-    pgn = '[Event "Reykjavik Rapid"]\n[Site "Reykjavik ISL"]\n[Date "2004.03.18"]\n[EventDate "2004.03.17"]\n[Round "1.2"]\n[Result "1-0"]\n[White "KasparovKingKiller"]\n[Black "DrDrunkenstein"]\n[ECO "E92"]\n[WhiteElo "2831"]\n[BlackElo "2484"]\n[PlyCount "63"]\n\n1. c4 Nf6 2. Nc3 g6 3. e4 d6 4. d4 Bg7 5. Nf3 O-O 6. Be2 e5\n7. Be3 exd4 8. Nxd4 c6 9. f3 Re8 10. Bf2 d5 11. exd5 cxd5\n12. c5 Nc6 13. O-O Nh5 14. Qd2 Be5 15. g3 Bh3 16. Rfe1 Ng7\n17. Rad1 Rc8 18. Ndb5 a6 19. Nd6 Bxd6 20. cxd6 d4\n21. Ne4 Bf5 22. d7 Bxd7 23. Bxd4 Nxd4 24. Qxd4 Nf5\n25. Qxd7 Qb6+ 26. Kh1 Red8 27. Qa4 Rxd1 28. Qxd1 Qxb2\n29. Qb1 Rc2 30. Qxb2 Rxb2\n31. Bc4 Nd4 32. Re3 1-0'
-
-    print(pgn_to_fen(pgn))
+    pgn = '[Event "?"]\n[Site "?"]\n[Date "????.??.??"]\n[Round "?"]\n[White "?"]\n[Black "?"]\n[Result "*"]\n\n1. a4 a5 2. b4 axb4 3. a5 Ra6 4. Na3 Rh6 5. a6 b3 6. a7 b2 7. a8=Q b1=Q 8. Bb2 *'
+   
+    x = pgn_to_fen(pgn)
