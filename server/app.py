@@ -46,9 +46,12 @@ class GameById(Resource):
 
         game_data = Game.query.filter_by(id=id).first()
         chess = Chess(game_data.fen)
-        print(chess.fen_list)
+        
+        if chess.is_legal_move(from_index, to_index):
+            pass
 
-        print(request_data)
+
+
         return make_response({'response': 'maybe idk'}, 200)
 api.add_resource(GameById, '/games/<int:id>')
 

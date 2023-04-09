@@ -41,3 +41,4 @@ def list_to_fen(pieces_list):
         fen = re.sub(pattern, str(i), fen)
 
     return fen
+

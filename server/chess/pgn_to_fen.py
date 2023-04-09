@@ -1,15 +1,9 @@
 import re
-# import sys
-# import os
-
-# # add parent dir for running file directly
-# parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-# sys.path.append(parent_dir)
 
 try:
-    import util
-except ImportError:
     from chess import util
+except ImportError:
+    import util # for testing
 
 def pgn_to_dict(pgn):
     pgn_dict = {}
