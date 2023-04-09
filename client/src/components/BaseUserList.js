@@ -6,29 +6,32 @@ import { TextField } from '@mui/material';
 
 function BaseUserList({ children, users }) {
 
+  
     const history = useHistory();
-
+    
     const [filteredUsers, setFilteredUsers] = useState([]);
 
     useEffect(() => {
-        setFilteredUsers(users);
+      setFilteredUsers(users);
     }, [users]);
-
+    
     const handleClickUser = (user) => {
-        history.push(`/users/${user.id}`);
+      history.push(`/users/${user.id}`);
     };
-
+    
     // search functionality
     const handleChange = (event) => {
-        const search = event.target.value.toLowerCase();
-        console.log(search)
-        setFilteredUsers(users.filter(user => {
-            const usernameBoolean = user.username.toLowerCase().includes(search);
-            const fullNameBoolean = user.full_name.toLowerCase().includes(search);
-            const emailBoolean = user.email.toLowerCase().includes(search);
-            return usernameBoolean || fullNameBoolean || emailBoolean;
-        }));
+      const search = event.target.value.toLowerCase();
+      console.log(search)
+      setFilteredUsers(users.filter(user => {
+        const usernameBoolean = user.username.toLowerCase().includes(search);
+        const fullNameBoolean = user.full_name.toLowerCase().includes(search);
+        const emailBoolean = user.email.toLowerCase().includes(search);
+        return usernameBoolean || fullNameBoolean || emailBoolean;
+      }));
     };
+  
+  users.sort((a, b) => a.username.localeCompare(b.username));
 
     return (
         <Box 
