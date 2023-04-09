@@ -31,7 +31,7 @@ function BaseUserList({ children, users }) {
       }));
     };
   
-  users.sort((a, b) => a.username.localeCompare(b.username));
+    users.sort((a, b) => a.username.localeCompare(b.username));
 
     return (
         <Box 

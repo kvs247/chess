@@ -250,6 +250,8 @@ def pgn_to_fen(pgn):
     fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
     pgn_dict = pgn_to_dict(pgn)
     move_list = pgn_dict['move_list']
+    if not move_list:
+        return fen
     move_list = move_list.split(' ')
     move_list = [m for m in move_list if m[0].isalpha()]
 
@@ -371,7 +373,7 @@ if __name__ == '__main__':
     # Nxe5 Nxe5 9. Qxe5+ Kf8 10. d3 Qg5 11. Bxg5 Bxf2+ 12. Kxf2 Bb7 13. Nc3 Bxg2 14.
     # Kxg2 Re8 15. Rhe1 Rxe5 16. Rxe5 d6 17. Rae1 dxe5 18. Rxe5 *'''
 
-    pgn = '[Event \"Reykjavik Rapid\"]\n[Site \"Reykjavik ISL\"]\n[Date \"2004.03.18\"]\n[EventDate \"2004.03.17\"]\n[Round \"1.2\"]\n[Result \"1-0\"]\n[White \"KasparovKingKiller\"]\n[Black \"DrDrunkenstein\"]\n[ECO \"E92\"]\n[WhiteElo \"2831\"]\n[BlackElo \"2484\"]\n[PlyCount \"63\"]\n\n1. c4 Nf6 2. Nc3 g6 3. e4 d6 4. d4 Bg7 5. Nf3 O-O 6. Be2 e5\n7. Be3 exd4 8. Nxd4 c6 9. f3 Re8 10. Bf2 d5 11. exd5 cxd5\n12. c5 Nc6 13. O-O Nh5 14. Qd2 Be5 15. g3 Bh3 16. Rfe1 Ng7\n17. Rad1 Rc8 18. Ndb5 a6 19. Nd6 Bxd6 20. cxd6 d4 21. Ne4 Bf5\n22. d7 Bxd7 23. Bxd4 Nxd4 24. Qxd4 Nf5 25. Qxd7 Qb6+ 26. Kh1\nRed8 27. Qa4 Rxd1 28. Qxd1 Qxb2 29. Qb1 Rc2 30. Qxb2 Rxb2\n31. Bc4 Nd4 32. Re3 1-0'   
+    pgn = '[Event \"Reykjavik Rapid\"]\n[Site \"Reykjavik ISL\"]\n[Date \"2004.03.18\"]\n[EventDate \"2004.03.17\"]\n[Round \"1.2\"]\n[Result \"1-0\"]\n[White \"KasparovKingKiller\"]\n[Black \"DrDrunkenstein\"]\n[ECO \"E92\"]\n[WhiteElo \"2831\"]\n[BlackElo \"2484\"]\n[PlyCount \"63\"]\n\n'   
     x = pgn_to_fen(pgn)
     print('final position:')
     print(x)

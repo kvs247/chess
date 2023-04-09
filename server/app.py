@@ -29,6 +29,15 @@ class Games(Resource):
         )
 api.add_resource(Games, '/games')
 
+class GameById(Resource):
+    def get(self, id):
+        try:
+            game = Game.query.filter_by(id=id).first()
+            return make_response(game.to_dict(), 200)
+        except Exception as e:
+            return make_response({'error': str(e)}, 404)
+api.add_resource(GameById, '/games/<int:id>')
+
 class Login(Resource):
     def post(self):
         data = request.json

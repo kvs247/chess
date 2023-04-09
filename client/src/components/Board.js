@@ -8,19 +8,19 @@ import { fenToArray } from './Util/pgnFenHandler.js'
 const lightSquare = '#c4c4c4';
 const darkSquare = '#005c28';
 
-const fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
-const fenArray = fenToArray(fen);
-
 function getInitialPositions() {
-    const positions = {};
+  const positions = {};
     for (let i = 0; i < 64; i++) {
-        positions[i] = { x: 0, y: 0 };
+      positions[i] = { x: 0, y: 0 };
     };
     return positions;
-}
-const initialPositions = getInitialPositions();
-
-function Board({ length, staticBoard }) {
+  }
+  const initialPositions = getInitialPositions();
+  
+  function Board({ length, staticBoard, fen }) {
+    
+    if (!fen) fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+    const fenArray = fenToArray(fen);
 
     const [positions, setPositions] = useState(initialPositions);
 

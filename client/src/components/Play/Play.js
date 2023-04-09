@@ -1,8 +1,13 @@
+import { useParams } from 'react-router-dom';
+
 import BaseContainer from '../BaseContainer';
 import NavBar from '../NavBar';
 import GameArea from '../GameArea';
 
 function Play({ user, onLogout, onClickPlay, playComputer }) {
+
+    const { id } = useParams();
+
     return (
         <BaseContainer>
             <NavBar 
@@ -10,7 +15,11 @@ function Play({ user, onLogout, onClickPlay, playComputer }) {
               onLogout={onLogout}
               onClickPlay={onClickPlay}
             />
-            <GameArea user={user} staticBoard={false}/>
+            <GameArea 
+              user={user} 
+              staticBoard={false}
+              gameId={id}
+            />
         </BaseContainer>
 
     );

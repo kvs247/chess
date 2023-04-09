@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 
 import Board from './Board.js';
@@ -32,7 +33,20 @@ const playerBox = (username, photo) => {
   );
 };
 
-function GameArea({ user, staticBoard }) {
+function GameArea({ user, staticBoard, gameId }) {
+
+    const [fen, setFen] = useState(null);
+
+    const getGameData = () => {
+        fetch(`/games/${gameId}`)
+          .then(res => res.json())
+          .then(data => setFen(data.fen));
+    };
+
+    useEffect(() => {
+        getGameData();
+    }, [gameId])
+
     return (
         <Box 
           bgcolor='primary.main' 
@@ -40,7 +54,11 @@ function GameArea({ user, staticBoard }) {
           my='auto'
         >
           {playerBox('Opponent', guest)}
-          <Board length={length} staticBoard={staticBoard}/>
+          <Board 
+            length={length} 
+            staticBoard={staticBoard}
+            fen={fen}
+          />
           {playerBox(user.username, user.profile_image)}
         </Box>
     );
