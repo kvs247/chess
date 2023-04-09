@@ -4,7 +4,7 @@ from flask_restful import Resource
 from models import User, Game
 from config import app, db, api
 from chess.chess_logic import Chess
-
+from chess.pgn_to_fen import pgn_to_fen
 
 class Users(Resource):
     def get(self):
@@ -44,13 +44,20 @@ class GameById(Resource):
         from_index = request_data['fromIndex']
         to_index = request_data['toIndex']
 
-        game_data = Game.query.filter_by(id=id).first()
-        chess = Chess(game_data.fen)
+        game = Game.query.filter_by(id=id).first()
+        chess = Chess(game.fen)
+
+        move = chess.move(from_index, to_index)
         
-        if chess.is_legal_move(from_index, to_index):
-            pass
-
-
+        if move:
+            print(game.pgn)
+            new_pgn = game.pgn[:-1] + move + ' ' + game.pgn[-1]
+            print(new_pgn)
+            game.pgn = new_pgn
+            game.fen = pgn_to_fen(new_pgn)
+            db.session.add(game)
+            db.session.commit()
+            return make_response({}, 200)
 
         return make_response({'response': 'maybe idk'}, 200)
 api.add_resource(GameById, '/games/<int:id>')

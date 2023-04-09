@@ -61,6 +61,7 @@ def pgn_to_fen(pgn):
     en_passant = '-'
     for move in  move_list:
         # print(fen)
+        # print(move)
         promotion = False
         from_index, to_index = util.algebraic_to_index(fen, whites_turn, move)
 
@@ -172,7 +173,8 @@ if __name__ == '__main__':
     # Nxe5 Nxe5 9. Qxe5+ Kf8 10. d3 Qg5 11. Bxg5 Bxf2+ 12. Kxf2 Bb7 13. Nc3 Bxg2 14.
     # Kxg2 Re8 15. Rhe1 Rxe5 16. Rxe5 d6 17. Rae1 dxe5 18. Rxe5 *'''
 
-    pgn = '[Event \"Reykjavik Rapid\"]\n[Site \"Reykjavik ISL\"]\n[Date \"2004.03.18\"]\n[EventDate \"2004.03.17\"]\n[Round \"1.2\"]\n[Result \"1-0\"]\n[White \"KasparovKingKiller\"]\n[Black \"DrDrunkenstein\"]\n[ECO \"E92\"]\n[WhiteElo \"2831\"]\n[BlackElo \"2484\"]\n[PlyCount \"63\"]\n\n'   
+    pgn = '[Event \"Let\\\\\'s Play!\"]\n[Site \"Chess.com\"]\n[Date \"2023.03.27\"]\n[Round \"?\"]\n[White \"Kye_Schnei\"]\n[Black \"topherLud\"]\n[Result \"*\"]\n[ECO \"C42\"]\n[WhiteElo \"1098\"]\n[BlackElo \"381\"]\n[TimeControl \"1/86400\"]\n\n1. e4 e5 2. Nf3 Nf6 3. Nxe5 Bd6 4. Nf3 O-O 5. d4 Nxe4 6. Bd3 Qh4 7. Nxh4 f5 8.\nQf3 Nc6 9. O-O Nxd4 10. Qe3 g5 11. Bxe4 gxh4 12. Bd5+ Ne6 13. Nc3 f4 14. Qe4 c6\n15. Bc4 b5 16. Bxe6+ dxe6 17. Qxc6 Rb8 18. Qxd6 Rb6 19. Qe5 Rf5 20. Qd4 h3 21. Ne2 *'   
+    # pgn = '[Event \"Let\\\\\'s Play!\"]\n[Site \"Chess.com\"]\n[Date \"2023.03.27\"]\n[Round \"?\"]\n[White \"Kye_Schnei\"]\n[Black \"topherLud\"]\n[Result \"*\"]\n[ECO \"C42\"]\n[WhiteElo \"1098\"]\n[BlackElo \"381\"]\n[TimeControl \"1/86400\"]\n\n1. e4 e5 2. Nf3 Nf6 3. Nxe5 Bd6 4. Nf3 O-O 5. d4 Nxe4 6. Bd3 Qh4 7. Nxh4 f5 8.\nQf3 Nc6 9. O-O Nxd4 10. Qe3 g5 11. Bxe4 gxh4 12. Bd5+ Ne6 13. Nc3 f4 14. Qe4 c6\n15. Bc4 b5 16. Bxe6+ dxe6 17. Qxc6 Rb8 18. Qxd6 Rb6 19. Qe5 Rf5 20. Qd4 *'
     x = pgn_to_fen(pgn)
     print('final position:')
     print(x)

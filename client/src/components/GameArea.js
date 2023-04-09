@@ -45,9 +45,12 @@ function GameArea({ user, staticBoard, gameId }) {
           })
           .then(res => res.json())    
         
+        setRerender(true)
+
         return responseFen;
     };
 
+    const [rerender, setRerender] = useState(false);
     const [fen, setFen] = useState(null);
 
     const getGameData = () => {
@@ -56,10 +59,10 @@ function GameArea({ user, staticBoard, gameId }) {
           .then(data => setFen(data.fen));
     };
 
-
     useEffect(() => {
         getGameData();
-    }, [gameId])
+        setRerender(false);
+    }, [gameId, rerender])
 
     return (
         <Box 
