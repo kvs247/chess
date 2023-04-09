@@ -35,7 +35,7 @@ with app.app_context():
     users = []
     for user in user_dicts:
         users.append(make_user(user))
-    random.shuffle(users)
+    users.sort(key=lambda u: u.date_joined)
     db.session.add_all(users)
 
     # Create friendships
