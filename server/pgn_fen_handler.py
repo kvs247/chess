@@ -342,12 +342,13 @@ def pgn_to_fen(pgn):
             halfmove = 0
         # set enpeasent
         enpeasent = '-'
-        if piece == 'p' or 'P':
-            if abs(from_index - to_index) == 16 or abs(to_index - from_index) == 16:
-                index = min(from_index, to_index) + 8
-                file, rank = util.index_to_filerank(index)
-                file = chr(file + 96)
-                enpeasent = f'{file}{rank}'
+        if not promotion:
+            if piece == 'p' or 'P':
+                if abs(from_index - to_index) == 16 or abs(to_index - from_index) == 16:
+                    index = min(from_index, to_index) + 8
+                    file, rank = util.index_to_filerank(index)
+                    file = chr(file + 96)
+                    enpeasent = f'{file}{rank}'
 
         fen += f' {turn} {castle} {enpeasent} {halfmove} {fullmove}' 
         whites_turn = not whites_turn
@@ -369,8 +370,7 @@ if __name__ == '__main__':
     # Nxe5 Nxe5 9. Qxe5+ Kf8 10. d3 Qg5 11. Bxg5 Bxf2+ 12. Kxf2 Bb7 13. Nc3 Bxg2 14.
     # Kxg2 Re8 15. Rhe1 Rxe5 16. Rxe5 d6 17. Rae1 dxe5 18. Rxe5 *'''
 
-    pgn = '[Event \"?\"]\n[Site \"?\"]\n[Date \"????.??.??\"]\n[Round \"?\"]\n[White \"?\"]\n[Black \"?\"]\n[Result \"*\"]\n\n1. Nh3 d5 2. Ng1 d4 3. e4 dxe3 *'
+    pgn = '[Event \"St. Louis Rapid & Blitz (Blitz)\"]\n[Site \"St Louis, MO USA\"]\n[Date \"2017.08.17\"]\n[EventDate \"2017.08.13\"]\n[Round \"7\"]\n[Result \"0-1\"]\n[White \"Garry Kasparov\"]\n[Black \"Levon Aronian\"]\n[ECO \"E32\"]\n[WhiteElo \"2812\"]\n[BlackElo \"2799\"]\n[PlyCount \"72\"]\n\n1. d4 Nf6 2. c4 e6 3. Nc3 Bb4 4. Qc2 O-O 5. a3 Bxc3+ 6. Qxc3\nd5 7. Nf3 dxc4 8. Qxc4 b6 9. h4 Bb7 10. Bg5 Qd5 11. Rc1 Nbd7\n12. Qxd5 Bxd5 13. Ne5 c5 14. Bxf6 Nxf6 15. dxc5 bxc5 16. f3\nRab8 17. e4 Ba2 18. Rc2 Bb1 19. Rd2 Rfd8 20. Rxd8+ Rxd8\n21. Bb5 Nh5 22. g4 Nf4 23. Kf2 f6 24. Nc6 Rd2+ 25. Ke3 Rxb2\n26. Kxf4 Rxb5 27. Rd1 h6 28. h5 Rb3 29. e5 Bd3 30. a4 c4\n31. Nxa7 Ra3 32. Nb5 Rxa4 33. Ke3 fxe5 34. Nd6 Ra3 35. Kf2 Kf8\n36. Nb5 Rb3 0-1'
    
     x = pgn_to_fen(pgn)
-    print('\n')
     print(x)
