@@ -3,8 +3,9 @@ from flask_restful import Resource
 
 from models import User, Game
 from config import app, db, api
-from chess.chess_logic import Chess
-from chess.pgn_to_fen import pgn_to_fen
+from chess.main import Chess
+from chess.pgn_to_fen import pgn_to_fen, update_fen
+from chess import util
 
 class Users(Resource):
     def get(self):
@@ -38,7 +39,7 @@ class GameById(Resource):
             return make_response(game.to_dict(), 200)
         except Exception as e:
             return make_response({'error': str(e)}, 404)
-        
+    
     def patch(self, id):
         request_data = request.json
         from_index = request_data['fromIndex']
@@ -51,9 +52,18 @@ class GameById(Resource):
         print('move', move)
         
         if move:
+            # promotion
+            promotion_type = None
+            if '=' in move:
+                promotion_type = move[-1]
+                fen_dict = util.fen_to_dict(game.fen)
+                active_color = fen_dict['active_color']
+                if active_color == 'b':
+                    promotion_type = promotion_type.lower()
+                move = move[:-2] + promotion_type
             new_pgn = game.pgn[:-1] + move + ' ' + game.pgn[-1]
             game.pgn = new_pgn
-            game.fen = pgn_to_fen(new_pgn)
+            game.fen = update_fen(game.fen, from_index, to_index, promotion_type)
             db.session.add(game)
             db.session.commit()
         

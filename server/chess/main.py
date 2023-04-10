@@ -1,5 +1,6 @@
 from chess import util
-from chess import knight
+from chess.knight import Knight
+from chess.pawn import Pawn
  
 class Chess:
     def __init__(self, fen):
@@ -16,10 +17,24 @@ class Chess:
         if color == 'b' and piece.isupper():
             print('fire')
             return None
+        
+        # pawn
+        if piece.upper() == 'P':
+            selected_piece = Pawn(color, from_index, self.fen)
+            legal_indexes = selected_piece.moves()
+            if to_index in legal_indexes:
+                move = util.index_to_algebraic(self.fen, from_index, to_index)
+                # promotion
+                if move[-1] == '8' or move[-1] == '1':
+                    move += '=Q'
+                    return move
+                return util.index_to_algebraic(self.fen, from_index, to_index)
+            else:
+                return None
 
         # knight
         if piece.upper() == 'N':
-            selected_piece = knight.Knight(color, from_index, self.fen_list)
+            selected_piece = Knight(color, from_index, self.fen)
             legal_indexes = selected_piece.moves()
             if to_index in legal_indexes:
                 return util.index_to_algebraic(self.fen, from_index, to_index)
