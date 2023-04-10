@@ -21,26 +21,72 @@ def fen_to_list(fen):
 
     return pieces_list
 
-def list_to_fen(pieces_list):
+def fen_to_dict(fen):
+    fen_dict = {}
+
+    fen_split = fen.split(' ')
+    fen_dict['piece_placement'] = fen_split[0]
+    fen_dict['active_color'] = fen_split[1]
+    fen_dict['castling_availability'] = fen_split[2]
+    fen_dict['en_passant_target_square'] = fen_split[3]
+    fen_dict['halfmove_clock'] = int(fen_split[4])
+    fen_dict['fullmove_number'] = int(fen_split[5])
+
+    return fen_dict
+
+def fen_from_dict(fen_dict):
     fen = ''
+    fen += fen_dict['piece_placement'] + ' '
+    fen += fen_dict['active_color'] + ' '
+    fen += fen_dict['castling_availability'] + ' '
+    fen += fen_dict['en_passant_target_square'] + ' '
+    fen += str(fen_dict['halfmove_clock']) + ' '
+    fen += str(fen_dict['fullmove_number'])
+
+    return fen
+
+def index_to_square(index):
+    file, rank = index_to_filerank(index)
+    return chr(file + 96) + str(rank)
+
+def square_to_index(square):
+    file = ord(square[0]) - 96
+    rank = int(square[1])
+    return filerank_to_index(file, rank)
+
+def piece_placement_to_list(piece_placement):
+    def helper(piece):
+        if piece.isdigit():
+            return [None] * int(piece)
+        else:
+            return piece
+    piece_placement = piece_placement.replace('/', '')
+    nested_list = list(map(lambda x: helper(x), piece_placement))
+    piece_placement_list = []
+    for sublist in nested_list:
+        piece_placement_list.extend(sublist)
+    return piece_placement_list
+
+def piece_placement_list_to_string(pieces_list):
+    piece_placement_string = ''
     for i in range(0, 64):
         if i % 8 == 0 and i != 0:
-            fen += '/'
+            piece_placement_string += '/'
         element = pieces_list[i]
 
         int_count = 0
         if element:
-            fen += element
+            piece_placement_string += element
         else:
             int_count += 1
-            fen += '1'
+            piece_placement_string += '1'
     
     # replace consecutive 1s with their sum
     for i in range(8, 0, -1):
         pattern  = '1' * i
-        fen = re.sub(pattern, str(i), fen)
+        piece_placement_string = re.sub(pattern, str(i), piece_placement_string)
 
-    return fen
+    return piece_placement_string
 
 # algebraic/index conversion
 
@@ -135,12 +181,16 @@ def rook_moves(index, fen, whites_turn):
 
     return possible_moves
 
-def algebraic_to_index(fen, whites_turn, move):
+def algebraic_to_index(fen, move):
     # convert algebraic notation to index
     # returns (from_index, to_index)
-    # UNLESS promotion, then (promotion_type, to_index)
+    # UNLESS promotion, then ((from_index, to_index), promotion_type)
 
     fen_list = fen_to_list(fen)
+
+    fen_dict = fen_to_dict(fen)
+
+    whites_turn = True if fen_dict['active_color'] == 'w' else False
 
     # remove check, checkmate and capture
     move = move.replace('+', '')
@@ -152,12 +202,16 @@ def algebraic_to_index(fen, whites_turn, move):
         to_file = ord(move[0]) - 96
         to_rank = int(move[1])
         to_index = filerank_to_index(to_file, to_rank)
+        if whites_turn:
+            from_index = to_index + 8
+        else:
+            from_index = to_index - 8
 
         promotion_type = move[3]
         if not whites_turn:
             promotion_type = promotion_type.lower()
 
-        return promotion_type, to_index
+        return (from_index, to_index), promotion_type
 
     # castling
     if move == 'O-O':
@@ -303,52 +357,52 @@ def index_to_algebraic(fen, from_index, to_index):
             file_char = chr(file + 96)
             return f'{piece_type}{file_char}{rank}'
 
-# tests
-if __name__ == '__main__':
-    # test index_to_algebraic
-    print('\n')
-    print('index_to_algebraic tests:')
-    # pawn move
-    test = index_to_algebraic(
-        'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-        52, 36
-        )
-    print('e4:', test)
-    # regular move
-    test = index_to_algebraic(
-        'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-        62, 45
-        )
-    print('Nf3:', test)
-    # pawn capture
-    test = index_to_algebraic(
-        'rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 2',
-        36, 27
-        )
-    print('exd4:', test)
-    # regular capture
-    test = index_to_algebraic(
-        'r1bqkbnr/pppppppp/2n5/4P3/8/8/PPPP1PPP/RNBQKBNR b KQkq - 0 2',
-        18, 28
-        )
-    print('Nxe5:', test)
-    # castling
-    test = index_to_algebraic(
-        'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-        60, 63
-        )
-    print('O-O:', test)
-    test = index_to_algebraic(
-        'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-        4, 2
-        )
-    print('O-O-O:', test)
-    test = index_to_algebraic(
-        'rnbqkb1r/pppppppp/7n/8/4P3/8/PPPPKPPP/RNBQNB1R b kq - 6 4',
-        60, 58
-        )
-    print('Nxc1:', test)
+# # tests
+# if __name__ == '__main__':
+#     # test index_to_algebraic
+#     print('\n')
+#     print('index_to_algebraic tests:')
+#     # pawn move
+#     test = index_to_algebraic(
+#         'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+#         52, 36
+#         )
+#     print('e4:', test)
+#     # regular move
+#     test = index_to_algebraic(
+#         'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+#         62, 45
+#         )
+#     print('Nf3:', test)
+#     # pawn capture
+#     test = index_to_algebraic(
+#         'rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 2',
+#         36, 27
+#         )
+#     print('exd4:', test)
+#     # regular capture
+#     test = index_to_algebraic(
+#         'r1bqkbnr/pppppppp/2n5/4P3/8/8/PPPP1PPP/RNBQKBNR b KQkq - 0 2',
+#         18, 28
+#         )
+#     print('Nxe5:', test)
+#     # castling
+#     test = index_to_algebraic(
+#         'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+#         60, 63
+#         )
+#     print('O-O:', test)
+#     test = index_to_algebraic(
+#         'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+#         4, 2
+#         )
+#     print('O-O-O:', test)
+#     test = index_to_algebraic(
+#         'rnbqkb1r/pppppppp/7n/8/4P3/8/PPPPKPPP/RNBQNB1R b kq - 6 4',
+#         60, 58
+#         )
+#     print('Nxc1:', test)
 
-    print('\n')
+#     print('\n')
 
     
