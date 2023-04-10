@@ -10,13 +10,9 @@ class Chess:
         piece = self.fen_list[from_index]
         color = self.fen.split(' ')[1]
 
-        # correct color
-        print('color', color)
-        print('piece', piece)
+        # correct turn
         if color == 'w' and piece.islower():
             return None
-        print('color==b', color == 'b')
-        print('piece.isupper()', piece.isupper())
         if color == 'b' and piece.isupper():
             print('fire')
             return None
