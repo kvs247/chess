@@ -50,7 +50,7 @@ class GameById(Resource):
         chess = Chess(game.fen)
 
         move = chess.move(from_index, to_index)
-        print('move', move)
+        # print('move', move)
         
         if move:
             # promotion

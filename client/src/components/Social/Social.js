@@ -20,6 +20,7 @@ function Social({ user, users, games, onLogout, onClickPlay }) {
       const thisPageUser = users.filter(u => u.id == id)[0];
       setProfileData(thisPageUser);
       setFriends(users.filter(u => thisPageUser.friend_ids.includes(u.id)));
+      
     };
     
     useEffect(() => {

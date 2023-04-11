@@ -18,7 +18,42 @@ class King(Piece):
                 moves.append(util.filerank_to_index(target_file, target_rank))
 
         # check
-        # for move in moves:
+        print(moves)
+        noncheck_moves = []
+        for move in moves:
+            print('move', move)
+            if not self.in_check(move):
+                noncheck_moves.append(move)
 
+        return noncheck_moves
+    
+    def in_check(self, index):
+        # rook/queen vertical/horizontal check
+        offsets = [(1, 0), (0, 1), (-1, 0), (0, -1)]
 
-        return moves
+        for offset_file, offset_rank in offsets:
+            file, rank = util.index_to_filerank(index)
+            while True:
+                file += offset_file
+                rank += offset_rank
+                if not self.is_on_board(file, rank):
+                    break
+                current_index = util.filerank_to_index(file, rank)
+                target_piece = self.piece_list[current_index]
+                # empty square - continue
+                if not target_piece:
+                    continue
+                target_color = 'w' if target_piece.isupper() else 'b'
+                # friendly piece - stop
+                if target_color == self.color:
+                    break
+                # enemy piece
+                if target_piece.upper() == 'R' or target_piece.upper() == 'Q':
+                    return True
+                else:
+                    break
+        # bishop/queen diagonal check
+        # knight check
+        # pawn check
+        # king check
+    
