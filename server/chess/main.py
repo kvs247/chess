@@ -5,7 +5,8 @@ from chess.bishop import Bishop
 from chess.rook import Rook
 from chess.queen import Queen
 from chess.king import King
- 
+from chess.pgn_to_fen import update_fen
+
 class Chess:
     def __init__(self, fen):
         self.fen = fen
@@ -20,6 +21,17 @@ class Chess:
             return None
         if color == 'b' and piece.isupper():
             return None
+        
+        # king in check?
+        # promotion? :(
+        new_fen = update_fen(self.fen, from_index, to_index)
+        new_fen_list = util.fen_to_list(new_fen)
+        king_index = new_fen_list.index('K') if color == 'w' else new_fen_list.index('k')
+        king = King(color, king_index, new_fen)
+        if king.in_check(king_index):
+            return None
+
+        # castling
         
         # pawn
         if piece.upper() == 'P':
