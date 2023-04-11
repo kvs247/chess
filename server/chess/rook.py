@@ -16,16 +16,19 @@ class Rook(Piece):
             while True:
                 target_file += offset_file
                 target_rank += offset_rank
-                # check square is on board and not occupied by friendly piece
-                if self.can_move(target_file, target_rank):
+                if not self.can_move(target_file, target_rank):
+                    break
+                # target square is on board and not occupied by friendly piece
+                else:
                     index = util.filerank_to_index(target_file, target_rank)
                     moves.append(index)
-                    target_piece = self.piece_list[index]
-                    if target_piece:
-                        target_color = 'w' if target_piece.isupper() else 'b'
+                    target_color = self.get_color(index)
+                    # if target square is empty - continue
+                    if not target_color:
+                        continue
+                    # target square is occupied by enemy piece - stop
+                    else:
                         if target_color != self.color:
                             break
-                else:
-                    break
 
         return moves
