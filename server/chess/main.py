@@ -4,6 +4,7 @@ from chess.knight import Knight
 from chess.bishop import Bishop
 from chess.rook import Rook
 from chess.queen import Queen
+from chess.king import King
  
 class Chess:
     def __init__(self, fen):
@@ -18,7 +19,6 @@ class Chess:
         if color == 'w' and piece.islower():
             return None
         if color == 'b' and piece.isupper():
-            print('fire')
             return None
         
         # pawn
@@ -65,6 +65,15 @@ class Chess:
         # queen
         if piece.upper() == 'Q':
             selected_piece = Queen(color, from_index, self.fen)
+            legal_indexes = selected_piece.moves()
+            if to_index in legal_indexes:
+                return util.index_to_algebraic(self.fen, from_index, to_index)
+            else:
+                return None
+            
+        # king 
+        if piece.upper() == 'K':
+            selected_piece = King(color, from_index, self.fen)
             legal_indexes = selected_piece.moves()
             if to_index in legal_indexes:
                 return util.index_to_algebraic(self.fen, from_index, to_index)

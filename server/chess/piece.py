@@ -14,8 +14,10 @@ class Piece:
         if 1 <= file <= 8 and 1 <= rank <= 8:
             index = util.filerank_to_index(file, rank)
             target_piece = self.piece_list[index]
+            # check empty square
             if not target_piece:
                 return True
+            # square occupied by enemy piece
             else:
                 target_color = 'w' if target_piece.isupper() else 'b'
                 if target_color != self.color:
