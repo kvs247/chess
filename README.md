@@ -9,5 +9,7 @@
 - improve animation area of CardActionArea - animation area currently larger than it should be
 - choose board color
 - sounds
+- see if pawn promotion opening check needs more logic
+- replace implementations of util.fen_to_list() with util.fen_to_dict()
 
 

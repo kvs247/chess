@@ -11,6 +11,7 @@ class Chess:
     def __init__(self, fen):
         self.fen = fen
         self.fen_list = util.fen_to_list(fen)
+        self.fen_dict = util.fen_to_dict(fen)
 
     def move(self, from_index, to_index):
         piece = self.fen_list[from_index]
@@ -32,7 +33,30 @@ class Chess:
             return None
 
         # castling
-        
+        king = King(color, from_index, self.fen)
+        if piece == 'K':
+            if from_index == 60 and to_index == 62:
+                if not self.fen_list[61] and not self.fen_list[62]:
+                    if self.fen_dict['castling_availability'].find('K') != -1:
+                        if not king.in_check(61) and not king.in_check(62):
+                            return 'O-O'
+            if from_index == 60 and to_index == 58:     
+                if not self.fen_list[58] and not self.fen_list[59]:
+                    if self.fen_dict['castling_availability'].find('Q') != -1:
+                        if not king.in_check(58) and not king.in_check(59):
+                            return 'O-O-O'
+        if piece == 'k':
+            if from_index == 4 and to_index == 6:
+                if not self.fen_list[5] and not self.fen_list[6]:
+                    if self.fen_dict['castling_availability'].find('k') != -1:
+                        if not king.in_check(5) and not king.in_check(6):
+                            return 'O-O'
+            if from_index == 4 and to_index == 2:     
+                if not self.fen_list[2] and not self.fen_list[3]:
+                    if self.fen_dict['castling_availability'].find('q') != -1:
+                        if not king.in_check(3) and not king.in_check(2):
+                            return 'O-O-O'
+
         # pawn
         if piece.upper() == 'P':
             selected_piece = Pawn(color, from_index, self.fen)
