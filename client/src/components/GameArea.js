@@ -64,6 +64,8 @@ function GameArea({ user, staticBoard, gameId }) {
         setRerender(false);
     }, [gameId, rerender])
 
+    if (fen) console.log(fen.split(' ')[1]);
+
     return (
         <Box 
           bgcolor='primary.main' 

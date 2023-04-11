@@ -41,9 +41,9 @@ function getInitialPositions() {
 
         const response = await onMove(fromIndex, toIndex);
         if (response !== fen) {
-            console.log('valid')
+            // console.log('valid')
         } else {
-            console.log('invalid')
+            // console.log('invalid')
             setPositions((positions) => {
                 const newPositions = { ...positions };
                 newPositions[i] = { x: 0, y: 0 };

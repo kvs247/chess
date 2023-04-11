@@ -93,9 +93,43 @@ class King(Piece):
                 continue
             target_color = 'w' if target_piece.isupper() else 'b'
             if target_color != self.color and target_piece.upper() == 'N':
-                print('check', target_piece, current_index)
+                # print('check', target_piece, current_index)
                 return True
         # pawn check
+        if self.color == 'w':
+            offsets = [(1, 1), (-1, 1)]
+        else:
+            offsets = [(1, -1), (-1, -1)]
+
+        for offset_file, offset_rank in offsets:
+            file, rank = util.index_to_filerank(index)
+            file += offset_file
+            rank += offset_rank
+            if not self.is_on_board(file, rank):
+                continue
+            current_index = util.filerank_to_index(file, rank)
+            target_piece = self.piece_list[current_index]
+            if not target_piece:
+                continue
+            target_color = 'w' if target_piece.isupper() else 'b'
+            if target_color != self.color and target_piece.upper() == 'P':
+                return True
         # king check
+        offsets = [(1, 0), (1, 1), (0, 1), (-1, 1),
+            (-1, 0), (-1, -1), (0, -1), (1, -1)]
+        
+        for offset_file, offset_rank in offsets:
+            file, rank = util.index_to_filerank(index)
+            file += offset_file
+            rank += offset_rank
+            if not self.is_on_board(file, rank):
+                continue
+            current_index = util.filerank_to_index(file, rank)
+            target_piece = self.piece_list[current_index]
+            if not target_piece:
+                continue
+            target_color = 'w' if target_piece.isupper() else 'b'
+            if target_color != self.color and target_piece.upper() == 'K':
+                return True
 
         return False
