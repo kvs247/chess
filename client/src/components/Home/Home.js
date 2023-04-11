@@ -3,7 +3,7 @@ import NavBar from '../NavBar';
 import ActiveGames from './ActiveGames';
 import GameArea from '../GameArea';
 
-function Home({ user, onLogout, onClickPlay }) {
+function Home({ user, users, onLogout, onClickPlay }) {
   return (
       <BaseContainer>
         <NavBar 
@@ -11,7 +11,11 @@ function Home({ user, onLogout, onClickPlay }) {
           onLogout={onLogout} 
           onClickPlay={onClickPlay}
         />
-        <GameArea user={user} staticBoard={true} />
+        <GameArea 
+          user={user}   
+          users={users}
+          staticBoard={true} 
+        />
         <ActiveGames />
       </BaseContainer>
   );

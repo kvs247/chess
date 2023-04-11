@@ -49,10 +49,10 @@ with app.app_context():
     for pgn in pgn_strs:
         pgn_dict = pgn_to_dict(pgn)
 
-
         white_username = pgn_dict['white_username']
         white_user_id = User.query.filter_by(username=white_username).first().id
         
+
         black_username = pgn_dict['black_username']
         black_user_id = User.query.filter_by(username=black_username).first().id
 

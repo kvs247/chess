@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 
 import Board from './Board.js';
+import { pgnToObj } from './Util/pgnFenHandler.js';
 
 import guest from '../assets/profile-image.png';
 
@@ -33,7 +34,7 @@ const playerBox = (username, photo) => {
   );
 };
 
-function GameArea({ user, staticBoard, gameId }) {
+function GameArea({ user, users, staticBoard, gameId }) {
 
     const handleMove = async (fromIndex, toIndex) => {
         const response = await fetch(`/games/${gameId}`, {
@@ -51,12 +52,13 @@ function GameArea({ user, staticBoard, gameId }) {
     };
 
     const [rerender, setRerender] = useState(false);
-    const [fen, setFen] = useState(null);
+    const [gameData, setGameData] = useState({});
 
     const getGameData = () => {
+        if (!gameId) gameId = 1;
         fetch(`/games/${gameId}`)
           .then(res => res.json())
-          .then(data => setFen(data.fen));
+          .then(data => setGameData(data));
     };
 
     useEffect(() => {
@@ -64,7 +66,29 @@ function GameArea({ user, staticBoard, gameId }) {
         setRerender(false);
     }, [gameId, rerender])
 
-    if (fen) console.log(fen.split(' ')[1]);
+    if (gameData.fen) console.log(gameData.fen.split(' ')[1]);
+
+    let whiteUsername = 'White';
+    let whiteProfileImage = guest;
+    let blackUsername = 'Black';
+    let blackProfileImage = guest;
+    if (gameData.pgn && users.length > 0) {
+      const pgnObj = pgnToObj(gameData.pgn);
+
+      whiteUsername = pgnObj['whiteUsername'];
+      whiteProfileImage = users.find(user => user.username === whiteUsername).profile_image;
+      
+      blackUsername = pgnObj['blackUsername'];
+      blackProfileImage = users.find(user => user.username === blackUsername).profile_image;
+      
+      if (gameData.id == 1) {
+          whiteUsername = 'White';
+          whiteProfileImage = guest;
+          blackUsername = 'Black';
+          blackProfileImage = guest;
+      }
+          
+    };
 
     return (
         <Box 
@@ -72,14 +96,14 @@ function GameArea({ user, staticBoard, gameId }) {
           align='center' 
           my='auto'
         >
-          {playerBox('Opponent', guest)}
+          {playerBox(blackUsername, blackProfileImage)}
           <Board 
             length={length} 
             staticBoard={staticBoard}
-            fen={fen}
+            gameData={gameData}
             onMove={handleMove}
           />
-          {playerBox(user.username, user.profile_image)}
+          {playerBox(whiteUsername, whiteProfileImage)}
         </Box>
     );
 }

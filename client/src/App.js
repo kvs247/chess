@@ -86,6 +86,7 @@ function App() {
             <Route path="/home">
               <Home 
                 user={user} 
+                users={users}
                 onLogout={handleLogout}
                 onClickPlay={handleClickPlay}
               />
@@ -94,6 +95,7 @@ function App() {
             <Route exact path='/play'>
               <Play 
                 user={user}
+                users={users}
                 onLogout={handleLogout}
                 onClickPlay={handleClickPlay}
                 playComputer={playComputer}
@@ -103,6 +105,7 @@ function App() {
             <Route path='/play/:id'>
               <Play 
                 user={user}
+                users={users}
                 onLogout={handleLogout}
                 onClickPlay={handleClickPlay}
                 playComputer={playComputer}

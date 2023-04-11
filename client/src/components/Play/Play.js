@@ -4,7 +4,7 @@ import BaseContainer from '../BaseContainer';
 import NavBar from '../NavBar';
 import GameArea from '../GameArea';
 
-function Play({ user, onLogout, onClickPlay, playComputer }) {
+function Play({ user, users, onLogout, onClickPlay, playComputer }) {
 
     const { id } = useParams();
 
@@ -17,6 +17,7 @@ function Play({ user, onLogout, onClickPlay, playComputer }) {
             />
             <GameArea 
               user={user} 
+              users={users}
               staticBoard={false}
               gameId={id}
             />

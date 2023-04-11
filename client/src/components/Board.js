@@ -17,7 +17,9 @@ function getInitialPositions() {
   }
   const initialPositions = getInitialPositions();
   
-  function Board({ length, staticBoard, fen, onMove }) {
+  function Board({ length, staticBoard, gameData, onMove }) {
+
+    let fen = gameData.fen
     
     if (!fen) fen = ' w KQkq - 0 1'
     const fenArray = fenToArray(fen);
