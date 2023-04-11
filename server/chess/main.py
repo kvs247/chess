@@ -1,7 +1,9 @@
 from chess import util
+from chess.pawn import Pawn
 from chess.knight import Knight
 from chess.bishop import Bishop
-from chess.pawn import Pawn
+from chess.rook import Rook
+from chess.queen import Queen
  
 class Chess:
     def __init__(self, fen):
@@ -45,6 +47,24 @@ class Chess:
         # bishop
         if piece.upper() == 'B':
             selected_piece = Bishop(color, from_index, self.fen)
+            legal_indexes = selected_piece.moves()
+            if to_index in legal_indexes:
+                return util.index_to_algebraic(self.fen, from_index, to_index)
+            else:
+                return None
+            
+        # rook
+        if piece.upper() == 'R':
+            selected_piece = Rook(color, from_index, self.fen)
+            legal_indexes = selected_piece.moves()
+            if to_index in legal_indexes:
+                return util.index_to_algebraic(self.fen, from_index, to_index)
+            else:
+                return None
+            
+        # queen
+        if piece.upper() == 'Q':
+            selected_piece = Queen(color, from_index, self.fen)
             legal_indexes = selected_piece.moves()
             if to_index in legal_indexes:
                 return util.index_to_algebraic(self.fen, from_index, to_index)
