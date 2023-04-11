@@ -50,7 +50,6 @@ function getInitialPositions() {
                 return newPositions
             });
         };
-        console.log(response)
     };
 
     const handleDrag = (e, ui, id) => {

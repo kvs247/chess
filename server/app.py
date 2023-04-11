@@ -42,6 +42,7 @@ class GameById(Resource):
     
     def patch(self, id):
         request_data = request.json
+        print(request_data)
         from_index = request_data['fromIndex']
         to_index = request_data['toIndex']
 

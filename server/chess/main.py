@@ -1,5 +1,6 @@
 from chess import util
 from chess.knight import Knight
+from chess.bishop import Bishop
 from chess.pawn import Pawn
  
 class Chess:
@@ -35,6 +36,15 @@ class Chess:
         # knight
         if piece.upper() == 'N':
             selected_piece = Knight(color, from_index, self.fen)
+            legal_indexes = selected_piece.moves()
+            if to_index in legal_indexes:
+                return util.index_to_algebraic(self.fen, from_index, to_index)
+            else:
+                return None
+            
+        # bishop
+        if piece.upper() == 'B':
+            selected_piece = Bishop(color, from_index, self.fen)
             legal_indexes = selected_piece.moves()
             if to_index in legal_indexes:
                 return util.index_to_algebraic(self.fen, from_index, to_index)

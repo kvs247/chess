@@ -22,7 +22,6 @@ function BaseUserList({ children, users }) {
     // search functionality
     const handleChange = (event) => {
       const search = event.target.value.toLowerCase();
-      console.log(search)
       setFilteredUsers(users.filter(user => {
         const usernameBoolean = user.username.toLowerCase().includes(search);
         const fullNameBoolean = user.full_name.toLowerCase().includes(search);
