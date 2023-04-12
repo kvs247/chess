@@ -18,14 +18,12 @@ class King(Piece):
                 moves.append(util.filerank_to_index(target_file, target_rank))
 
         # check
-        # print(moves)
         legal_moves = []
         for move in moves:
             # print('move', move)
             if not self.in_check(move):
                 legal_moves.append(move)
 
-        print('legal_moves', legal_moves)
         return legal_moves
     
     def in_check(self, index):
@@ -50,6 +48,7 @@ class King(Piece):
                     break
                 # enemy piece
                 if target_piece.upper() == 'R' or target_piece.upper() == 'Q':
+                    # print('check', target_piece, current_index)
                     return True
                 else:
                     break
@@ -74,6 +73,7 @@ class King(Piece):
                     break
                 # enemy piece
                 if target_piece.upper() == 'B' or target_piece.upper() == 'Q':
+                    # print('check', target_piece, current_index)
                     return True
                 else:
                     break
@@ -113,6 +113,7 @@ class King(Piece):
                 continue
             target_color = 'w' if target_piece.isupper() else 'b'
             if target_color != self.color and target_piece.upper() == 'P':
+                # print('check', target_piece, current_index)
                 return True
         # king check
         offsets = [(1, 0), (1, 1), (0, 1), (-1, 1),
@@ -130,6 +131,7 @@ class King(Piece):
                 continue
             target_color = 'w' if target_piece.isupper() else 'b'
             if target_color != self.color and target_piece.upper() == 'K':
+                print('check', target_piece, current_index)
                 return True
 
         return False

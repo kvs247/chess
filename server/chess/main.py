@@ -17,6 +17,9 @@ class Chess:
         piece = self.fen_list[from_index]
         color = self.fen.split(' ')[1]
 
+        # idea for later?
+        # return_move = None
+
         # correct turn
         if color == 'w' and piece.islower():
             return None
@@ -25,12 +28,78 @@ class Chess:
         
         # king in check?
         # promotion? :(
+        def king_in_check_after_move(color, fen):
+            fen_list = util.fen_to_list(fen)
+            king_index = fen_list.index('K') if color == 'w' else fen_list.index('k')
+            king = King(color, king_index, fen)
+            if king.in_check(king_index):
+                return True
+            return False
+        new_fen = update_fen(self.fen, from_index, to_index)
+        if king_in_check_after_move(color, new_fen):
+            return None
+        
+        # checkmate?
         new_fen = update_fen(self.fen, from_index, to_index)
         new_fen_list = util.fen_to_list(new_fen)
-        king_index = new_fen_list.index('K') if color == 'w' else new_fen_list.index('k')
-        king = King(color, king_index, new_fen)
-        if king.in_check(king_index):
-            return None
+        # king in check and no legal moves
+        king_index = new_fen_list.index('k') if color == 'w' else new_fen_list.index('K')
+        king_color = 'w' if color == 'b' else 'b'
+        king = King(king_color, king_index, new_fen)
+        if king.in_check(king_index) and len(king.moves()) == 0:
+            print('king cant move')
+            checkmate = True
+            for index in range(64):
+                piece = new_fen_list[index]
+                if not piece:
+                    break
+                piece_color = 'w' if piece.isupper() else 'b'
+                if piece_color != king_color:
+                    continue
+                if piece.upper() == 'P':
+                    pawn = Pawn(king_color, index, new_fen)   
+                    for move in pawn.moves():
+                        piece_fen = update_fen(new_fen, index, move)
+                        if not king_in_check_after_move(king_color, piece_fen):
+                            # print(f'{index} pawn can move {move}')
+                            checkmate = False
+                            break
+                if piece.upper() == 'N':
+                    knight = Knight(king_color, index, new_fen)   
+                    for move in knight.moves():
+                        piece_fen = update_fen(new_fen, index, move)
+                        if not king_in_check_after_move(king_color, piece_fen):
+                            # print(f'{index} knight can move {move}')
+                            checkmate = False
+                            break
+                if piece.upper() == 'B':
+                    bishop = Bishop(king_color, index, new_fen)   
+                    for move in bishop.moves():
+                        piece_fen = update_fen(new_fen, index, move)
+                        if not king_in_check_after_move(king_color, piece_fen):
+                            # print(f'{index} bishop can move {move}')
+                            checkmate = False                        
+                            break
+                if piece.upper() == 'R':
+                    rook = Rook(king_color, index, new_fen)   
+                    for move in rook.moves():
+                        piece_fen = update_fen(new_fen, index, move)
+                        if not king_in_check_after_move(king_color, piece_fen):
+                            # print(f'{index} rook can move {move}')
+                            checkmate = False                        
+                            break
+                if piece.upper() == 'Q':
+                    queen = Queen(king_color, index, new_fen)   
+                    for move in queen.moves():
+                        piece_fen = update_fen(new_fen, index, move)
+                        if not king_in_check_after_move(king_color, piece_fen):
+                            # print(f'{index} queen can move {move}')
+                            checkmate = False                        
+                            break
+            if checkmate:
+                print('checkmate')
+            
+        
 
         # castling
         king = King(color, from_index, self.fen)
@@ -57,6 +126,8 @@ class Chess:
                         if not king.in_check(3) and not king.in_check(2):
                             return 'O-O-O'
 
+        # print(piece)
+        piece = self.fen_list[from_index]
         # pawn
         if piece.upper() == 'P':
             selected_piece = Pawn(color, from_index, self.fen)

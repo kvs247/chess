@@ -16,7 +16,9 @@ function Home({ user, users, onLogout, onClickPlay }) {
           users={users}
           staticBoard={true} 
         />
-        <ActiveGames />
+        <ActiveGames 
+          users={users}
+        />
       </BaseContainer>
   );
 }

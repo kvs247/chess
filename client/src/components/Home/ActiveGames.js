@@ -21,7 +21,7 @@ const users = [
     }
 ]
 
-function ActiveGames() {
+function ActiveGames({ users }) {
     return (
         <Box bgcolor='secondary.main' align='center'>
           <Typography
@@ -64,5 +64,11 @@ function ActiveGames() {
         </Box>
     );
 }
+
+// function ActiveGames({ users }) {
+//     return (
+
+//     );
+// }
 
 export default ActiveGames;
