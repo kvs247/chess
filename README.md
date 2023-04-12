@@ -14,5 +14,6 @@
 - replace implementations of util.fen_to_list() with util.fen_to_dict()
 - improve pgn PATCH, add numbers and new lines
 - reverse board
+- choose piece to promote to (modal)
 
 
