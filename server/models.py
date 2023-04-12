@@ -64,3 +64,14 @@ class Game(db.Model, SerializerMixin):
     black_user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     pgn = db.Column(db.String())
     fen = db.Column(db.String())
+
+class Challenge(db.Model, SerializerMixin):
+    __tablename__ = 'challenges'
+
+    serialize_rules = ('-challenger', '-challengee')
+
+    id = db.Column(db.Integer, primary_key=True)
+    challenger_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    challengee_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    status = db.Column(db.String())
+    game_id = db.Column(db.Integer, db.ForeignKey('games.id'))
