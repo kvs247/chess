@@ -12,7 +12,9 @@ function App() {
 
     const history = useHistory();
 
-    const initialUserState = {};
+    const initialUserState = {
+        friend_ids: [],
+    };
     const [user, setUser] = useState(initialUserState);
     const [users, setUsers] = useState([]);
     const [games, setGames] = useState([]);

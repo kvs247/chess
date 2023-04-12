@@ -1,6 +1,6 @@
 import random
 
-num_players = 12
+num_players = 13
 
 def get_pair(num_players, friendship_pairs):
     int1 = random.randint(1, num_players)

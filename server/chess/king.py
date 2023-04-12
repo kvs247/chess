@@ -131,7 +131,7 @@ class King(Piece):
                 continue
             target_color = 'w' if target_piece.isupper() else 'b'
             if target_color != self.color and target_piece.upper() == 'K':
-                print('check', target_piece, current_index)
+                # print('check', target_piece, current_index)
                 return True
 
         return False

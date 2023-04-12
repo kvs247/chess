@@ -48,7 +48,7 @@ class User(db.Model, SerializerMixin):
 class Friendship(db.Model, SerializerMixin):
     __tablename__ = 'friendships'
 
-    serialize_rules = ()
+    serialize_rules = ('-user', '-friend')
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))

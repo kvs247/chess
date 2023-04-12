@@ -1,7 +1,7 @@
 from flask import request, session, make_response, jsonify, abort
 from flask_restful import Resource
 
-from models import User, Game
+from models import User, Game, Friendship
 from config import app, db, api
 from chess.main import Chess
 from chess.pgn_to_fen import pgn_to_fen, update_fen
@@ -23,6 +23,32 @@ class UserById(Resource):
         except Exception as e:
             return make_response({'error': str(e)}, 400)
 api.add_resource(UserById, '/users/<int:id>')
+
+class Friendships(Resource):
+    def get(self):
+        return make_response(
+            [f.to_dict() for f in Friendship.query.all()],
+            200
+        )
+    
+    def post(self):
+        data = request.json
+        db.session.add_all(
+            [Friendship(user_id=data[0], friend_id=data[1]),
+            Friendship(user_id=data[1], friend_id=data[0])]
+        )
+        db.session.commit()
+
+    def delete(self):
+        data = request.json
+        db.session.delete(
+            Friendship.query.filter_by(user_id=data[0], friend_id=data[1]).first()
+        )
+        db.session.delete(
+            Friendship.query.filter_by(user_id=data[1], friend_id=data[0]).first()
+        )
+        db.session.commit()
+api.add_resource(Friendships, '/friendships')
 
 class Games(Resource):
     def get(self):

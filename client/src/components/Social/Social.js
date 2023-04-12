@@ -14,22 +14,43 @@ function Social({ user, users, games, onLogout, onClickPlay }) {
     const [profileData, setProfileData] = useState({});
     const [friends, setFriends] = useState([]);
     const [showFriends, setShowFriends] = useState(true);
-
     
+    useEffect(() => {
+      updateStates();
+    }, [id, users]);   
+
     const updateStates = () => {
       const thisPageUser = users.filter(u => u.id == id)[0];
       setProfileData(thisPageUser);
       setFriends(users.filter(u => thisPageUser.friend_ids.includes(u.id)));
-      
     };
-    
-    useEffect(() => {
-      updateStates();
-    }, [users]);   
-    
-    useEffect(() => {
-      updateStates();
-    }, [id]);    
+
+    const handleAddFriend = () => {
+        fetch('/friendships', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify([user.id, profileData.id])
+        })
+          .then(() => {
+              const newFriend = users.filter(u => u.id == user.id)[0];
+              setFriends(friends => [...friends, newFriend]);
+          });
+    };
+
+    const handleRemoveFriend = () => {
+        fetch('/friendships', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }, 
+            body: JSON.stringify([user.id, profileData.id])
+        })
+          .then(() => {
+              setFriends(friends => friends.filter(u => u.id != user.id));
+          });
+    };
     
     const handleClickButton = () => {
         setShowFriends(!showFriends);
@@ -50,6 +71,8 @@ function Social({ user, users, games, onLogout, onClickPlay }) {
             user={user}   
             profileData={profileData}
             games={filteredGames}
+            onAddFriend={handleAddFriend}
+            onRemoveFriend={handleRemoveFriend}
           />
           {showFriends ? 
           <UserList users={users} onClickButton={handleClickButton}/>
