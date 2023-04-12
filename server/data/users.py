@@ -24,6 +24,14 @@ user_dicts = [
         'password_hash': 'password'
     },
     {
+        'full_name': 'Terrence Chung',
+        'username': 'twocupterry',
+        'email': 'terrence@fake.com',
+        'profile_image': 'https://github.com/kschneider0/chess/blob/main/server/assets/terrence.JPG?raw=true',
+        'date_joined': datetime.date(2016, 4, 4),
+        'password_hash': 'password'
+    },
+    {
         'full_name': 'Magnus Carlsen',
         'username': 'DrDrunkenstein',
         'email': 'magnus@fake.com',
@@ -31,14 +39,6 @@ user_dicts = [
         'date_joined': fake.date_between(start_date=start_date, end_date=end_date),
         'password_hash': 'password'
     },
-    # {
-    #     'full_name': 'Bobby Fischer',
-    #     'username': 'BobbyBlitzBoy',
-    #     'email': 'bobby@fake.com',
-    #     'profile_image': 'https://github.com/kschneider0/chess/blob/main/server/assets/bobby.jpg?raw=true',
-    #     'date_joined': fake.date_between(start_date=start_date, end_date=end_date),
-    #     'password_hash': 'password'
-    # },
     {
         'full_name': 'Garry Kasparov',
         'username': 'KasparovKingKiller',
@@ -47,14 +47,6 @@ user_dicts = [
         'date_joined': fake.date_between(start_date=start_date, end_date=end_date),
         'password_hash': 'password'
     },
-    # {
-    #     'full_name': 'Hans Niemann',
-    #     'username': 'Hans Solo',
-    #     'email': 'hand@fake.com',
-    #     'profile_image': 'https://github.com/kschneider0/chess/blob/main/server/assets/hans.jpg?raw=true',
-    #     'date_joined': fake.date_between(start_date=start_date, end_date=end_date),
-    #     'password_hash': 'password'
-    # },
     {
         'full_name': 'Hikaru Nakamura',
         'username': 'Hikaru',
@@ -63,14 +55,6 @@ user_dicts = [
         'date_joined': fake.date_between(start_date=start_date, end_date=end_date),
         'password_hash': 'password'
     },
-    # {
-    #     'full_name': 'Levy Rozman',
-    #     'username': 'Gotham Chess',
-    #     'email': 'levy@fake.com',
-    #     'profile_image': 'https://github.com/kschneider0/chess/blob/main/server/assets/levy.png?raw=true',
-    #     'date_joined': fake.date_between(start_date=start_date, end_date=end_date),
-    #     'password_hash': 'password'
-    # },
     {
         'full_name': 'Fabiano Caruana',
         'username': 'FabulousFabiano',

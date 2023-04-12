@@ -18,7 +18,7 @@ function Play({ user, users, onLogout, onClickPlay, playComputer }) {
             <GameArea 
               user={user} 
               users={users}
-              staticBoard={false}
+              staticBoard={id ? false : true}
               gameId={id}
             />
         </BaseContainer>

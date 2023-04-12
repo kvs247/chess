@@ -1,0 +1,19 @@
+[Event "Live Chess"]
+[Site "Chess.com"]
+[Date "2023.04.10"]
+[Round "?"]
+[White "Kye_Schnei"]
+[Black "twocupterry"]
+[Result "0-1"]
+[ECO "C65"]
+[WhiteElo "629"]
+[BlackElo "793"]
+[TimeControl "180+2"]
+[EndTime "8:34:53 PDT"]
+[Termination "terrencechung won by checkmate"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Bc5 4. O-O Nf6 5. Re1 d6 6. c3 Bg4 7. d4 exd4 8. cxd4
+Bb6 9. Nbd2 Qd7 10. b3 O-O-O 11. d5 Nd4 12. Bxd7+ Rxd7 13. Bb2 h5 14. h3 Nxf3+
+15. Nxf3 Bxf3 16. Qxf3 h4 17. Bxf6 gxf6 18. Qxf6 Rg8 19. a4 Rdd8 20. a5 Bc5 21.
+Reb1 Rg6 22. Qxf7 Rdg8 23. Qf3 Bd4 24. Ra2 Kd7 25. b4 c6 26. Qf7+ Kd8 27. Qxb7
+Rxg2+ 28. Kf1 Rxf2+ 29. Ke1 Rg1# 0-1
