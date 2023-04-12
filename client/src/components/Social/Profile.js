@@ -15,9 +15,11 @@ function Profile({ user, profileData, games }) {
   
   // only render if profileData is not empty
   if (profileData?.date_joined) {
+
+      const completedGames = games.filter(game => game.pgn.slice(-1)[0] != '*');
     
-      const numGames = games.length;
-      const wonGames = games.filter(g => {
+      const numGames = completedGames.length;
+      const wonGames = completedGames.filter(g => {
           const pgnObj = pgnToObj(g.pgn);
           const isWhite = pgnObj['whiteUsername'] === profileData.username;
           const isBlack = pgnObj['blackUsername'] === profileData.username;
@@ -89,7 +91,7 @@ function Profile({ user, profileData, games }) {
               overflow='auto'
             >
               <Typography variant='h4' sx={{ p: 2}}>Completed Games</Typography>
-              <CompletedGames games={games} />
+              <CompletedGames games={completedGames} />
             </Box>
              
           </Box>
