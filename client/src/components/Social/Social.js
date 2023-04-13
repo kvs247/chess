@@ -11,7 +11,16 @@ function Social({ user, users, games, onLogout, onClickPlay }) {
 
     const { id } = useParams();
 
-    const [profileData, setProfileData] = useState({});
+    const initialUserState = {
+      id: 0,
+      full_name: '',
+      username: '',
+      email: '',
+      profile_image: '',
+      date_joined: '',
+      friend_ids: []
+    };
+    const [profileData, setProfileData] = useState(initialUserState);
     const [friends, setFriends] = useState([]);
     const [showFriends, setShowFriends] = useState(true);
     

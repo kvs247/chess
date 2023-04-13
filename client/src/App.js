@@ -12,7 +12,15 @@ function App() {
 
     const history = useHistory();
 
-    const initialUserState = {};
+    const initialUserState = {
+        id: 1,
+        full_name: '',
+        username: '',
+        email: '',
+        profile_image: '',
+        date_joined: '',
+        friend_ids: []
+    };
     const [user, setUser] = useState(initialUserState);
     const [users, setUsers] = useState([]);
     const [games, setGames] = useState([]);

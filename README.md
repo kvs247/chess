@@ -5,6 +5,7 @@
 - error messages at login/signup (formik?)
 - add white/black king icons to Completed Games section
 - confirmation when sending challenge
+- fix colors for dark mode
 
 ## could do
 - improve "Don't have an account?" text on Login page - currently jumps to two lines often
