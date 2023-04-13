@@ -20,10 +20,9 @@ function Play({ user, users, games, onLogout, onClickPlay, playComputer }) {
     });
     const activeGamesUserIds = activeGames.map(game => {
         return [game['white_user_id'], game['black_user_id']]
-    }).flat().filter(id => id !== user.id);
-    const activeGameUserIdsUnqiue = [...new Set(activeGamesUserIds)]
-    const activeGameUsers = users.filter(user => {
-        return activeGameUserIdsUnqiue.includes(user.id)
+    }).flat();
+    const activeGamesUsers = users.filter(user => {
+      return activeGamesUserIds.includes(user.id)
     });
 
     return (
@@ -39,10 +38,13 @@ function Play({ user, users, games, onLogout, onClickPlay, playComputer }) {
             staticBoard={id ? false : true}
             gameId={id}
           />
-          <ActiveGames
-            users={activeGameUsers}
-          >
-          </ActiveGames>
+          {id ? null :
+            <ActiveGames
+              games={activeGames}
+              users={activeGamesUsers}
+            >
+            </ActiveGames>
+          }
         </BaseContainer>
 
     );

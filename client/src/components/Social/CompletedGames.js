@@ -4,6 +4,9 @@ import Box from '@mui/material/Box';
 
 import { pgnToObj } from '../Util/pgnFenHandler.js'
 
+import whiteKing from '../../assets/chess-pieces/white-king.png';
+import blackKing from '../../assets/chess-pieces/black-king.png';
+
 function CompletedGames({ games }) {
   
   //will need to filter for completed games
@@ -81,10 +84,36 @@ function CompletedGames({ games }) {
               >
                 <Box sx={{ flexBasis: '25%' }}>
                   <Typography variant="h6" gutterBottom>
-                    {game.whiteUsername}
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <Box 
+                        component='img'
+                        src={whiteKing}
+                        alt=''
+                        sx={{ 
+                          height: '2rem', 
+                          width: '2rem', 
+                          marginRight: '0.5rem', 
+                          marginBottom: '0.2rem' 
+                        }}
+                      />
+                      {game.whiteUsername} 
+                    </Box>
                   </Typography>
                   <Typography variant="h6" gutterBottom>
-                    {game.blackUsername}
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Box 
+                          component='img'
+                          src={blackKing}
+                          alt=''
+                          sx={{ 
+                            height: '2rem', 
+                            width: '2rem', 
+                            marginRight: '0.5rem', 
+                            marginBottom: '0.2rem' 
+                          }}
+                        />
+                        {game.blackUsername} 
+                      </Box>
                   </Typography>                                                      
                 </Box>
                 <Box sx={{ flexBasis: '25%' }}>

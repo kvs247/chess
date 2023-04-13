@@ -22,6 +22,11 @@ export function pgnToObj(pgn) {
     const blackUsername = blackUsernameRegex.exec(pgn)[1];
     pgnObj['blackUsername'] = blackUsername;
 
+    // not all pgns have this :(
+    // const playCountRegex = /PlayCount "(.*)"/;
+    // const playCount = playCountRegex.exec(pgn)[1];
+    // pgnObj['playCount'] = playCount;
+
     const pgnSplit = pgn.split('\n');
     const moveListSplit = pgnSplit.slice(pgnSplit.indexOf('') + 1);
     const moveList = moveListSplit.join(' ');

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import CardActionArea from '@mui/material/CardActionArea';
-import { TextField } from '@mui/material';
+import TextField from '@mui/material/TextField';
 
 function BaseUserList({ children, users }) {
 
