@@ -98,6 +98,7 @@ function App() {
               <Play 
                 user={user}
                 users={users}
+                games={games}
                 onLogout={handleLogout}
                 onClickPlay={handleClickPlay}
                 playComputer={playComputer}
@@ -108,6 +109,7 @@ function App() {
               <Play 
                 user={user}
                 users={users}
+                games={games}
                 onLogout={handleLogout}
                 onClickPlay={handleClickPlay}
                 playComputer={playComputer}

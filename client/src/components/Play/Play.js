@@ -1,26 +1,48 @@
 import { useParams } from 'react-router-dom';
 
-import BaseContainer from '../BaseContainer';
-import NavBar from '../NavBar';
-import GameArea from '../GameArea';
+import { pgnToObj } from '../Util/pgnFenHandler.js';
 
-function Play({ user, users, onLogout, onClickPlay, playComputer }) {
+import BaseContainer from '../BaseContainer.js';
+import NavBar from '../NavBar.js';
+import GameArea from '../GameArea.js';
+import ActiveGames from './ActiveGames.js';
+
+function Play({ user, users, games, onLogout, onClickPlay, playComputer }) {
 
     const { id } = useParams();
 
+    const activeGames = games.filter(game => {
+        const pgnObj = pgnToObj(game.pgn);
+        const inProgress = pgnObj['result'] == '*'
+        const isWhite = pgnObj['whiteUsername'] === user.username;
+        const isBlack = pgnObj['blackUsername'] === user.username;
+        return inProgress && (isWhite || isBlack);
+    });
+    const activeGamesUserIds = activeGames.map(game => {
+        return [game['white_user_id'], game['black_user_id']]
+    }).flat().filter(id => id !== user.id);
+    const activeGameUserIdsUnqiue = [...new Set(activeGamesUserIds)]
+    const activeGameUsers = users.filter(user => {
+        return activeGameUserIdsUnqiue.includes(user.id)
+    });
+
     return (
         <BaseContainer>
-            <NavBar 
-              user={user}
-              onLogout={onLogout}
-              onClickPlay={onClickPlay}
-            />
-            <GameArea 
-              user={user} 
-              users={users}
-              staticBoard={id ? false : true}
-              gameId={id}
-            />
+          <NavBar 
+            user={user}
+            onLogout={onLogout}
+            onClickPlay={onClickPlay}
+          />
+          <GameArea 
+            user={user} 
+            users={users}
+            staticBoard={id ? false : true}
+            gameId={id}
+          />
+          <ActiveGames
+            users={activeGameUsers}
+          >
+          </ActiveGames>
         </BaseContainer>
 
     );

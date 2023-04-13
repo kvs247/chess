@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import Fade from '@mui/material/Fade';
 
 import { pgnToObj } from '../Util/pgnFenHandler.js'
 
@@ -14,6 +15,7 @@ const length = '80%';
 function Profile({ user, profileData, games, onAddFriend, onRemoveFriend }) {
   
     const [isFriend, setIsFriend] = useState(false);
+    const [showConfirmation, setShowConfirmation] = useState(false);
 
     useEffect(() => {
         if (user && profileData) {
@@ -21,6 +23,18 @@ function Profile({ user, profileData, games, onAddFriend, onRemoveFriend }) {
         }
     }, [user?.friend_ids, profileData?.id]);
     
+    const onSendChallenge = () => {
+        fetch('/challenges', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ challengerId: user.id, challengeeId: profileData.id})
+        })
+        setShowConfirmation(true);
+        setTimeout(() => setShowConfirmation(false), 2000);
+    };
+
     // only render if profileData is not empty
     if (profileData?.date_joined) {
 
@@ -40,6 +54,7 @@ function Profile({ user, profileData, games, onAddFriend, onRemoveFriend }) {
         const yyyymmdd = profileData.date_joined.split(' ')[0].split('-')
         const date = new Date(yyyymmdd[0], yyyymmdd[1]-1, yyyymmdd[2])
         const formattedDate = moment(date).format('MMMM D Y')
+
 
         return (
             <Box
@@ -100,6 +115,7 @@ function Profile({ user, profileData, games, onAddFriend, onRemoveFriend }) {
                   <Button
                     variant='contained'
                     sx={{ mr: 2 }}
+                    onClick={onSendChallenge}
                   >
                     Send Challenge
                   </Button>
@@ -115,15 +131,24 @@ function Profile({ user, profileData, games, onAddFriend, onRemoveFriend }) {
                       Remove Friend
                     </Button> :                
                     <Button
-                      variant='contained'
-                      sx={{ ml: 2 }}
-                      onClick={() => {
+                    variant='contained'
+                    sx={{ ml: 2 }}
+                    onClick={() => {
                         onAddFriend();
                         setIsFriend(!isFriend);
                       }}
-                    >
+                      >
                       Add Friend
                     </Button>}
+                    <Fade in={showConfirmation} sx={{ mt: 1 }}>
+                      <Box
+                        bgcolor='green'
+                        width='20%'
+                        borderRadius='5px'
+                      >
+                        challenge created
+                      </Box>
+                    </Fade>
                 </Box>
               : null} 
     

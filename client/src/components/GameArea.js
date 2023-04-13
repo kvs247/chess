@@ -66,7 +66,7 @@ function GameArea({ user, users, staticBoard, gameId }) {
         setRerender(false);
     }, [gameId, rerender])
 
-    if (gameData.fen) console.log(gameData.fen.split(' ')[1]);
+    // if (gameData.fen) console.log(gameData.fen.split(' ')[1]);
 
     let whiteUsername = 'White';
     let whiteProfileImage = guest;

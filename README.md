@@ -4,6 +4,7 @@
 - fix SHOW USERS button and search bar placement
 - error messages at login/signup (formik?)
 - add white/black king icons to Completed Games section
+- confirmation when sending challenge
 
 ## could do
 - improve "Don't have an account?" text on Login page - currently jumps to two lines often

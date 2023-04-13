@@ -1,7 +1,7 @@
 import glob
 
 from app import app
-from models import db, User, Friendship, Game
+from models import db, User, Friendship, Game, Challenge
 from chess.pgn_to_fen import pgn_to_dict, pgn_to_fen
 
 from data.users import user_dicts
@@ -18,6 +18,7 @@ with app.app_context():
     User.query.delete()
     Friendship.query.delete()
     Game.query.delete()
+    Challenge.query.delete()
 
     # Create users
     print('Creating users...')
