@@ -1,3 +1,4 @@
+import random
 from flask import request, session, make_response, jsonify, abort
 from flask_restful import Resource
 
@@ -6,6 +7,7 @@ from config import app, db, api
 from chess.main import Chess
 from chess.pgn_to_fen import pgn_to_fen, update_fen
 from chess import util
+from chess.new_pgn import new_pgn
 
 class Users(Resource):
     def get(self):
@@ -56,6 +58,21 @@ class Games(Resource):
             [g.to_dict() for g in Game.query.all()],
             200
         )
+    
+    def post(self):
+        data = request.json
+        random.shuffle(data)
+        pgn = new_pgn(data[0]['username'], data[1]['username'])
+        game = Game(
+            white_user_id=data[0]['id'],
+            black_user_id=data[1]['id'],
+            pgn = pgn,
+            fen = pgn_to_fen(pgn)
+        )
+        db.session.add(game)
+        db.session.commit()
+        return(make_response(game.to_dict(), 201))
+        
 api.add_resource(Games, '/games')
 
 class GameById(Resource):

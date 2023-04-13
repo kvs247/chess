@@ -4,9 +4,13 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 
-function Challenges({ receivedChallengeUsers, sentChallengeUsers, onClickDelete, onClickDecline }) {
-
-    if (!receivedChallengeUsers[0]) return <h1>Loading...</h1>;
+function Challenges({ 
+    receivedChallengeUsers, 
+    sentChallengeUsers, 
+    onClickDelete, 
+    onClickDecline, 
+    onClickAccept 
+}) {
 
     return (
         <Box 
@@ -58,7 +62,12 @@ function Challenges({ receivedChallengeUsers, sentChallengeUsers, onClickDelete,
                     {`${challengeUser.challenge.date_created.split(' ')[0]}`}
                   </Typography>
                   <Box sx={{ ml: 'auto' }}>
-                    <CardActionArea>
+                    <CardActionArea
+                      onClick={() => {
+                        onClickDecline(challengeUser.challenge.id);
+                        onClickAccept(challengeUser.user.id, challengeUser.user.username);
+                      }}
+                    >
                       <CheckIcon sx={{ mr: 1 }} />
                     </CardActionArea>
                     <CardActionArea

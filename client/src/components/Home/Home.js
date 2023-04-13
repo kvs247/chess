@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import BaseContainer from '../BaseContainer';
 import NavBar from '../NavBar';
 import Challenges from './Challenges.js';
 import GameArea from '../GameArea';
 
 function Home({ user, users, onLogout, onClickPlay }) {
+
+    const history = useHistory();
 
     const [receivedChallenges, setReceivedChallenges] = useState([]);
     const [sentChallenges, setSentChallenges] = useState([]);
@@ -20,6 +23,23 @@ function Home({ user, users, onLogout, onClickPlay }) {
               setSentChallenges(sentUserChallenges)
           }) 
     }, [user])
+
+    const handleClickAccept = (id, username) => {
+        fetch('/games', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify([
+              { id: user.id, username: user.username}, 
+              { id, username }
+            ])
+        })
+          .then(res => res.json())
+          .then(data => {
+              history.push(`/play/${data.id}`)
+          });
+    };
 
     const handleClickDecline = (challengeId) => {
         fetch(`/challenges/${challengeId}`, {
@@ -70,6 +90,7 @@ function Home({ user, users, onLogout, onClickPlay }) {
           <Challenges 
             receivedChallengeUsers={receivedChallengeUsers}
             sentChallengeUsers={sentChallengeUsers}
+            onClickAccept={handleClickAccept}
             onClickDecline={handleClickDecline}
             onClickDelete={handleClickDelete}
           />
