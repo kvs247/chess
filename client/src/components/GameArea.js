@@ -36,6 +36,9 @@ const playerBox = (username, photo) => {
 
 function GameArea({ user, users, staticBoard, gameId }) {
 
+    const [rerender, setRerender] = useState(false);
+    const [gameData, setGameData] = useState({});
+
     const handleMove = async (fromIndex, toIndex) => {
         const response = await fetch(`/games/${gameId}`, {
             method: 'PATCH',
@@ -50,9 +53,6 @@ function GameArea({ user, users, staticBoard, gameId }) {
 
         return response;
     };
-
-    const [rerender, setRerender] = useState(false);
-    const [gameData, setGameData] = useState({});
 
     const getGameData = () => {
         if (!gameId) gameId = 1;
@@ -96,6 +96,18 @@ function GameArea({ user, users, staticBoard, gameId }) {
           align='center' 
           my='auto'
         >
+          <Box
+            sx={{
+              width: length,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              my: 1,
+              color: '#e1e1e1',
+            }}          
+          >
+            {gameData.fen ? gameData.fen.split(' ')[1] === 'w' ? 'White\'s Turn' : 'Black\'s Turn' : null}
+          </Box>
           {playerBox(blackUsername, blackProfileImage)}
           <Board 
             length={length} 

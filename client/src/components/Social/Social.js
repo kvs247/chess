@@ -20,7 +20,7 @@ function Social({ user, users, games, onLogout, onClickPlay }) {
     }, [id, users]);   
 
     const updateStates = () => {
-      const thisPageUser = users.filter(u => u.id == id)[0];
+      const thisPageUser = users.filter(u => parseInt(u.id) === parseInt(id))[0];
       setProfileData(thisPageUser);
       setFriends(users.filter(u => thisPageUser.friend_ids.includes(u.id)));
     };
@@ -34,7 +34,7 @@ function Social({ user, users, games, onLogout, onClickPlay }) {
             body: JSON.stringify([user.id, profileData.id])
         })
           .then(() => {
-              const newFriend = users.filter(u => u.id == user.id)[0];
+              const newFriend = users.filter(u => parseInt(u.id) === parseInt(id))[0];
               setFriends(friends => [...friends, newFriend]);
           });
     };
@@ -48,7 +48,7 @@ function Social({ user, users, games, onLogout, onClickPlay }) {
             body: JSON.stringify([user.id, profileData.id])
         })
           .then(() => {
-              setFriends(friends => friends.filter(u => u.id != user.id));
+              setFriends(friends => friends.filter(u => parseInt(u.id) !== parseInt(user.id)));
           });
     };
     
@@ -57,7 +57,7 @@ function Social({ user, users, games, onLogout, onClickPlay }) {
     };
 
     const filteredGames = games.filter(u => {
-      return u.white_user_id == id || u.black_user_id == id;
+      return parseInt(u.white_user_id) === parseInt(id) || parseInt(u.black_user_id) === parseInt(id);
     });
 
     return (

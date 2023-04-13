@@ -76,7 +76,7 @@ function ActiveGames({ games, users }) {
                     />
                     {blackUser.username} 
                   </Box>
-                  Moves: {game.fen.slice(-1)[0]}
+                  Move {game.fen.split(' ')[5]}
                 </Typography>
               </Box>
             </CardActionArea>

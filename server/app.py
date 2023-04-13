@@ -128,6 +128,21 @@ class Challenges(Resource):
         return make_response({}, 201)
 api.add_resource(Challenges, '/challenges')
 
+class ChallengeById(Resource):
+    def get(self, id):
+        try:
+            challenge = Challenge.query.filter_by(id=id).first()
+            return make_response(challenge.to_dict(), 200)
+        except Exception as e:
+            return make_response({'error': str(e)}, 404)
+        
+    def delete(self, id):
+        challenge = Challenge.query.filter_by(id=id).first()
+        db.session.delete(challenge)
+        db.session.commit()
+        return make_response({}, 204)
+api.add_resource(ChallengeById, '/challenges/<int:id>')
+
 class Login(Resource):
     def post(self):
         data = request.json

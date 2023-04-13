@@ -78,3 +78,4 @@ class Challenge(db.Model, SerializerMixin):
     challengee_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     status = db.Column(db.String())
     game_id = db.Column(db.Integer, db.ForeignKey('games.id'))
+    date_created = db.Column(db.DateTime(), server_default=db.func.now())
