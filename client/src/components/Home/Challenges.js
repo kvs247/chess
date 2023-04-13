@@ -57,7 +57,7 @@ function Challenges({
                     }}
                   />
                   <Typography textAlign='center' mx='auto'>
-                    {`${challengeUser.user.username}`}
+                    {challengeUser.user ? `${challengeUser.user.username}` : null}
                     <br />
                     {`${challengeUser.challenge.date_created.split(' ')[0]}`}
                   </Typography>

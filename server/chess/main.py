@@ -125,8 +125,9 @@ class Chess:
                         if not king.in_check(3) and not king.in_check(2):
                             return 'O-O-O'
 
-        # print(piece)
         piece = self.fen_list[from_index]
+        result = ''
+        
         # pawn
         if piece.upper() == 'P':
             selected_piece = Pawn(color, from_index, self.fen)
