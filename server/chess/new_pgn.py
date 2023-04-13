@@ -11,5 +11,3 @@ def new_pgn(white_username, black_username):
     )
 
     return pgn
-
-print(new_pgn('a', 'b'))

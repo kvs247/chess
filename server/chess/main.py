@@ -26,7 +26,7 @@ class Chess:
         if color == 'b' and piece.isupper():
             return None
         
-        # king in check?
+        # player moving king in check?
         # promotion? :(
         def king_in_check_after_move(color, fen):
             fen_list = util.fen_to_list(fen)
@@ -36,22 +36,30 @@ class Chess:
                 return True
             return False
         new_fen = update_fen(self.fen, from_index, to_index)
+        check = False
         if king_in_check_after_move(color, new_fen):
+            print('checlk')
+            check = True
             return None
         
-        # checkmate?
+
+        # opponent in check?
+        checkmate = False
         new_fen = update_fen(self.fen, from_index, to_index)
         new_fen_list = util.fen_to_list(new_fen)
-        # king in check and no legal moves
         king_index = new_fen_list.index('k') if color == 'w' else new_fen_list.index('K')
         king_color = 'w' if color == 'b' else 'b'
         king = King(king_color, king_index, new_fen)
-        if king.in_check(king_index) and len(king.moves()) == 0:
+        if king.in_check(king_index):
+            check = True
+        # checkmate?
+        if len(king.moves()) == 0:
+            # print('king in check cant move')
             checkmate = True
             for index in range(64):
                 piece = new_fen_list[index]
                 if not piece:
-                    continue # break and not contiue?
+                    continue
                 piece_color = 'w' if piece.isupper() else 'b'
                 if piece_color != king_color:
                     continue
@@ -95,11 +103,7 @@ class Chess:
                             # print(f'{index} queen can move {move}')
                             checkmate = False                        
                             break
-            if checkmate:
-                print('checkmate')
             
-        
-
         # castling
         king = King(color, from_index, self.fen)
         if piece == 'K':
@@ -127,7 +131,7 @@ class Chess:
 
         piece = self.fen_list[from_index]
         result = ''
-        
+
         # pawn
         if piece.upper() == 'P':
             selected_piece = Pawn(color, from_index, self.fen)
@@ -137,52 +141,63 @@ class Chess:
                 # promotion
                 if move[-1] == '8' or move[-1] == '1':
                     move += '=Q'
-                    return move
+                    result = move
                 return util.index_to_algebraic(self.fen, from_index, to_index)
             else:
-                return None
+                result = None
 
         # knight
         if piece.upper() == 'N':
             selected_piece = Knight(color, from_index, self.fen)
             legal_indexes = selected_piece.moves()
             if to_index in legal_indexes:
-                return util.index_to_algebraic(self.fen, from_index, to_index)
+                result = util.index_to_algebraic(self.fen, from_index, to_index)
             else:
-                return None
+                result = None
             
         # bishop
         if piece.upper() == 'B':
             selected_piece = Bishop(color, from_index, self.fen)
             legal_indexes = selected_piece.moves()
             if to_index in legal_indexes:
-                return util.index_to_algebraic(self.fen, from_index, to_index)
+                result = util.index_to_algebraic(self.fen, from_index, to_index)
             else:
-                return None
+                result = None
             
         # rook
         if piece.upper() == 'R':
             selected_piece = Rook(color, from_index, self.fen)
             legal_indexes = selected_piece.moves()
             if to_index in legal_indexes:
-                return util.index_to_algebraic(self.fen, from_index, to_index)
+                result = util.index_to_algebraic(self.fen, from_index, to_index)
             else:
-                return None
+                result = None
             
         # queen
         if piece.upper() == 'Q':
             selected_piece = Queen(color, from_index, self.fen)
             legal_indexes = selected_piece.moves()
             if to_index in legal_indexes:
-                return util.index_to_algebraic(self.fen, from_index, to_index)
+                result = util.index_to_algebraic(self.fen, from_index, to_index)
             else:
-                return None
+                result = None
             
         # king 
         if piece.upper() == 'K':
             selected_piece = King(color, from_index, self.fen)
             legal_indexes = selected_piece.moves()
             if to_index in legal_indexes:
-                return util.index_to_algebraic(self.fen, from_index, to_index)
+                result = util.index_to_algebraic(self.fen, from_index, to_index)
             else:
-                return None
+                result = None
+
+        if not result:
+            return None
+
+        # print('check', check)
+        # print('checkmate', checkmate)
+        if check and not checkmate:
+            result += '+'
+        if checkmate:
+            result += '#'
+        return result
