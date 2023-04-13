@@ -47,12 +47,11 @@ class Chess:
         king_color = 'w' if color == 'b' else 'b'
         king = King(king_color, king_index, new_fen)
         if king.in_check(king_index) and len(king.moves()) == 0:
-            print('king cant move')
             checkmate = True
             for index in range(64):
                 piece = new_fen_list[index]
                 if not piece:
-                    break
+                    continue # break and not contiue?
                 piece_color = 'w' if piece.isupper() else 'b'
                 if piece_color != king_color:
                     continue

@@ -73,7 +73,9 @@ class GameById(Resource):
         to_index = request_data['toIndex']
 
         game = Game.query.filter_by(id=id).first()
-        chess = Chess(game.fen)
+        fen = game.fen
+        fen_dict = util.fen_to_dict(fen)
+        chess = Chess(fen)
 
         move = chess.move(from_index, to_index)
         # print('move', move)
@@ -88,7 +90,15 @@ class GameById(Resource):
                 if active_color == 'b':
                     promotion_type = promotion_type.lower()
                 move = move[:-2] + promotion_type
-            new_pgn = game.pgn[:-1] + move + ' ' + game.pgn[-1]
+            
+            # update pgn and fen
+            move_number = ''
+            newline = ''
+            if fen_dict['active_color'] == 'w':
+                move_number = str(fen_dict['fullmove_number']) + '. '
+                if len(game.pgn.splitlines()[-1]) > 60:
+                    newline = '\n'
+            new_pgn = game.pgn[:-1] + newline + move_number + move + ' ' + game.pgn[-1]
             game.pgn = new_pgn
             game.fen = update_fen(game.fen, from_index, to_index, promotion_type)
             db.session.add(game)
