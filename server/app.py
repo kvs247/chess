@@ -1,7 +1,7 @@
 from flask import request, session, make_response, jsonify, abort
 from flask_restful import Resource
 
-from models import User, Game, Friendship
+from models import User, Game, Friendship, Challenge
 from config import app, db, api
 from chess.main import Chess
 from chess.pgn_to_fen import pgn_to_fen, update_fen
@@ -97,6 +97,26 @@ class GameById(Resource):
         return make_response(jsonify(game.fen), 200)
 
 api.add_resource(GameById, '/games/<int:id>')
+
+class Challenges(Resource):
+    def get(self):
+        return make_response(
+            [c.to_dict() for c in Challenge.query.all()],
+            201
+        )
+    
+    def post(self):
+        data = request.json
+        db.session.add(
+            Challenge(
+                challenger_id=data['challengerId'], 
+                challengee_id=data['challengeeId'],
+                status='pending'
+            )
+        )
+        db.session.commit()
+        return make_response({}, 201)
+api.add_resource(Challenges, '/challenges')
 
 class Login(Resource):
     def post(self):

@@ -18,6 +18,9 @@ class User(db.Model, SerializerMixin):
 
     friendships = db.relationship('Friendship', foreign_keys='Friendship.user_id', backref='user')
 
+    sent_challenges = db.relationship('Challenge', foreign_keys='Challenge.challenger_id', backref='challenger')
+    received_challenges = db.relationship('Challenge', foreign_keys='Challenge.challengee_id', backref='challengee')
+
     @property
     def friend_ids(self):
         friends_duplicated = [f.friend_id for f in self.friendships]
