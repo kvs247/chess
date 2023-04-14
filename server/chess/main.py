@@ -35,10 +35,10 @@ class Chess:
             if king.in_check(king_index):
                 return True
             return False
+        
         new_fen = update_fen(self.fen, from_index, to_index)
         check = False
         if king_in_check_after_move(color, new_fen):
-            print('checlk')
             check = True
             return None
         
@@ -140,9 +140,13 @@ class Chess:
                 move = util.index_to_algebraic(self.fen, from_index, to_index)
                 # promotion
                 if move[-1] == '8' or move[-1] == '1':
+                    print('promotion')
+                    print(move)
                     move += '=Q'
+                    print(move)
                     result = move
-                return util.index_to_algebraic(self.fen, from_index, to_index)
+                else:
+                    result = util.index_to_algebraic(self.fen, from_index, to_index)
             else:
                 result = None
 
@@ -194,6 +198,7 @@ class Chess:
         if not result:
             return None
 
+        print('result', result)
         # print('check', check)
         # print('checkmate', checkmate)
         if check and not checkmate:

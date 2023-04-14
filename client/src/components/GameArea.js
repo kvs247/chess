@@ -36,8 +36,20 @@ const playerBox = (username, photo) => {
 
 function GameArea({ user, users, staticBoard, gameId }) {
 
+    const initialGameData = {
+        id: 0,
+        white_user_id: 0,
+        black_user_id: 0,
+        pgn: '',
+        fen: ''
+    };
     const [rerender, setRerender] = useState(false);
     const [gameData, setGameData] = useState({});
+
+    useEffect(() => {
+        getGameData();
+        setRerender(false);
+    }, [gameId, rerender])
 
     const handleMove = async (fromIndex, toIndex) => {
         const response = await fetch(`/games/${gameId}`, {
@@ -61,13 +73,6 @@ function GameArea({ user, users, staticBoard, gameId }) {
           .then(data => setGameData(data));
     };
 
-    useEffect(() => {
-        getGameData();
-        setRerender(false);
-    }, [gameId, rerender])
-
-    // if (gameData.fen) console.log(gameData.fen.split(' ')[1]);
-
     let whiteUsername = 'White';
     let whiteProfileImage = guest;
     let blackUsername = 'Black';
@@ -90,6 +95,19 @@ function GameArea({ user, users, staticBoard, gameId }) {
           
     };
 
+    const pgnObj = pgnToObj(gameData.pgn);
+    if (pgnObj['result'] !== '*') staticBoard = true;
+
+    let message = '';
+    if (gameData.fen) {
+        message = gameData.fen.split(' ')[1] === 'w' ? 'White\'s Turn' : 'Black\'s Turn';
+        if (pgnObj['result'] !== '*') {
+              if (pgnObj['result'] === '1/2-1/2') message = 'Draw';
+              if (pgnObj['result'] === '1-0') message = 'White Wins';
+              if (pgnObj['result'] === '0-1') message = 'Black Wins';
+        }
+    };
+
     return (
         <Box 
           bgcolor='primary.main' 
@@ -106,7 +124,7 @@ function GameArea({ user, users, staticBoard, gameId }) {
               color: '#e1e1e1',
             }}          
           >
-            {gameData.fen ? gameData.fen.split(' ')[1] === 'w' ? 'White\'s Turn' : 'Black\'s Turn' : null}
+            {gameData.fen ? message : null}
           </Box>
           {playerBox(blackUsername, blackProfileImage)}
           <Board 

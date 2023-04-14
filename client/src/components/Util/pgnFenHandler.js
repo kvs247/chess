@@ -1,7 +1,11 @@
 import moment from 'moment';
 
 export function pgnToObj(pgn) {
-    const pgnObj = {};
+    const pgnObj = {
+        
+    };
+
+    if (!pgn) return pgnObj;
 
     const dateRegex = /Date "(.*)"/;
     const dateRaw = dateRegex.exec(pgn)[1];

@@ -106,7 +106,6 @@ class GameById(Resource):
                 active_color = fen_dict['active_color']
                 if active_color == 'b':
                     promotion_type = promotion_type.lower()
-                move = move[:-2] + promotion_type
             
             # update pgn and fen
             move_number = ''
@@ -116,6 +115,10 @@ class GameById(Resource):
                 if len(game.pgn.splitlines()[-1]) > 60:
                     newline = '\n'
             new_pgn = game.pgn[:-1] + newline + move_number + move + ' ' + game.pgn[-1]
+            # checkmate
+            if '#' in move:
+                win_string = '1-0' if fen_dict['active_color'] == 'w' else '0-1'
+                new_pgn = new_pgn.replace('*', win_string)
             game.pgn = new_pgn
             game.fen = update_fen(game.fen, from_index, to_index, promotion_type)
             db.session.add(game)
