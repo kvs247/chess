@@ -3,8 +3,6 @@
 ## need to do
 - fix SHOW USERS button and search bar placement
 - error messages at login/signup (formik?)
-- add white/black king icons to Completed Games section
-- confirmation when sending challenge
 - fix colors for dark mode
 
 ## could do
@@ -17,5 +15,6 @@
 - improve pgn PATCH, add numbers and new lines
 - reverse board
 - choose piece to promote to (modal)
+- update Active Games with state
 
 

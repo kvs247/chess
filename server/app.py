@@ -5,7 +5,7 @@ from flask_restful import Resource
 from models import User, Game, Friendship, Challenge
 from config import app, db, api
 from chess.main import Chess
-from chess.pgn_to_fen import pgn_to_fen, update_fen
+from chess.pgn_to_fen import pgn_to_fen, pgn_to_dict, update_fen
 from chess import util
 from chess.new_pgn import new_pgn
 
@@ -85,14 +85,29 @@ class GameById(Resource):
     
     def patch(self, id):
         request_data = request.json
-        # print(request_data)
+        print(request_data)
         from_index = request_data['fromIndex']
         to_index = request_data['toIndex']
 
+
         game = Game.query.filter_by(id=id).first()
         fen = game.fen
+        pgn = game.pgn
         fen_dict = util.fen_to_dict(fen)
+        pgn_dict = pgn_to_dict(pgn)
         chess = Chess(fen)
+
+        # user ended game
+        if from_index == -1:
+            if request_data['resign']:
+                username = request_data['resign']
+                if username == pgn_dict['white_username']:
+                    game.pgn = game.pgn.replace('*', '0-1')
+                else:
+                    game.pgn = game.pgn.replace('*', '1-0')
+                db.session.add(game)
+                db.session.commit()
+                return make_response(jsonify(game.fen), 200)
 
         move = chess.move(from_index, to_index)
         # print('move', move)
@@ -112,13 +127,15 @@ class GameById(Resource):
             newline = ''
             if fen_dict['active_color'] == 'w':
                 move_number = str(fen_dict['fullmove_number']) + '. '
-                if len(game.pgn.splitlines()[-1]) > 60:
+                if len(pgn.splitlines()[-1]) > 60:
                     newline = '\n'
-            new_pgn = game.pgn[:-1] + newline + move_number + move + ' ' + game.pgn[-1]
+            new_pgn = pgn[:-1] + newline + move_number + move + ' ' + pgn[-1]
+
             # checkmate
             if '#' in move:
                 win_string = '1-0' if fen_dict['active_color'] == 'w' else '0-1'
                 new_pgn = new_pgn.replace('*', win_string)
+                
             game.pgn = new_pgn
             game.fen = update_fen(game.fen, from_index, to_index, promotion_type)
             db.session.add(game)

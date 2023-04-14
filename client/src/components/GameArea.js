@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 import Board from './Board.js';
 import { pgnToObj } from './Util/pgnFenHandler.js';
@@ -51,13 +52,25 @@ function GameArea({ user, users, staticBoard, gameId }) {
         setRerender(false);
     }, [gameId, rerender])
 
-    const handleMove = async (fromIndex, toIndex) => {
+    const handleMove = async (
+      fromIndex, 
+      toIndex, 
+      promotion=null, 
+      resign=null, 
+      draw=null
+    ) => {
         const response = await fetch(`/games/${gameId}`, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ fromIndex, toIndex })
+            body: JSON.stringify({ 
+              fromIndex, 
+              toIndex ,
+              promotion,
+              resign,
+              draw              
+            })
           }) 
           .then(res => res.json())
         
@@ -122,6 +135,7 @@ function GameArea({ user, users, staticBoard, gameId }) {
               justifyContent: 'center',
               my: 1,
               color: '#e1e1e1',
+              bgcolor: 'secondary.main',
             }}          
           >
             {gameData.fen ? message : null}
@@ -134,6 +148,42 @@ function GameArea({ user, users, staticBoard, gameId }) {
             onMove={handleMove}
           />
           {playerBox(whiteUsername, whiteProfileImage)}
+          <Box
+            sx={{
+              width: length,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              my: 1,
+              color: '#e1e1e1',
+              bgcolor: 'secondary.main',
+            }}               
+          >
+            <Button
+              variant='contained'
+              sx ={{ m: 1, }}
+            >
+              Flip Board
+            </Button> 
+            {user.username == whiteUsername || user.username == blackUsername ? 
+              <>
+              <Button
+                variant='contained'
+                sx ={{ m: 1, }}
+                onClick={() => handleMove(-1, -1, null, user.username, null)}
+              >
+                Resign
+              </Button> 
+              <Button
+                variant='contained'
+                sx = {{ m: 1 }}
+              >
+                Draw
+              </Button>
+              </>
+            : null
+            }
+          </Box>
         </Box>
     );
 }

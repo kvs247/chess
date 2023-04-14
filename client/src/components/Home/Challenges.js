@@ -104,14 +104,14 @@ function Challenges({
                   <Box
                     component='img'
                     alt=''
-                    src={challengeUser.user.profile_image}
+                    src={challengeUser.user ? challengeUser.user.profile_image : ''}
                     sx={{
                       width: 50,
                       mr: 2,
                     }}
                   />
                   <Typography textAlign='center' mx='auto'>
-                    {`${challengeUser.user.username}`}
+                    {`${challengeUser.user ? challengeUser.user.username : ''}`}
                     <br />
                     {`${challengeUser.challenge.date_created.split(' ')[0]}`}
                   </Typography>
