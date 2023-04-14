@@ -97,8 +97,13 @@ class GameById(Resource):
         pgn_dict = pgn_to_dict(pgn)
         chess = Chess(fen)
 
+        if pgn_dict['result'] != '*':
+            print('game ended')
+            return make_response(jsonify(game.fen), 200)
+
         # user ended game
         if from_index == -1:
+            # resignation
             if request_data['resign']:
                 username = request_data['resign']
                 if username == pgn_dict['white_username']:
@@ -131,6 +136,7 @@ class GameById(Resource):
                     newline = '\n'
             new_pgn = pgn[:-1] + newline + move_number + move + ' ' + pgn[-1]
 
+
             # checkmate
             if '#' in move:
                 win_string = '1-0' if fen_dict['active_color'] == 'w' else '0-1'
@@ -138,6 +144,13 @@ class GameById(Resource):
                 
             game.pgn = new_pgn
             game.fen = update_fen(game.fen, from_index, to_index, promotion_type)
+            fen_dict = util.fen_to_dict(game.fen)
+
+            # 50 move draw
+            if fen_dict['halfmove_clock'] == 100:
+                print('draw')
+                game.pgn = game.pgn.replace('*', '1/2-1/2')
+
             db.session.add(game)
             db.session.commit()
         
