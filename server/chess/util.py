@@ -181,6 +181,71 @@ def rook_moves(index, fen, whites_turn):
 
     return possible_moves
 
+def queen_moves(index, fen, whites_turn):
+    # TODO needs diagonal aswell
+    
+    possible_moves = []
+    file, rank = index_to_filerank(index)
+    fen_list = fen_to_list(fen)
+
+    # up
+    for i in range(rank + 1, 9):
+        index = filerank_to_index(file, i)
+        if not fen_list[index]:
+            possible_moves.append(index)
+        elif whites_turn and fen_list[index] == 'Q':
+            possible_moves.append(index)
+            break
+        elif not whites_turn and fen_list[index] == 'q':
+            possible_moves.append(index)
+            break
+        elif fen_list[index]:
+            break
+
+    # down
+    for i in range(rank - 1, 0, -1):
+        index = filerank_to_index(file, i)
+        if not fen_list[index]:
+            possible_moves.append(index)
+        elif whites_turn and fen_list[index] == 'Q':
+            possible_moves.append(index)
+            break
+        elif not whites_turn and fen_list[index] == 'q':
+            possible_moves.append(index)
+            break
+        elif fen_list[index]:
+            break
+
+    # right
+    for i in range(file + 1, 9):
+        index = filerank_to_index(i, rank)
+        if not fen_list[index]:
+            possible_moves.append(index)
+        elif whites_turn and fen_list[index] == 'Q':
+            possible_moves.append(index)
+            break
+        elif not whites_turn and fen_list[index] == 'q':
+            possible_moves.append(index)
+            break
+        elif fen_list[index]:
+            break
+
+    # left
+    for i in range(file - 1, 0, -1):
+        index = filerank_to_index(i, rank)
+        if not fen_list[index]:
+            possible_moves.append(index)
+        elif whites_turn and fen_list[index] == 'Q':
+            possible_moves.append(index)
+            break
+        elif not whites_turn and fen_list[index] == 'q':
+            possible_moves.append(index)
+            break
+        elif fen_list[index]:
+            break
+
+    return possible_moves
+
 def algebraic_to_index(fen, move):
     # convert algebraic notation to index
     # returns (from_index, to_index)
@@ -296,6 +361,13 @@ def algebraic_to_index(fen, move):
     # rook
     if piece.upper() == 'R':
         possible_indexes = rook_moves(to_index, fen, whites_turn)
+        for index in piece_indexes:
+            if index in possible_indexes:
+                return index, to_index
+            
+    # queen
+    if piece.upper() == 'Q':
+        possible_indexes = queen_moves(to_index, fen, whites_turn)
         for index in piece_indexes:
             if index in possible_indexes:
                 return index, to_index

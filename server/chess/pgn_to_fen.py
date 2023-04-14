@@ -122,6 +122,9 @@ def pgn_to_fen(pgn):
     move_list = [m for m in move_list if m[0].isalpha()]
 
     for move in move_list:
+        # print(move)
+        # print(fen)
+        # print(util.algebraic_to_index(fen, move))
         from_index, to_index = util.algebraic_to_index(fen, move)
         # promotion
         if type(from_index) == tuple:
@@ -161,10 +164,10 @@ def pgn_to_fen_store(pgn):
     return result
 
 if __name__ == '__main__':
-    pgn = '"[Date \"2023.04.14\"]\n[Result \"*\"]\n[White \"Kye_Schnei\"]\n[Black \"topherLud\"]\n\n1. Nh3 Nh6 2. Ng1 Ng8 3. Nh3 Nh6 4. Ng1 Ng8 5. Nh3 Nh6 6. Ng1 Ng8 \n7. Nh3 Nh6 8. Ng1 Ng8 9. Nh3 Nh6 10. Ng1 Ng8 11. Nh3 Nh6 12. Ng1 Ng8 \n13. Nh3 Nh6 14. Ng1 Ng8 15. Nh3 Nh6 16. Nf4 Ng4 17. Nh5 Ne5 \n18. Ng3 Ng4 19. Nf5 Ne5 20. Ne3 Ng4 21. Nf5 Ne5 22. Ne3 Ng4 \n23. Nf5 Ne5 24. Nd4 Ng4 25. Nf5 Ne3 26. Nd4 Nf5 27. Nf3 Nh4 \n28. Ng5 Nf5 29. Ne4 Nd4 30. Nc5 Nf5 31. Nd3 Nd4 32. Nf4 Ne6 \n33. Nd5 Nf4 34. Ne3 Nd5 35. Nf5 Ne3 36. Nd4 Nd5 37. Nf5 Ne3 \n38. Nd4 Nd5 39. Nf5 Ne3 40. Nd4 Nd5 41. Nf5 Ne3 42. Nd4 Nf5 \n43. Nf3 Nd4 44. Ne5 Nf5 45. Nf3 Nd4 46. Ne5 Nf5 47. Nf3 Nd4 \n48. Ne5 Nf3+ 49. exf3 Na6 50. Nc4 Nc5 51. Na5 Na4 52. Nc4 Nc5 \n53. Na5 Na4 54. Nc4 Nc5 55. Na5 Na4 56. Nc4 Nc5 57. Na5 Na4 \n58. Nc4 Nc5 59. Na5 Na4 60. Nc4 Nc5 61. Na5 Na4 62. Nc4 Nc5 \n63. Na5 Na4 64. Nc4 Nc5 65. Na5 Na4 66. Nc4 Nc5 67. Na5 Na4 \n68. Nc4 Nc5 69. Na5 Na4 70. Nc4 Nc5 71. Na5 Na4 72. Nc4 Nc5 \n73. Na5 Na4 74. Nc4 Nc5 75. Na5 Na4 76. Nc4 Nc5 77. Na5 Na4 \n78. Nc4 Nc5 79. Na5 Na4 80. Nc4 Nc5 81. Na5 Na4 82. Nc4 Nc5 \n83. Na5 Na4 84. Nc4 Nc5 85. Na5 Na4 86. Nc4 Nc5 87. Na5 Na4 \n88. Nc4 Nc5 89. Na5 Na4 90. Nc4 Nc5 91. Na5 Na4 92. Nc4 Nc5 \n93. Na5 Na4 94. Nc4 Nc5 95. Na5 Na4 96. Nc4 Nc5 97. Na5 Na4 \n98. Nc4 Nc5 *"'
-    # fen = pgn_to_fen(pgn)
-    fen_list = pgn_to_fen_store(pgn)
-    print(fen_list)
+    pgn = '[Event \"Live Chess\"]\n[Site \"Chess.com\"]\n[Date \"2023.04.13\"]\n[Round \"?\"]\n[White \"Kye_Schnei\"]\n[Black \"twocupterry\"]\n[Result \"1/2-1/2\"]\n[ECO \"C44\"]\n[WhiteElo \"764\"]\n[BlackElo \"759\"]\n[TimeControl \"60+1\"]\n[EndTime \"8:45:49 PDT\"]\n[Termination \"Game drawn by stalemate\"]\n\n1. e4 e5 2. Nf3 Nc6 3. g3 Nf6 4. d3 Bc5 5. Bg2 d6 6. Bg5 h6 7. Bh4 g5 8. Nxg5\nhxg5 9. Bxg5 Rg8 10. Bxf6 Qxf6 11. Qf3 Qxf3 12. Bxf3 Bh3 13. Nd2 O-O-O 14. O-O-O\nf5 15. Nc4 Bxf2 16. d4 f4 17. gxf4 exf4 18. d5 Be3+ 19. Kb1 Nd4 20. Rxd4 Bxd4\n21. Rd1 Be3 22. Rd3 Rg1+ 23. Rd1 Rxd1+ 24. Bxd1 Rg8 25. Nxe3 Rg1 26. Kc1 Kd7 27.\nNc4 Bg4 28. Kd2 Rxd1+ 29. Kc3 b5 30. Na5 c5 31. Kb3 Rd2 32. Nb7 Kc7 33. Na5 Kb6\n34. Kc3 Kxa5 35. Kxd2 b4 36. b3 f3 37. Ke1 Bh3 38. Kf2 Bg4 39. h3 Bh5 40. e5 Kb6\n41. exd6 Bg6 42. h4 Kb7 43. h5 Bxh5 44. Kg3 a6 45. Kh4 a5 46. Kxh5 c4 47. Kh4 f2\n48. d7 Kc7 49. d8=Q+ Kxd8 50. d6 f1=Q 51. d7 Kxd7 52. Kg5 Qc1+ 53. Kg6 Qxc2+ 54.\nKf6 Qxa2 55. Kf5 Qxb3 56. Ke4 a4 57. Ke5 a3 58. Kf5 a2 59. Kf4 a1=Q 60. Kg4 c3\n61. Kg5 c2 62. Kf5 c1=Q 63. Ke4 Qba3 64. Kf5 b3 65. Kg6 b2 66. Kf6 b1=Q+ 67. Kf7\nQad3 68. Kf8 Qe1 69. Kg8 Qbb4 70. Kf7 Qf4+ 71. Kg8 Qae5 1/2-1/2'
+    fen = pgn_to_fen(pgn)
+    # fen_list = pgn_to_fen_store(pgn)
+    # print(fen_list)
 
     pass
 

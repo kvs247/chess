@@ -118,6 +118,12 @@ class GameById(Resource):
         # print('move', move)
         
         if move:
+            # stalemate
+            stalemate = False
+            if '$' in move:
+                move = move.replace('$', '')
+                stalemate = True
+
             # promotion
             promotion_type = None
             if '=' in move:
@@ -135,6 +141,9 @@ class GameById(Resource):
                 if len(pgn.splitlines()[-1]) > 60:
                     newline = '\n'
             new_pgn = pgn[:-1] + newline + move_number + move + ' ' + pgn[-1]
+            if stalemate:
+                new_pgn = new_pgn.replace('*', '1/2-1/2')
+
 
             # checkmate
             if '#' in move:
