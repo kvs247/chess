@@ -136,7 +136,6 @@ class GameById(Resource):
                     newline = '\n'
             new_pgn = pgn[:-1] + newline + move_number + move + ' ' + pgn[-1]
 
-
             # checkmate
             if '#' in move:
                 win_string = '1-0' if fen_dict['active_color'] == 'w' else '0-1'
