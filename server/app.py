@@ -5,7 +5,7 @@ from flask_restful import Resource
 from models import User, Game, Friendship, Challenge
 from config import app, db, api
 from chess.main import Chess
-from chess.pgn_to_fen import pgn_to_fen, pgn_to_dict, update_fen
+from chess.pgn_to_fen import pgn_to_fen, pgn_to_fen_store, pgn_to_dict, update_fen
 from chess import util
 from chess.new_pgn import new_pgn
 
@@ -150,6 +150,18 @@ class GameById(Resource):
             if fen_dict['halfmove_clock'] == 100:
                 print('draw')
                 game.pgn = game.pgn.replace('*', '1/2-1/2')
+
+            # threefold repetition
+            fen_list  = pgn_to_fen_store(game.pgn)
+            fen_list = list(map(lambda x: x.split(' ')[0], fen_list))
+            game_fen_string = game.fen.split(' ')[0]
+            if game_fen_string in fen_list[:-1]:
+                print('repeated once')
+                temp_fen_list = fen_list[:-1]
+                temp_fen_list.remove(game_fen_string)
+                if game_fen_string in temp_fen_list:
+                    print('repeated twice')
+                    game.pgn = game.pgn.replace('*', '1/2-1/2')
 
             db.session.add(game)
             db.session.commit()
