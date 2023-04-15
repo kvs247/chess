@@ -35,7 +35,7 @@ const playerBox = (username, photo) => {
   );
 };
 
-function GameArea({ user, users, staticBoard, gameId }) {
+function GameArea({ user, users, getGames, staticBoard, gameId }) {
 
     const initialGameData = {
         id: 0,
@@ -73,7 +73,7 @@ function GameArea({ user, users, staticBoard, gameId }) {
             })
           }) 
           .then(res => res.json())
-        
+        getGames();
         setRerender(true)
 
         return response;

@@ -44,6 +44,7 @@ class Chess:
             return None
         
         # check/checkmate/stalemate
+        stalemate = False
         checkmate = False
         new_fen = update_fen(self.fen, from_index, to_index)
         new_fen_list = util.fen_to_list(new_fen)

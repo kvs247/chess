@@ -4,6 +4,7 @@
 - fix SHOW USERS button and search bar placement
 - error messages at login/signup (formik?)
 - fix colors for dark mode
+- fix the fucking friends AGAIN!!!!!!
 
 ## could do
 - improve "Don't have an account?" text on Login page - currently jumps to two lines often

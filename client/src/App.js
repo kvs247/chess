@@ -105,6 +105,8 @@ function App() {
                 user={user}
                 users={users}
                 games={games}
+                setGames={setGames}
+                getGames={getGames}                
                 onLogout={handleLogout}
                 onClickPlay={handleClickPlay}
                 playComputer={playComputer}
@@ -116,6 +118,8 @@ function App() {
                 user={user}
                 users={users}
                 games={games}
+                setGames={setGames}
+                getGames={getGames}
                 onLogout={handleLogout}
                 onClickPlay={handleClickPlay}
                 playComputer={playComputer}
