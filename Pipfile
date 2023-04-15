@@ -16,6 +16,7 @@ honcho = "*"
 gunicorn = "*"
 psycopg2-binary = "*"
 python-dotenv = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
