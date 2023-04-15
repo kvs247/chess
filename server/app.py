@@ -1,3 +1,7 @@
+# import os
+# from dotenv import load_dotenv
+# load_dotenv()
+
 import random
 from flask import request, session, make_response, jsonify, abort
 from flask_restful import Resource
