@@ -29,6 +29,9 @@ function NavBar({ user, onLogout, onClickPlay }) {
                       break;
                     case 'Logout':
                       onLogout();
+                      break;
+                    default:
+                      break;
                   };
                   history.push(route);
                 }}

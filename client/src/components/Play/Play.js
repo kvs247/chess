@@ -17,7 +17,7 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
 
     const activeGames = games.filter(game => {
         const pgnObj = pgnToObj(game.pgn);
-        const inProgress = pgnObj['result'] == '*'
+        const inProgress = pgnObj['result'] === '*'
         const isWhite = pgnObj['whiteUsername'] === user.username;
         const isBlack = pgnObj['blackUsername'] === user.username;
         return inProgress && (isWhite || isBlack);

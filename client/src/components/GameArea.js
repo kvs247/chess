@@ -37,20 +37,20 @@ const playerBox = (username, photo) => {
 
 function GameArea({ user, users, getGames, staticBoard, gameId }) {
 
-    const initialGameData = {
-        id: 0,
-        white_user_id: 0,
-        black_user_id: 0,
-        pgn: '',
-        fen: ''
-    };
+    // const initialGameData = {
+    //     id: 0,
+    //     white_user_id: 0,
+    //     black_user_id: 0,
+    //     pgn: '',
+    //     fen: ''
+    // };
     const [rerender, setRerender] = useState(false);
     const [gameData, setGameData] = useState({});
 
     useEffect(() => {
         getGameData();
         setRerender(false);
-    }, [gameId, rerender])
+    }, [gameId, rerender, getGameData])
 
     const handleMove = async (
       fromIndex, 
