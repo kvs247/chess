@@ -55,8 +55,7 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
     // };
 
     useEffect(() => {
-        if (!gameId) gameId = 1;
-        fetch(`/games/${gameId}`)
+        fetch(`/games/${gameId ? gameId : 1}`)
           .then(res => res.json())
           .then(data => setGameData(data));
 
