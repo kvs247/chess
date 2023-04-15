@@ -25,8 +25,8 @@ def index(id=0):
 CORS(app)
 bcrypt = Bcrypt(app)
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db' # development
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI') # production
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db' # development
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI') # production
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 
