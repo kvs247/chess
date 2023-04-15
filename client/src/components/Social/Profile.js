@@ -31,7 +31,7 @@ function Profile({ user, profileData, games, onAddFriend, onRemoveFriend }) {
         if (profileData) {
             setIsFriend(user.friend_ids.includes(profileData.id));
         }
-    }, [profileData]);
+    }, [profileData, user.friend_ids]);
     
     const onSendChallenge = () => {
         fetch('/challenges', {
@@ -45,7 +45,7 @@ function Profile({ user, profileData, games, onAddFriend, onRemoveFriend }) {
         setTimeout(() => setShowConfirmation(false), 2000);
     };
 
-    const completedGames = games.filter(game => game.pgn.slice(-1)[0] != '*');
+    const completedGames = games.filter(game => game.pgn.slice(-1)[0] !== '*');
   
     const numGames = completedGames.length;
     const wonGames = completedGames.filter(g => {
@@ -116,7 +116,7 @@ function Profile({ user, profileData, games, onAddFriend, onRemoveFriend }) {
           </Box>
 
           {/* Challenge/Friend Button */}
-          <Box>
+          {user.id !== profileData.id ? <Box>
             <Button
               variant='contained'
               sx={{ mr: 2 }}
@@ -154,7 +154,7 @@ function Profile({ user, profileData, games, onAddFriend, onRemoveFriend }) {
                   challenge created
                 </Box>
               </Fade>
-          </Box>
+          </Box> : null}
 
           {/* Completed Games */}
           <Box
