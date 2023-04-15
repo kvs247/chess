@@ -47,17 +47,21 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
     const [rerender, setRerender] = useState(false);
     const [gameData, setGameData] = useState({});
 
-    const getGameData = () => {
-      if (!gameId) gameId = 1;
-      fetch(`/games/${gameId}`)
-        .then(res => res.json())
-        .then(data => setGameData(data));
-    };
+    // const getGameData = () => {
+    //   if (!gameId) gameId = 1;
+    //   fetch(`/games/${gameId}`)
+    //     .then(res => res.json())
+    //     .then(data => setGameData(data));
+    // };
 
     useEffect(() => {
-        getGameData();
+        if (!gameId) gameId = 1;
+        fetch(`/games/${gameId}`)
+          .then(res => res.json())
+          .then(data => setGameData(data));
+
         setRerender(false);
-    }, [gameId, rerender, getGameData])
+    }, [gameId, rerender])
 
     const handleMove = async (
       fromIndex, 
