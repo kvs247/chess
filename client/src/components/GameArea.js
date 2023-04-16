@@ -37,13 +37,13 @@ const playerBox = (username, photo) => {
 
 function GameArea({ user, users, getGames, staticBoard, gameId }) {
 
-    const initialGameData = {
-        id: 0,
-        white_user_id: 0,
-        black_user_id: 0,
-        pgn: '',
-        fen: ''
-    };
+    // const initialGameData = {
+    //     id: 0,
+    //     white_user_id: 0,
+    //     black_user_id: 0,
+    //     pgn: '',
+    //     fen: ''
+    // };
     const [rerender, setRerender] = useState(false);
     const [gameData, setGameData] = useState({});
     const [flippedBoard, setFlippedBoard] = useState(false);
@@ -58,12 +58,13 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
             else if (!whitesTurn && user.id === gameData.black_user_id) setIsUsersTurn(true)
             else setIsUsersTurn(false);
         };
-        
-    }, [gameData]);
+    }, [user.id, gameData]);
     
     useEffect(() => {
-      getGameData();
       setRerender(false);
+      fetch(`/games/${gameId ? gameId : 1}`)
+        .then(res => res.json())
+        .then(data => setGameData(data));
     }, [gameId, rerender])
 
     const handleMove = async (
@@ -93,13 +94,6 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
         return response;
     };
 
-    const getGameData = () => {
-        if (!gameId) gameId = 1;
-        fetch(`/games/${gameId}`)
-          .then(res => res.json())
-          .then(data => setGameData(data));
-    };
-
     let whiteUsername = 'White';
     let whiteProfileImage = guest;
     let blackUsername = 'Black';
@@ -113,7 +107,7 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
       blackUsername = pgnObj['blackUsername'];
       blackProfileImage = users.find(user => user.username === blackUsername).profile_image;
       
-      if (gameData.id == 1) {
+      if (gameData.id === 1) {
           whiteUsername = 'White';
           whiteProfileImage = guest;
           blackUsername = 'Black';
@@ -186,7 +180,7 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
             >
               Flip Board
             </Button> 
-            {user.username == whiteUsername || user.username == blackUsername ? 
+            {user.username === whiteUsername || user.username === blackUsername ? 
               <>
               <Button
                 variant='contained'

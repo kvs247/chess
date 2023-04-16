@@ -19,7 +19,7 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
 
     const activeGames = games.filter(game => {
         const pgnObj = pgnToObj(game.pgn);
-        const inProgress = pgnObj['result'] == '*'
+        const inProgress = pgnObj['result'] === '*'
         const isWhite = pgnObj['whiteUsername'] === user.username;
         const isBlack = pgnObj['blackUsername'] === user.username;
         return inProgress && (isWhite || isBlack);
@@ -39,15 +39,19 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
         setYourMoveGames(activeGames.filter(game => {
             // console.log(game);
             const whitesTurn = game.fen.split(' ')[1] === 'w' ? true : false;
-            if (whitesTurn && user.id === game.white_user_id) return true;
-            if (!whitesTurn && user.id === game.black_user_id) return true;
+            let result = false
+            if (whitesTurn && user.id === game.white_user_id) result = true;
+            if (!whitesTurn && user.id === game.black_user_id) result = true;
+            return result
         }));
         setTheirMoveGames(activeGames.filter(game => {
             const whitesTurn = game.fen.split(' ')[1] === 'w' ? true : false;
-            if (whitesTurn && user.id !== game.white_user_id) return true;
-            if (!whitesTurn && user.id !== game.black_user_id) return true;
+            let result = false
+            if (whitesTurn && user.id !== game.white_user_id) result = true;
+            if (!whitesTurn && user.id !== game.black_user_id) result = true;
+            return result
         }));
-    }, [games, id]);
+    }, [games, id, user.id, activeGames]);
 
     return (
         <BaseContainer>
