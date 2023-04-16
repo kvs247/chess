@@ -58,7 +58,7 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
             else if (!whitesTurn && user.id === gameData.black_user_id) setIsUsersTurn(true)
             else setIsUsersTurn(false);
         };
-    }, [gameData]);
+    }, [user.id, gameData]);
     
     useEffect(() => {
       setRerender(false);
