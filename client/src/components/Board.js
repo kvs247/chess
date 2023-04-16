@@ -17,7 +17,7 @@ function getInitialPositions() {
   }
 const initialPositions = getInitialPositions();
   
-function Board({ length, staticBoard, gameData, onMove }) {
+function Board({ length, staticBoard, flippedBoard, gameData, onMove }) {
 
     let fen = gameData.fen
 
@@ -25,6 +25,10 @@ function Board({ length, staticBoard, gameData, onMove }) {
     
     if (!fen) fen = ' w KQkq - 0 1'
     const fenArray = fenToArray(fen);
+
+    if (flippedBoard) {
+        fenArray.reverse();
+    }
 
     const [positions, setPositions] = useState(initialPositions);
 
@@ -40,8 +44,15 @@ function Board({ length, staticBoard, gameData, onMove }) {
         const deltaX = positions[i].x;
         const deltaY = positions[i].y;
 
-        const fromIndex = i;
-        const toIndex = i + Math.round(deltaX / squareLength) + Math.round(deltaY / squareLength) * 8;
+        let fromIndex = i;
+        let toIndex = i + Math.round(deltaX / squareLength) + Math.round(deltaY / squareLength) * 8;
+
+        if (flippedBoard) {
+            fromIndex = 63 - fromIndex;
+            toIndex = 63 - toIndex;         
+        };
+
+        console.log(fromIndex, toIndex)
 
         const response = await onMove(fromIndex, toIndex);
         if (response !== fen) {

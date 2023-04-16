@@ -171,6 +171,9 @@ class GameById(Resource):
                     print('repeated twice')
                     game.pgn = game.pgn.replace('*', '1/2-1/2')
 
+            # insufficient material
+            fen_list = util.piece_placement_to_list(fen_dict['piece_placement'])
+
             db.session.add(game)
             db.session.commit()
         

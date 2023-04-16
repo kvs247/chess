@@ -45,6 +45,7 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
         fen: ''
     };
     const [rerender, setRerender] = useState(false);
+    const [flippedBoard, setFlippedBoard] = useState(false);
     const [gameData, setGameData] = useState({});
 
     useEffect(() => {
@@ -140,14 +141,19 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
           >
             {gameData.fen ? message : null}
           </Box>
-          {playerBox(blackUsername, blackProfileImage)}
+          {flippedBoard ? 
+          playerBox(blackUsername, blackProfileImage) : 
+          playerBox(whiteUsername, whiteProfileImage)}
           <Board 
             length={length} 
             staticBoard={staticBoard}
+            flippedBoard={flippedBoard}
             gameData={gameData}
             onMove={handleMove}
           />
-          {playerBox(whiteUsername, whiteProfileImage)}
+          {flippedBoard ? 
+          playerBox(whiteUsername, whiteProfileImage) : 
+          playerBox(blackUsername, blackProfileImage)}
           <Box
             sx={{
               width: length,
@@ -162,6 +168,7 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
             <Button
               variant='contained'
               sx ={{ m: 1, }}
+              onClick={() => setFlippedBoard(!flippedBoard)}
             >
               Flip Board
             </Button> 
