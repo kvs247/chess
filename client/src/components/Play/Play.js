@@ -14,6 +14,8 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
     const { id } = useParams();
 
     const [moves, setMoves] = useState('');
+    const [yourMoveGames, setYourMoveGames] = useState([]);
+    const [theirMoveGames, setTheirMoveGames] = useState([]);
 
     const activeGames = games.filter(game => {
         const pgnObj = pgnToObj(game.pgn);
@@ -29,9 +31,22 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
       return activeGamesUserIds.includes(user.id)
     });
 
+    
     useEffect(() => {
         const game = games.find(game => game.id === parseInt(id));
         if (game && game.pgn) setMoves(pgnToObj(game.pgn)['moveList']);
+
+        setYourMoveGames(activeGames.filter(game => {
+            // console.log(game);
+            const whitesTurn = game.fen.split(' ')[1] === 'w' ? true : false;
+            if (whitesTurn && user.id === game.white_user_id) return true;
+            if (!whitesTurn && user.id === game.black_user_id) return true;
+        }));
+        setTheirMoveGames(activeGames.filter(game => {
+            const whitesTurn = game.fen.split(' ')[1] === 'w' ? true : false;
+            if (whitesTurn && user.id !== game.white_user_id) return true;
+            if (!whitesTurn && user.id !== game.black_user_id) return true;
+        }));
     }, [games, id]);
 
     return (
@@ -52,6 +67,8 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
             <MoveList moves={moves}/> :
             <ActiveGames
               games={activeGames}
+              yourMoveGames={yourMoveGames}
+              theirMoveGames={theirMoveGames}
               users={activeGamesUsers}
             >
             </ActiveGames>
