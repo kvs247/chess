@@ -46,20 +46,25 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
     // };
     const [rerender, setRerender] = useState(false);
     const [gameData, setGameData] = useState({});
-
-    // const getGameData = () => {
-    //   if (!gameId) gameId = 1;
-    //   fetch(`/games/${gameId}`)
-    //     .then(res => res.json())
-    //     .then(data => setGameData(data));
-    // };
+    const [flippedBoard, setFlippedBoard] = useState(false);
+    const [isUsersTurn, setIsUsersTurn] = useState(false);
 
     useEffect(() => {
-        fetch(`/games/${gameId ? gameId : 1}`)
-          .then(res => res.json())
-          .then(data => setGameData(data));
-
-        setRerender(false);
+        setFlippedBoard(user.id === gameData.black_user_id);
+        if (gameData.fen) {
+            const whitesTurn = gameData.fen.split(' ')[1] === 'w' ? true : false;
+            console.log('whitesTurn', whitesTurn);
+            if (whitesTurn && user.id === gameData.white_user_id) setIsUsersTurn(true)
+            else if (!whitesTurn && user.id === gameData.black_user_id) setIsUsersTurn(true)
+            else setIsUsersTurn(false);
+        };
+    }, [gameData]);
+    
+    useEffect(() => {
+      setRerender(false);
+      fetch(`/games/${gameId ? gameId : 1}`)
+        .then(res => res.json())
+        .then(data => setGameData(data));
     }, [gameId, rerender])
 
     const handleMove = async (
@@ -143,14 +148,20 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
           >
             {gameData.fen ? message : null}
           </Box>
-          {playerBox(blackUsername, blackProfileImage)}
+          {flippedBoard ? 
+          playerBox(whiteUsername, whiteProfileImage) :
+          playerBox(blackUsername, blackProfileImage)} 
           <Board 
             length={length} 
             staticBoard={staticBoard}
+            flippedBoard={flippedBoard}
+            isUsersTurn={isUsersTurn}
             gameData={gameData}
             onMove={handleMove}
           />
-          {playerBox(whiteUsername, whiteProfileImage)}
+          {flippedBoard ? 
+          playerBox(blackUsername, blackProfileImage) :
+          playerBox(whiteUsername, whiteProfileImage)}
           <Box
             sx={{
               width: length,
@@ -165,6 +176,7 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
             <Button
               variant='contained'
               sx ={{ m: 1, }}
+              onClick={() => setFlippedBoard(!flippedBoard)}
             >
               Flip Board
             </Button> 
