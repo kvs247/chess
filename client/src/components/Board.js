@@ -17,7 +17,7 @@ function getInitialPositions() {
   }
 const initialPositions = getInitialPositions();
   
-function Board({ length, staticBoard, flippedBoard, gameData, onMove }) {
+function Board({ length, staticBoard, flippedBoard, isUsersTurn, gameData, onMove }) {
 
     let fen = gameData.fen
 
@@ -41,6 +41,15 @@ function Board({ length, staticBoard, flippedBoard, gameData, onMove }) {
     const onStop = async (i) => {
         const deltaX = positions[i].x;
         const deltaY = positions[i].y;
+
+        if (!isUsersTurn) {
+            setPositions((positions) => {
+              const newPositions = { ...positions };
+              newPositions[i] = { x: 0, y: 0 };
+              return newPositions
+            });
+            return '';
+        };
 
         let fromIndex = i;
         let toIndex = i + Math.round(deltaX / squareLength) + Math.round(deltaY / squareLength) * 8;

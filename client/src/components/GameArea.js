@@ -47,9 +47,18 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
     const [rerender, setRerender] = useState(false);
     const [gameData, setGameData] = useState({});
     const [flippedBoard, setFlippedBoard] = useState(false);
+    const [isUsersTurn, setIsUsersTurn] = useState(false);
 
     useEffect(() => {
         setFlippedBoard(user.id === gameData.black_user_id);
+        if (gameData.fen) {
+            const whitesTurn = gameData.fen.split(' ')[1] === 'w' ? true : false;
+            console.log('whitesTurn', whitesTurn);
+            if (whitesTurn && user.id === gameData.white_user_id) setIsUsersTurn(true)
+            else if (!whitesTurn && user.id === gameData.black_user_id) setIsUsersTurn(true)
+            else setIsUsersTurn(false);
+        };
+        
     }, [gameData]);
     
     useEffect(() => {
@@ -152,6 +161,7 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
             length={length} 
             staticBoard={staticBoard}
             flippedBoard={flippedBoard}
+            isUsersTurn={isUsersTurn}
             gameData={gameData}
             onMove={handleMove}
           />
