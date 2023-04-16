@@ -32,7 +32,6 @@ function ActiveGames({ games, users }) {
         {games && users[0] ? games.map((game) => {
           const whiteUser = users.find(user => user.id === game.white_user_id);
           const blackUser = users.find(user => user.id === game.black_user_id);
-          console.log(game)
           return (
             <CardActionArea key={game.id}>
               <Box

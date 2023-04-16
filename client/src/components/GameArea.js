@@ -45,12 +45,16 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
         fen: ''
     };
     const [rerender, setRerender] = useState(false);
-    const [flippedBoard, setFlippedBoard] = useState(false);
     const [gameData, setGameData] = useState({});
+    const [flippedBoard, setFlippedBoard] = useState(false);
 
     useEffect(() => {
-        getGameData();
-        setRerender(false);
+        setFlippedBoard(user.id === gameData.black_user_id);
+    }, [gameData]);
+    
+    useEffect(() => {
+      getGameData();
+      setRerender(false);
     }, [gameId, rerender])
 
     const handleMove = async (
@@ -142,8 +146,8 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
             {gameData.fen ? message : null}
           </Box>
           {flippedBoard ? 
-          playerBox(blackUsername, blackProfileImage) : 
-          playerBox(whiteUsername, whiteProfileImage)}
+          playerBox(whiteUsername, whiteProfileImage) :
+          playerBox(blackUsername, blackProfileImage)} 
           <Board 
             length={length} 
             staticBoard={staticBoard}
@@ -152,8 +156,8 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
             onMove={handleMove}
           />
           {flippedBoard ? 
-          playerBox(whiteUsername, whiteProfileImage) : 
-          playerBox(blackUsername, blackProfileImage)}
+          playerBox(blackUsername, blackProfileImage) :
+          playerBox(whiteUsername, whiteProfileImage)}
           <Box
             sx={{
               width: length,

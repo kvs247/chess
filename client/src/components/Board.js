@@ -21,8 +21,6 @@ function Board({ length, staticBoard, flippedBoard, gameData, onMove }) {
 
     let fen = gameData.fen
 
-    
-    
     if (!fen) fen = ' w KQkq - 0 1'
     const fenArray = fenToArray(fen);
 
@@ -51,8 +49,6 @@ function Board({ length, staticBoard, flippedBoard, gameData, onMove }) {
             fromIndex = 63 - fromIndex;
             toIndex = 63 - toIndex;         
         };
-
-        console.log(fromIndex, toIndex)
 
         const response = await onMove(fromIndex, toIndex);
         if (response !== fen) {
