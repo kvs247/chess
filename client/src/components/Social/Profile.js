@@ -18,13 +18,13 @@ function Profile({ user, profileData, games, onAddFriend, onRemoveFriend }) {
     const [showConfirmation, setShowConfirmation] = useState(false);
 
     if (!profileData) profileData = {
-      id: 0,
-      full_name: '',
-      username: '',
-      email: '',
-      profile_image: '',
-      date_joined: '',
-      friend_ids: []
+        id: 0,
+        full_name: '',
+        username: '',
+        email: '',
+        profile_image: '',
+        date_joined: '',
+        friend_ids: []
     };
 
     useEffect(() => {
@@ -46,7 +46,6 @@ function Profile({ user, profileData, games, onAddFriend, onRemoveFriend }) {
     };
 
     const completedGames = games.filter(game => game.pgn.slice(-1)[0] !== '*');
-  
     const numGames = completedGames.length;
     const wonGames = completedGames.filter(g => {
         const pgnObj = pgnToObj(g.pgn);
@@ -161,11 +160,27 @@ function Profile({ user, profileData, games, onAddFriend, onRemoveFriend }) {
             bgcolor='secondary.main'
             width={length}
             height='40vh'
-            sx={{ my: 2, p: 2}}
-            overflow='auto'
+            sx={{ my: 2, p: 2 }}
+            // overflow='auto'
           >
-            <Typography variant='h4' sx={{ p: 2}}>Completed Games</Typography>
-            <CompletedGames games={completedGames} />
+            <Box
+              bgcolor='secondary.main'
+              width={length}
+              sx={{ 
+                my: 2, 
+                p: 2, 
+                height: '95%', 
+                width: '100%', 
+                overflow: 'auto',
+                '&::-webkit-scrollbar': {
+                  display: 'none',
+                },
+              }}
+              // overflow='auto'            
+            >
+              <Typography variant='h4' sx={{ p: 2}}>Completed Games</Typography>
+              <CompletedGames games={completedGames} />
+            </Box>
           </Box>
           
         </Box>

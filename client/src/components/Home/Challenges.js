@@ -30,7 +30,12 @@ function Challenges({
           <Typography
             variant='h6'
             align='center'
-            sx={{ mt: 1, mb: 3 }}
+            sx={{
+              mt: 1,
+              mb: 3,
+              color: '#fff',
+              textDecoration: 'underline',
+            }}
           >
             Received
           </Typography>
@@ -84,7 +89,12 @@ function Challenges({
           <Typography
             variant='h6'
             align='center'
-            sx={{ mt: 1, mb: 3 }}
+            sx={{
+              mt: 1,
+              mb: 3,
+              color: '#fff',
+              textDecoration: 'underline',
+            }}
           >
             Sent
           </Typography>

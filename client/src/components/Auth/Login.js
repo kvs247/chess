@@ -53,7 +53,12 @@ function Login({ onSubmit }) {
               label='Email Address'
               name='email'
               color='secondary'
-              sx={{ input: {color: 'white'} }}
+              InputLabelProps={{
+                style: {
+                  color: '#E1E1E1',
+                }
+              }}
+              sx={{ input: {color: '#E1E1E1'}, border: {color: '#E1E1E1'} }}
             />
             <TextField 
               margin='normal'
@@ -62,8 +67,14 @@ function Login({ onSubmit }) {
               id='password'
               label='Password'
               name='password'
+              type='password'
               color='secondary'
-              sx={{ input: {color: 'white'} }}
+              InputLabelProps={{
+                style: {
+                  color: '#E1E1E1',
+                }
+              }}
+              sx={{ input: {color: '#E1E1E1'}, border: {color: '#E1E1E1'} }}
             />
             <Button
               type='submit'

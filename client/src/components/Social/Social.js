@@ -24,51 +24,44 @@ function Social({ user, users, games, onLogout, onClickPlay }) {
     const [friends, setFriends] = useState([]);
     const [showFriends, setShowFriends] = useState(true);
     
-    
-
-    
     const handleAddFriend = () => {
-      fetch('/friendships', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify([user.id, profileData.id])
-          })
-          .then(() => {
-            const newFriend = users.filter(u => parseInt(u.id) === parseInt(user.id))[0];
-            setFriends(friends => [...friends, newFriend]);
-          });
-        };
+        fetch('/friendships', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify([user.id, profileData.id])
+            })
+            .then(() => {
+              const newFriend = users.filter(u => parseInt(u.id) === parseInt(user.id))[0];
+              setFriends(friends => [...friends, newFriend]);
+            });
+          };
         
-        const handleRemoveFriend = () => {
-          fetch('/friendships', {
+    const handleRemoveFriend = () => {
+        fetch('/friendships', {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json'
             }, 
             body: JSON.stringify([user.id, profileData.id])
-        })
-          .then(() => {
+        }).then(() => {
             setFriends(friends => friends.filter(u => parseInt(u.id) !== parseInt(user.id)));
-          });
-        };
-        
-        const handleClickButton = () => {
-          setShowFriends(!showFriends);
-        };
-        
-        const filteredGames = games.filter(u => {
-          return parseInt(u.white_user_id) === parseInt(id) || parseInt(u.black_user_id) === parseInt(id);
         });
+    };
+        
+    const handleClickButton = () => {
+        setShowFriends(!showFriends);
+    };
+    
+    const filteredGames = games.filter(u => {
+        return parseInt(u.white_user_id) === parseInt(id) || parseInt(u.black_user_id) === parseInt(id);
+    });
         
     useEffect(() => {
-      const updateStates = () => {
         const thisPageUser = users.filter(u => parseInt(u.id) === parseInt(id))[0];
         setProfileData(thisPageUser);
         setFriends(users.filter(u => thisPageUser.friend_ids.includes(u.id)));
-      };
-      updateStates();
     }, [id, users]);   
 
     return (
@@ -86,8 +79,7 @@ function Social({ user, users, games, onLogout, onClickPlay }) {
             onRemoveFriend={handleRemoveFriend}
           />
           {showFriends ? 
-          <UserList users={users} onClickButton={handleClickButton}/>
-          :
+          <UserList users={users} onClickButton={handleClickButton}/> :
           <FriendList users={friends} onClickButton={handleClickButton}/>
           }
         </BaseContainer>

@@ -20,6 +20,10 @@ function UserList({ users, onClickButton }) {
           <Button
             variant='contained'
             onClick={onClickButton}
+            sx={{
+              mx: 'auto',
+              display: 'block', 
+            }}            
           >
             Show Friends
           </Button>
