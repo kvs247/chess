@@ -22,7 +22,19 @@ const theme = createTheme({
       fontSize: '2rem',
       color: '#E1E1E1',
     },
+    h3: {
+      color: '#E1E1E1',
+    },
+    h4: {
+      color: '#E1E1E1',
+    },
     h5: {
+      color: '#E1E1E1',
+    },
+    h6: {
+      color: '#E1E1E1',
+    },
+    h7: {
       color: '#E1E1E1',
     }
   },

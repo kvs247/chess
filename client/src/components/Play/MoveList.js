@@ -3,18 +3,15 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
 
 function MoveList({ moves }) {
 
     const [groupedMoves, setGroupedMoves] = useState([]);
 
     useEffect(() => {
-        console.log(moves)
-        // const groupedMoves = [];
         if (moves.length > 0) {
-              // console.log('moves', moves)
               const movesSplit = moves.split(' ').filter(move => move !== '')
-              // console.log('moveSplit', movesSplit)
               const mainArr = [];
               let tempArr = [];
               for (let i = 0; i < movesSplit.length + 1; i += 1) {
@@ -27,7 +24,6 @@ function MoveList({ moves }) {
               };
               setGroupedMoves(mainArr);
           };
-        // console.log('groupedMoves', groupedMoves)
 
     }, [moves]);
 
@@ -37,11 +33,21 @@ function MoveList({ moves }) {
         bgcolor='secondary.main'
         sx={{ overflow: 'auto'}}
         >
+          <Typography
+            variant='h5'
+            align='center'
+            sx={{
+              mt: 1,
+              mb: 3,
+            }}
+          >
+            Moves
+          </Typography>
           <List>
             {groupedMoves.map((text, index) => {
               return (
                 <ListItem key={index}>
-                  <ListItemText primary={text} />
+                  <ListItemText primary={text} sx={{ textAlign: 'center' }} />
                 </ListItem>
               );
             })}

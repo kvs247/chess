@@ -61,7 +61,7 @@ function NavBar({ user, onLogout, onClickPlay }) {
         <Box 
         bgcolor='secondary.main'
         >
-          <CardActionArea>
+          <CardActionArea disableRipple>
             <Typography 
               variant='h5' 
               align='center'

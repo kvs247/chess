@@ -40,12 +40,19 @@ function BaseUserList({ children, users }) {
         >
           {children}
           <TextField
+            variant='filled'
             onChange={(event) => handleChange(event)}
             margin='normal'
             id='search'
             label='Search'
             name='search'
             color='secondary'
+            InputLabelProps={{
+              style: {
+                color: '#E1E1E1',
+              }
+            }}
+            sx={{ input: {color: '#E1E1E1'}, border: {color: '#E1E1E1'} }}            
           />
           {users ? filteredUsers.map((user) => {
             return (

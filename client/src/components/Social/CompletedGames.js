@@ -86,6 +86,7 @@ function CompletedGames({ games }) {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     padding: '16px',
+                    color: '#E1E1E1',
                   }}
                 >
                   <Box sx={{ flexBasis: '25%' }}>

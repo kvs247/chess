@@ -16,9 +16,14 @@ class Chess:
     def move(self, from_index, to_index):
         piece = self.fen_list[from_index]
         color = self.fen.split(' ')[1]
-
-        # idea for later?
-        # return_move = None
+        piece_classes = {
+            'P': Pawn,
+            'N': Knight,
+            'B': Bishop,
+            'R': Rook,
+            'Q': Queen,
+            'K': King
+        }
 
         # correct turn
         if color == 'w' and piece.islower():
@@ -55,7 +60,6 @@ class Chess:
             check = True
             # checkmate?
             if len(king.moves()) == 0:
-                # print('king in check cant move')
                 checkmate = True
                 for index in range(64):
                     piece = new_fen_list[index]
@@ -64,46 +68,13 @@ class Chess:
                     piece_color = 'w' if piece.isupper() else 'b'
                     if piece_color != king_color:
                         continue
-                    if piece.upper() == 'P':
-                        pawn = Pawn(king_color, index, new_fen)   
-                        for move in pawn.moves():
-                            piece_fen = update_fen(new_fen, index, move)
-                            if not king_in_check_after_move(king_color, piece_fen):
-                                # print(f'{index} pawn can move {move}')
-                                checkmate = False
-                                break
-                    if piece.upper() == 'N':
-                        knight = Knight(king_color, index, new_fen)   
-                        for move in knight.moves():
-                            piece_fen = update_fen(new_fen, index, move)
-                            if not king_in_check_after_move(king_color, piece_fen):
-                                # print(f'{index} knight can move {move}')
-                                checkmate = False
-                                break
-                    if piece.upper() == 'B':
-                        bishop = Bishop(king_color, index, new_fen)   
-                        for move in bishop.moves():
-                            piece_fen = update_fen(new_fen, index, move)
-                            if not king_in_check_after_move(king_color, piece_fen):
-                                # print(f'{index} bishop can move {move}')
-                                checkmate = False                        
-                                break
-                    if piece.upper() == 'R':
-                        rook = Rook(king_color, index, new_fen)   
-                        for move in rook.moves():
-                            piece_fen = update_fen(new_fen, index, move)
-                            if not king_in_check_after_move(king_color, piece_fen):
-                                # print(f'{index} rook can move {move}')
-                                checkmate = False                        
-                                break
-                    if piece.upper() == 'Q':
-                        queen = Queen(king_color, index, new_fen)   
-                        for move in queen.moves():
-                            piece_fen = update_fen(new_fen, index, move)
-                            if not king_in_check_after_move(king_color, piece_fen):
-                                # print(f'{index} queen can move {move}')
-                                checkmate = False                        
-                                break
+                    piece_class = piece_classes[piece.upper()]
+                    piece = piece_class(king_color, index, new_fen)
+                    for move in piece.moves():
+                        piece_fen = update_fen(new_fen, index, move)
+                        if not king_in_check_after_move(king_color, piece_fen):
+                            checkmate = False
+                            break
         else:
             # stalemate?
             stalemate = True
@@ -115,40 +86,16 @@ class Chess:
                     piece_color = 'w' if piece.isupper() else 'b'
                     if piece_color != king_color:
                         continue
-                    if piece.upper() == 'P':
-                        pawn = Pawn(king_color, index, new_fen)
-                        for move in pawn.moves():
-                            piece_fen = update_fen(new_fen, index, move)
-                            if not king_in_check_after_move(king_color, piece_fen):
-                                stalemate = False
-                    if piece.upper() == 'N':
-                        pawn = Knight(king_color, index, new_fen)
-                        for move in pawn.moves():
-                            piece_fen = update_fen(new_fen, index, move)
-                            if not king_in_check_after_move(king_color, piece_fen):
-                                stalemate = False
-                    if piece.upper() == 'B':
-                        pawn = Bishop(king_color, index, new_fen)
-                        for move in pawn.moves():
-                            piece_fen = update_fen(new_fen, index, move)
-                            if not king_in_check_after_move(king_color, piece_fen):
-                                stalemate = False
-                    if piece.upper() == 'R':
-                        pawn = Rook(king_color, index, new_fen)
-                        for move in pawn.moves():
-                            piece_fen = update_fen(new_fen, index, move)
-                            if not king_in_check_after_move(king_color, piece_fen):
-                                stalemate = False     
-                    if piece.upper() == 'Q':
-                        pawn = Pawn(king_color, index, new_fen)
-                        for move in pawn.moves():
-                            piece_fen = update_fen(new_fen, index, move)
-                            if not king_in_check_after_move(king_color, piece_fen):
-                                stalemate = False            
+                    piece_class = piece_classes[piece.upper()]
+                    piece = piece_class(king_color, index, new_fen)
+                    for move in piece.moves():
+                        piece_fen = update_fen(new_fen, index, move)
+                        if not king_in_check_after_move(king_color, piece_fen):
+                            stalemate = False
+                            break         
             else:
                 stalemate = False               
     
-
         # castling
         king = King(color, from_index, self.fen)
         if piece == 'K':
@@ -174,79 +121,22 @@ class Chess:
                         if not king.in_check(3) and not king.in_check(2):
                             return 'O-O-O'
 
-        piece = self.fen_list[from_index]
+        # determine if move is legal
         result = ''
-
-        # pawn
-        if piece.upper() == 'P':
-            selected_piece = Pawn(color, from_index, self.fen)
-            legal_indexes = selected_piece.moves()
-            if to_index in legal_indexes:
-                move = util.index_to_algebraic(self.fen, from_index, to_index)
-                # promotion
-                if move[-1] == '8' or move[-1] == '1':
-                    print('promotion')
-                    print(move)
-                    move += '=Q'
-                    print(move)
-                    result = move
-                else:
-                    result = util.index_to_algebraic(self.fen, from_index, to_index)
-            else:
-                result = None
-
-        # knight
-        if piece.upper() == 'N':
-            selected_piece = Knight(color, from_index, self.fen)
-            legal_indexes = selected_piece.moves()
-            if to_index in legal_indexes:
-                result = util.index_to_algebraic(self.fen, from_index, to_index)
-            else:
-                result = None
-            
-        # bishop
-        if piece.upper() == 'B':
-            selected_piece = Bishop(color, from_index, self.fen)
-            legal_indexes = selected_piece.moves()
-            if to_index in legal_indexes:
-                result = util.index_to_algebraic(self.fen, from_index, to_index)
-            else:
-                result = None
-            
-        # rook
-        if piece.upper() == 'R':
-            selected_piece = Rook(color, from_index, self.fen)
-            legal_indexes = selected_piece.moves()
-            if to_index in legal_indexes:
-                result = util.index_to_algebraic(self.fen, from_index, to_index)
-            else:
-                result = None
-            
-        # queen
-        if piece.upper() == 'Q':
-            selected_piece = Queen(color, from_index, self.fen)
-            legal_indexes = selected_piece.moves()
-            if to_index in legal_indexes:
-                result = util.index_to_algebraic(self.fen, from_index, to_index)
-            else:
-                result = None
-            
-        # king 
-        if piece.upper() == 'K':
-            selected_piece = King(color, from_index, self.fen)
-            legal_indexes = selected_piece.moves()
-            if to_index in legal_indexes:
-                result = util.index_to_algebraic(self.fen, from_index, to_index)
-            else:
-                result = None
+        piece = self.fen_list[from_index]
+        piece_class = piece_classes[piece.upper()]
+        selected_piece = piece_class(color, from_index, self.fen)
+        legal_indexes = selected_piece.moves()
+        if to_index in legal_indexes:
+            result = util.index_to_algebraic(self.fen, from_index, to_index)
+            if piece.upper() == 'P' and (result[-1] == '8' or result[-1] == '1'):
+                result += '=Q'
+        else:
+            result = None
 
         if not result:
             return None
 
-        # print('result', result)
-        # print('check', check)
-        # print('checkmate', checkmate)
-        # print('stalemate', stalemate)
         if check and not checkmate:
             result += '+'
         if checkmate:
