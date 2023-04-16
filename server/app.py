@@ -3,7 +3,7 @@
 # load_dotenv()
 
 import random
-from flask import request, session, make_response, jsonify, abort
+from flask import request, session, make_response, jsonify, abort, render_template
 from flask_restful import Resource
 
 from models import User, Game, Friendship, Challenge
@@ -12,6 +12,11 @@ from chess.main import Chess
 from chess.pgn_to_fen import pgn_to_fen, pgn_to_fen_store, pgn_to_dict, update_fen
 from chess import util
 from chess.new_pgn import new_pgn
+
+@app.route('/')
+@app.route('/<int:id>')
+def index(id=0):
+    return render_template("index.html")
 
 class Users(Resource):
     def get(self):
