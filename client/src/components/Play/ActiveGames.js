@@ -122,7 +122,7 @@ function ActiveGames({ games, users, yourMoveGames, theirMoveGames }) {
                 No active games
               </Typography>
             }                        
-
+            
         </Box>
     );
 

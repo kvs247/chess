@@ -40,9 +40,12 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
             // console.log(game);
             const whitesTurn = game.fen.split(' ')[1] === 'w' ? true : false;
             if (whitesTurn && user.id === game.white_user_id) return true;
+            if (!whitesTurn && user.id === game.black_user_id) return true;
         }));
         setTheirMoveGames(activeGames.filter(game => {
-            if (!yourMoveGames.includes(game)) return true;
+            const whitesTurn = game.fen.split(' ')[1] === 'w' ? true : false;
+            if (whitesTurn && user.id !== game.white_user_id) return true;
+            if (!whitesTurn && user.id !== game.black_user_id) return true;
         }));
     }, [games, id]);
 
