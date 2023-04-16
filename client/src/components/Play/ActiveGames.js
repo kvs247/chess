@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
+import Typography from '@mui/material/Typography';
 
 import whiteKing from '../../assets/chess-pieces/white-king.png';
 import blackKing from '../../assets/chess-pieces/black-king.png';
