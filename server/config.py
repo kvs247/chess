@@ -17,15 +17,6 @@ app = Flask(
     static_folder='../client/build',
     template_folder='../client/build'
 )
-# @app.route('/')
-# @app.route('/<int:id>')
-# def index(id=0):
-#     return render_template('index.html')
-
-# @app.route('/', defaults={'path': ''})
-# @app.route('/<path:path>')
-# def catch_all(path):
-#     return render_template('index.html')
 
 CORS(app)
 bcrypt = Bcrypt(app)

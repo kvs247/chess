@@ -1,6 +1,7 @@
 # chess
 
 ## need to do
+- deployment stuff got messed up I guess - signup page not found and db not seeding with Render db
 
 ## could do
 - improve "Don't have an account?" text on Login page - currently jumps to two lines often

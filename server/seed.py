@@ -15,10 +15,10 @@ for f in pgn_files:
 
 with app.app_context():
 
-    User.query.delete()
     Friendship.query.delete()
     Game.query.delete()
     Challenge.query.delete()
+    User.query.delete()
 
     # Create users
     print('Creating users...')
