@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -5,9 +6,37 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 
+const validationSchema = yup.object({
+    email: yup
+        .string('Enter your email')
+        .email('Enter a valid email')
+        .required('Email is required'),
+    password: yup
+        .string('Enter your password')
+        .min(8, 'Password should be of minimum 8 characters length')
+        .required('Password is required'),
+});
 
-function Login({ onSubmit }) {
+function Login({ handleLogin }) {
+
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+        },
+        validationSchema: validationSchema,
+        validateOnChange: false,
+        onSubmit: (e) => {
+          handleLogin(e, '/login')
+            .catch(error => {
+              formik.setErrors({ login: error.error });
+            });
+        }
+    });
+
     return (
         <Container
           sx={{ 
@@ -38,7 +67,8 @@ function Login({ onSubmit }) {
           </Typography>
           <Box
             component='form'
-            onSubmit={(e) => onSubmit(e, '/login')}
+            // onSubmit={(e) => onSubmit(e, '/login')}
+            onSubmit={(e) => formik.handleSubmit(e, '/login')}
             textAlign='center'
             sx={{
               width: '25%',
@@ -46,13 +76,15 @@ function Login({ onSubmit }) {
             }}
           >
             <TextField 
-              margin='normal'
               required
               fullWidth
+              color='secondary'
               id='email'
               label='Email Address'
+              margin='normal'
               name='email'
-              color='secondary'
+              value={formik.values.email}
+              onChange={formik.handleChange}
               InputLabelProps={{
                 style: {
                   color: '#E1E1E1',
@@ -69,6 +101,8 @@ function Login({ onSubmit }) {
               name='password'
               type='password'
               color='secondary'
+              value={formik.values.password}
+              onChange={formik.handleChange}
               InputLabelProps={{
                 style: {
                   color: '#E1E1E1',
@@ -76,6 +110,21 @@ function Login({ onSubmit }) {
               }}
               sx={{ input: {color: '#E1E1E1'}, border: {color: '#E1E1E1'} }}
             />
+            {/* Errors */}
+            {Object.keys(formik.errors).length > 0 &&
+              <Box sx={{ mb: 2 }}>
+                {Object.keys(formik.errors).map((error, index) => (
+                  <Typography key={index} sx={{ color: 'error.main' }}>
+                    {formik.errors[error]}
+                  </Typography>
+                ))}    
+              </Box>
+            }
+            {/* {loginError ? 
+                <Typography sx={{ color: 'error.main' }}>
+                  Incorrect username or password
+                </Typography> : null
+            }                  */}
             <Button
               type='submit'
               fullWidth

@@ -233,6 +233,8 @@ class Login(Resource):
             if user.authenticate(data['password']):
                 session['user_id'] = user.id
                 return make_response(user.to_dict(), 200)
+            else:
+                abort(404, 'Incorrect email or password')
         except Exception as e:
             return make_response({'error': str(e)}, 400)
 api.add_resource(Login, '/login')
