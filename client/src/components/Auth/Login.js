@@ -30,12 +30,12 @@ function Login({ handleLogin }) {
         validationSchema: validationSchema,
         validateOnChange: false,
         onSubmit: (e) => {
-          handleLogin(e, '/login')
-            .catch(error => {
-              formik.setErrors({ login: error.error });
-            });
+            handleLogin(e, '/login')
+              .catch(error => {
+                  formik.setErrors({ login: error.error });
+              });
         }
-    });
+      });
 
     return (
         <Container
@@ -67,7 +67,6 @@ function Login({ handleLogin }) {
           </Typography>
           <Box
             component='form'
-            // onSubmit={(e) => onSubmit(e, '/login')}
             onSubmit={(e) => formik.handleSubmit(e, '/login')}
             textAlign='center'
             sx={{
@@ -120,11 +119,6 @@ function Login({ handleLogin }) {
                 ))}    
               </Box>
             }
-            {/* {loginError ? 
-                <Typography sx={{ color: 'error.main' }}>
-                  Incorrect username or password
-                </Typography> : null
-            }                  */}
             <Button
               type='submit'
               fullWidth

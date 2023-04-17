@@ -56,22 +56,23 @@ function App() {
     
     // route is either '/login' or '/signup'
     const handleLoginSignUp = (event, route) => {
-      const dataObj = event
-      return fetch(route, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(dataObj)
+        const dataObj = event
+        console.log(dataObj)
+        return fetch(route, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataObj)
         })
-            .then(res => {
-                if (res.ok) {
-                    history.push('/home');
-                    return res.json().then(user => setUser(user));
-                } else {
-                    return res.json().then(errors => Promise.reject(errors));
-                };
-            })
+          .then(res => {
+              if (res.ok) {
+                  history.push('/home');
+                  return res.json().then(user => setUser(user));
+              } else {
+                  return res.json().then(errors => Promise.reject(errors));
+              };
+          })
     };
 
       
@@ -148,7 +149,7 @@ function App() {
             </Route>
 
             <Route path="/signup">
-              <SignUp onSubmit={handleLoginSignUp} />
+              <SignUp handleSignUp={handleLoginSignUp} />
             </Route>
 
             <Redirect from='/' to='/login' />

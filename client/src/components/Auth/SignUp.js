@@ -5,8 +5,45 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 
-function SignUp({ onSubmit }) {
+const validationSchema = yup.object({
+  email: yup
+      .string('Enter your email')
+      .email('Enter a valid email')
+      .required('Email is required'),
+  password: yup
+      .string('Enter your password')
+      .min(8, 'Password should be of minimum 8 characters length')
+      .required('Password is required'),
+});
+
+function SignUp({ handleSignUp }) {
+
+    const formik = useFormik({
+        initialValues: {
+            fullName: '',
+            username: '',
+            email: '',
+            password: '',
+        },
+        validationSchema: validationSchema,
+        validateOnChange: false,
+        onSubmit: (e) => {
+            handleSignUp(e, '/signup')
+              .catch(error => {
+                  console.log(error.error)
+                  if (error.error.includes('UNIQUE constraint failed: users.email')) {
+                    formik.setErrors({ login: 'email already in use' });
+                  }
+                  if (error.error.includes('UNIQUE constraint failed: users.username')) {
+                    formik.setErrors({ login: 'username is taken' });
+                  }                  
+              });
+        }
+    });
+
     return (
         <Container
           sx={{ 
@@ -37,7 +74,7 @@ function SignUp({ onSubmit }) {
           </Typography>
           <Box
             component='form'
-            onSubmit={(e) => onSubmit(e, '/signup')}
+            onSubmit={(e) => formik.handleSubmit(e, '/signup')}
             textAlign='center'
             sx={{
               width: '25%',
@@ -52,6 +89,8 @@ function SignUp({ onSubmit }) {
               label='Full Name'
               name='fullName'
               color='secondary'
+              value={formik.values.fullName}
+              onChange={formik.handleChange}              
               InputLabelProps={{
                 style: {
                   color: '#E1E1E1',
@@ -67,6 +106,8 @@ function SignUp({ onSubmit }) {
               label='Username'
               name='username'
               color='secondary'
+              value={formik.values.username}
+              onChange={formik.handleChange}                 
               InputLabelProps={{
                 style: {
                   color: '#E1E1E1',
@@ -82,6 +123,8 @@ function SignUp({ onSubmit }) {
               label='Email Address'
               name='email'
               color='secondary'
+              value={formik.values.email}
+              onChange={formik.handleChange}                 
               InputLabelProps={{
                 style: {
                   color: '#E1E1E1',
@@ -98,6 +141,8 @@ function SignUp({ onSubmit }) {
               name='password'
               type='password'
               color='secondary'
+              value={formik.values.password}
+              onChange={formik.handleChange}                 
               InputLabelProps={{
                 style: {
                   color: '#E1E1E1',
@@ -105,6 +150,16 @@ function SignUp({ onSubmit }) {
               }}
               sx={{ input: {color: '#E1E1E1'}, border: {color: '#E1E1E1'} }}
             />
+            {/* Errors */}
+            {Object.keys(formik.errors).length > 0 &&
+              <Box sx={{ mb: 2 }}>
+                {Object.keys(formik.errors).map((error, index) => (
+                  <Typography key={index} sx={{ color: 'error.main' }}>
+                    {formik.errors[error]}
+                  </Typography>
+                ))}    
+              </Box>
+            }            
             <Button
               type='submit'
               fullWidth
