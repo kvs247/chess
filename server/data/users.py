@@ -8,6 +8,7 @@ end_date = datetime.date(2015, 12, 31)
 
 user_dicts = [
     {
+        'id': 1,
         'full_name': 'Kyle Schneider',
         'username': 'Kye_Schnei',
         'email': 'kyle@fake.com',
@@ -16,6 +17,7 @@ user_dicts = [
         'password_hash': 'password'
     },
     {
+        'id': 2,
         'full_name': 'Topher Ludlow',
         'username': 'topherLud',
         'email': 'topher@fake.com',
@@ -24,6 +26,7 @@ user_dicts = [
         'password_hash': 'password'
     },
     {
+        'id': 3,
         'full_name': 'Terrence Chung',
         'username': 'twocupterry',
         'email': 'terrence@fake.com',
@@ -32,6 +35,7 @@ user_dicts = [
         'password_hash': 'password'
     },
     {
+        'id': 4,
         'full_name': 'Magnus Carlsen',
         'username': 'DrDrunkenstein',
         'email': 'magnus@fake.com',
@@ -40,6 +44,7 @@ user_dicts = [
         'password_hash': 'password'
     },
     {
+        'id': 5,
         'full_name': 'Garry Kasparov',
         'username': 'KasparovKingKiller',
         'email': 'garry@fake.com',
@@ -48,6 +53,7 @@ user_dicts = [
         'password_hash': 'password'
     },
     {
+        'id': 6,
         'full_name': 'Hikaru Nakamura',
         'username': 'Hikaru',
         'email': 'hikaru@fake.com',
@@ -56,6 +62,7 @@ user_dicts = [
         'password_hash': 'password'
     },
     {
+        'id': 7,
         'full_name': 'Fabiano Caruana',
         'username': 'FabulousFabiano',
         'email': 'fabiano@fake.com',
@@ -64,6 +71,7 @@ user_dicts = [
         'password_hash': 'password'
     },
     {
+        'id': 8,
         'full_name': 'Maxime Vachier-Lagrave',
         'username': 'MVLchess',
         'email': 'maxime@fake.com',
@@ -72,6 +80,7 @@ user_dicts = [
         'password_hash': 'password'
     },
     {
+        'id': 9,
         'full_name': 'Wesley So',
         'username': 'SoSneaky',
         'email': 'wesley@fake.com',
@@ -80,6 +89,7 @@ user_dicts = [
         'password_hash': 'password'
     },
     {
+        'id': 10,
         'full_name': 'Viswanathan Anand',
         'username': 'Vishy',
         'email': 'vishy@fake.com',
@@ -88,6 +98,7 @@ user_dicts = [
         'password_hash': 'password'
     },
     {
+        'id': 11,
         'full_name': 'Levon Aronian',
         'username': 'The Levonator',
         'email': 'levon@fake.com',
@@ -96,6 +107,7 @@ user_dicts = [
         'password_hash': 'password'
     },
     {
+        'id': 12,
         'full_name': 'Anish Giri',
         'username': 'GiriGiri',
         'email': 'anish@fake.com',
@@ -104,6 +116,7 @@ user_dicts = [
         'password_hash': 'password'
     },
     {
+        'id': 13,
         'full_name': 'Ian Nepomniachtchi',
         'username': 'Nepo',
         'email': 'ian@fake.com',

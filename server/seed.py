@@ -13,17 +13,21 @@ for f in pgn_files:
     with open(f) as f:
         pgn_strs.append(f.read())
 
+# print(pgn_strs)
+# import sys; sys.exit()
+
 with app.app_context():
 
-    Friendship.query.delete()
-    Game.query.delete()
     Challenge.query.delete()
+    Game.query.delete()
+    Friendship.query.delete()
     User.query.delete()
 
     # Create users
     print('Creating users...')
     def make_user(user_dict):
         return User(
+            id=user_dict['id'],
             full_name=user_dict['full_name'],
             username=user_dict['username'],
             email=user_dict['email'],
@@ -37,6 +41,7 @@ with app.app_context():
     users.sort(key=lambda u: u.date_joined)
     db.session.add_all(users)
 
+
     # Create friendships
     print('Creating friendships...')
     friendships = []
@@ -47,17 +52,29 @@ with app.app_context():
     # Create games
     print('Creating games...')
     games = []
+    print('user_ids', [u.id for u in User.query.all()])
+    # starting position
+    game = Game(
+        id=0,
+        white_user_id=1,
+        black_user_id=2,
+        pgn = '"[Date \"1980.06.18\"]\n[Result \"*\"]\n[White \"Kye_Schnei\"]\n[Black \"topherLud\"]\n\n*"',
+        fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+    )
+    games.append(game)
+    i = 1
     for pgn in pgn_strs:
         pgn_dict = pgn_to_dict(pgn)
+        # print(pgn_dict['move_list'])
 
         white_username = pgn_dict['white_username']
         white_user_id = User.query.filter_by(username=white_username).first().id
         
-
         black_username = pgn_dict['black_username']
         black_user_id = User.query.filter_by(username=black_username).first().id
 
         game = Game(
+            id=i,
             white_user_id=white_user_id,
             black_user_id=black_user_id,
             pgn=pgn
@@ -67,8 +84,13 @@ with app.app_context():
         except Exception as e:
             game.fen = str(e)
         games.append(game)
+
+        i += 1
+
     games.sort(key=lambda g: pgn_to_dict(g.pgn)['date'])
     db.session.add_all(games)
+
+    print('game_ids', [g.id for g in Game.query.all()])
 
     db.session.commit()
 

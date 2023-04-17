@@ -62,7 +62,7 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
     
     useEffect(() => {
       setRerender(false);
-      fetch(`/games/${gameId ? gameId : 1}`)
+      fetch(`/games/${gameId ? gameId : 0}`)
         .then(res => res.json())
         .then(data => setGameData(data));
     }, [gameId, rerender])
