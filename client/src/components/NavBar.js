@@ -10,7 +10,7 @@ import about from '../assets/about.png';
 import logout from '../assets/logout.png';
 
 
-function NavBar({ user, onLogout, onClickPlay }) {
+function NavBar({ user, movesToMake, onLogout, onClickPlay }) {
   
     const history = useHistory();
 
@@ -52,6 +52,20 @@ function NavBar({ user, onLogout, onClickPlay }) {
                 }}
               />
                 {`${text}`}
+                {text === 'Play Friends' && movesToMake > 0 ? 
+                <Box
+                  sx={{ 
+                    ml: 2, 
+                    bgcolor: 'red',
+                    borderRadius: '25%',
+                    width: 15,
+                    height: 15,
+                    display: 'flex',
+                    justifyContent: 'center',                
+                  }}
+                >
+                  {movesToMake}
+                </Box> : null}
               </Box>
             </CardActionArea>
         );

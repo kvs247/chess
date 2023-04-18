@@ -9,7 +9,7 @@ import GameArea from '../GameArea.js';
 import ActiveGames from './ActiveGames.js';
 import MoveList from './MoveList.js';
 
-function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, playComputer }) {
+function Play({ user, users, movesToMake, games, setGames, getGames, onLogout, onClickPlay, playComputer }) {
 
     // console.log('Play.js: users', users)
 
@@ -26,8 +26,6 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
     }, []);
 
     useEffect(() => {
-
-
         const game = games.find(game => game.id === parseInt(id));
         if (game && game.pgn) setMoves(pgnToObj(game.pgn)['moveList']);
         const activeGames = games.filter(game => {
@@ -78,6 +76,7 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
             <BaseContainer>
           <NavBar 
             user={user}
+            movesToMake={movesToMake}
             onLogout={onLogout}
             onClickPlay={onClickPlay}
           />

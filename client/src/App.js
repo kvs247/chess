@@ -8,6 +8,8 @@ import Play from './components/Play/Play.js';
 import Social from './components/Social/Social.js';
 import About from './components/About/About.js';
 
+import { pgnToObj } from './components/Util/pgnFenHandler.js';
+
 function App() {
 
     const history = useHistory();
@@ -24,6 +26,7 @@ function App() {
     const [user, setUser] = useState(initialUserState);
     const [users, setUsers] = useState([]);
     const [games, setGames] = useState([]);
+    const [movesToMake, setMovesToMake] = useState(0);
     const [playComputer, setPlayComputer] = useState(true);
 
     const authorize = () => {
@@ -52,6 +55,24 @@ function App() {
       getUsers();
       getGames();
     }, []);
+
+    useEffect(() => {
+        const activeGames = games.filter(game => {
+            const pgnObj = pgnToObj(game.pgn);
+            const inProgress = pgnObj['result'] === '*'
+            const isWhite = pgnObj['whiteUsername'] === user.username;
+            const isBlack = pgnObj['blackUsername'] === user.username;
+            return inProgress && (isWhite || isBlack);
+        });         
+        const yourMoveGames = activeGames.filter(game => {
+            const whitesTurn = game.fen.split(' ')[1] === 'w' ? true : false;
+            let result = false
+            if (whitesTurn && user.id === game.white_user_id) result = true;
+            if (!whitesTurn && user.id === game.black_user_id) result = true;
+            return result
+        });
+        setMovesToMake(yourMoveGames.length);
+    }, [games]);
 
     
     // route is either '/login' or '/signup'
@@ -95,6 +116,7 @@ function App() {
               <Home 
                 user={user} 
                 users={users}
+                movesToMake={movesToMake}
                 onLogout={handleLogout}
                 onClickPlay={handleClickPlay}
               />
@@ -104,6 +126,7 @@ function App() {
               <Play 
                 user={user}
                 users={users}
+                movesToMake={movesToMake}
                 games={games}
                 setGames={setGames}
                 getGames={getGames}                
@@ -117,6 +140,7 @@ function App() {
               <Play 
                 user={user}
                 users={users}
+                movesToMake={movesToMake}
                 games={games}
                 setGames={setGames}
                 getGames={getGames}
@@ -131,6 +155,7 @@ function App() {
                 user={user}
                 users={users}
                 games={games}
+                movesToMake={movesToMake}
                 onLogout={handleLogout}
                 onClickPlay={handleClickPlay}
               />
@@ -139,6 +164,7 @@ function App() {
             <Route path='/about'>
               <About 
                 user={user} 
+                movesToMake={movesToMake}
                 onLogout={handleLogout}
                 onClickPlay={handleClickPlay}
               />

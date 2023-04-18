@@ -7,7 +7,7 @@ import Profile from './Profile';
 import UserList from './UserList';
 import FriendList from './FriendList';
 
-function Social({ user, users, games, onLogout, onClickPlay }) {
+function Social({ user, users, games, movesToMake, onLogout, onClickPlay }) {
 
     const { id } = useParams();
 
@@ -68,6 +68,7 @@ function Social({ user, users, games, onLogout, onClickPlay }) {
         <BaseContainer>
           <NavBar 
             user={user}
+            movesToMake={movesToMake}
             onLogout={onLogout} 
             onClickPlay={onClickPlay}
           />

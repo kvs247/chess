@@ -5,7 +5,7 @@ import NavBar from '../NavBar';
 import Challenges from './Challenges.js';
 import GameArea from '../GameArea';
 
-function Home({ user, users, onLogout, onClickPlay }) {
+function Home({ user, users, movesToMake, onLogout, onClickPlay }) {
 
     const history = useHistory();
 
@@ -79,6 +79,7 @@ function Home({ user, users, onLogout, onClickPlay }) {
         <BaseContainer>
           <NavBar 
             user={user}
+            movesToMake={movesToMake}
             onLogout={onLogout} 
             onClickPlay={onClickPlay}
           />

@@ -72,9 +72,6 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
     };
 
     useEffect(() => {
-        // setIndex(-1);
-        console.log('useffect indeex', index)
-        console.log('mounted')
         document.removeEventListener('keydown', helper);
         if (isLoaded) {
             document.addEventListener('keydown', helper);
