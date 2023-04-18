@@ -1,9 +1,11 @@
 import { useState } from 'react';
+// import { useHistory } from 'react-router-dom';
 import Draggable from 'react-draggable';
 import Box from '@mui/material/Box';
 
 import piecePngObj from './Util/piecePNGs';
 import { fenToArray } from './Util/pgnFenHandler.js'
+import { useHistory } from 'react-router-dom';
 
 const lightSquare = '#c4c4c4';
 const darkSquare = '#005c28';
@@ -18,6 +20,8 @@ function getInitialPositions() {
 const initialPositions = getInitialPositions();
   
 function Board({ length, staticBoard, flippedBoard, isUsersTurn, gameData, onMove }) {
+
+    const history = useHistory();
 
     let fen = gameData.fen
 
@@ -42,14 +46,14 @@ function Board({ length, staticBoard, flippedBoard, isUsersTurn, gameData, onMov
         const deltaX = positions[i].x;
         const deltaY = positions[i].y;
 
-        if (!isUsersTurn) {
-            setPositions((positions) => {
-              const newPositions = { ...positions };
-              newPositions[i] = { x: 0, y: 0 };
-              return newPositions
-            });
-            return '';
-        };
+        // if (!isUsersTurn) {
+        //     setPositions((positions) => {
+        //       const newPositions = { ...positions };
+        //       newPositions[i] = { x: 0, y: 0 };
+        //       return newPositions
+        //     });
+        //     return '';
+        // };
 
         let fromIndex = i;
         let toIndex = i + Math.round(deltaX / squareLength) + Math.round(deltaY / squareLength) * 8;
@@ -61,7 +65,10 @@ function Board({ length, staticBoard, flippedBoard, isUsersTurn, gameData, onMov
 
         const response = await onMove(fromIndex, toIndex);
         if (response !== fen) {
-            // console.log('valid')
+            console.log('valid')
+            setTimeout(() => 
+                {history.push('/play');
+            }, 1500)
         } else {
             // console.log('invalid')
             setPositions((positions) => {
