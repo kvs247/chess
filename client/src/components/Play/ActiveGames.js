@@ -8,6 +8,10 @@ import blackKing from '../../assets/chess-pieces/black-king.png';
 
 function ActiveGames({ users, yourMoveGames, theirMoveGames }) {
 
+    console.log('ActiveGames.js: users', users)
+    console.log('ActivbeGames.js: yourMoveGames: ', yourMoveGames);
+    console.log('ActivbeGames.js: theirMoveGames: ', theirMoveGames);
+
     const history = useHistory();
     const handleClick = (gameId) => {
         history.push(`/play/${gameId}`);
@@ -98,7 +102,7 @@ function ActiveGames({ users, yourMoveGames, theirMoveGames }) {
             >
                 Your Move
             </Typography>
-            {users[0] ? renderGames(yourMoveGames, users) :
+            {yourMoveGames && users.length > 0 ? renderGames(yourMoveGames, users) :
               <Typography variant='h7'>
                 No active games
               </Typography>

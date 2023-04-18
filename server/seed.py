@@ -13,9 +13,6 @@ for f in pgn_files:
     with open(f) as f:
         pgn_strs.append(f.read())
 
-# print(pgn_strs)
-# import sys; sys.exit()
-
 with app.app_context():
 
     Challenge.query.delete()
@@ -52,7 +49,6 @@ with app.app_context():
     # Create games
     print('Creating games...')
     games = []
-    print('user_ids', [u.id for u in User.query.all()])
     # starting position
     game = Game(
         id=0,
@@ -89,8 +85,6 @@ with app.app_context():
 
     games.sort(key=lambda g: pgn_to_dict(g.pgn)['date'])
     db.session.add_all(games)
-
-    print('game_ids', [g.id for g in Game.query.all()])
 
     db.session.commit()
 

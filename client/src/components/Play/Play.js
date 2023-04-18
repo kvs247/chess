@@ -11,6 +11,8 @@ import MoveList from './MoveList.js';
 
 function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, playComputer }) {
 
+    console.log('Play.js: users', users)
+
     const { id } = useParams();
 
     const [moves, setMoves] = useState('');
@@ -32,42 +34,33 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
           return [game['white_user_id'], game['black_user_id']]
         }).flat();
 
-        // console.log('activeGames', activeGames)
-
-        setActiveGamesUsers(users.filter(user => {
-            return activeGamesUserIds.includes(user.id)
-        }));
-
-        setYourMoveGames(activeGames.filter(game => {
-            const whitesTurn = game.fen.split(' ')[1] === 'w' ? true : false;
-            let result = false
-            if (whitesTurn && user.id === game.white_user_id) result = true;
-            if (!whitesTurn && user.id === game.black_user_id) result = true;
-            return result
-        }));
-
-        // console.log('yourMoveGames', yourMoveGames)
-
-        // setTheirMoveGames(activeGames.filter(game => {
-        //     const whitesTurn = game.fen.split(' ')[1] === 'w' ? true : false;
-        //     let result = false
-        //     if (whitesTurn && user.id !== game.white_user_id) result = true;
-        //     if (!whitesTurn && user.id !== game.black_user_id) result = true;
-        //     return result
-        // }));
-
-        setTheirMoveGames(activeGames.filter(game => {
-            return !yourMoveGames.includes(game)
-        }));
-
-        // console.log('theirMoveGames', theirMoveGames)
+        console.log('activeGames', activeGames)
         
-    // eslint-disable-next-line
-    }, [games, id]);
-
-
-    return (
-        <BaseContainer>
+        
+        setActiveGamesUsers(users.filter(user => {
+          return activeGamesUserIds.includes(user.id)
+        }));
+        
+        setYourMoveGames(activeGames.filter(game => {
+          const whitesTurn = game.fen.split(' ')[1] === 'w' ? true : false;
+          let result = false
+          if (whitesTurn && user.id === game.white_user_id) result = true;
+          if (!whitesTurn && user.id === game.black_user_id) result = true;
+          return result
+        }));
+        
+        setTheirMoveGames(activeGames.filter(game => {
+          return !yourMoveGames.includes(game)
+          }));
+            
+    }, [games, users, id]);
+          
+          
+          console.log('games', games.sort((a, b) => a.id - b.id))
+          console.log('yourMoveGames', yourMoveGames)
+          console.log('theirMoveGames', theirMoveGames)
+          return (
+            <BaseContainer>
           <NavBar 
             user={user}
             onLogout={onLogout}
