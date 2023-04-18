@@ -46,14 +46,14 @@ function Board({ length, staticBoard, flippedBoard, isUsersTurn, gameData, onMov
         const deltaX = positions[i].x;
         const deltaY = positions[i].y;
 
-        // if (!isUsersTurn) {
-        //     setPositions((positions) => {
-        //       const newPositions = { ...positions };
-        //       newPositions[i] = { x: 0, y: 0 };
-        //       return newPositions
-        //     });
-        //     return '';
-        // };
+        if (!isUsersTurn) {
+            setPositions((positions) => {
+              const newPositions = { ...positions };
+              newPositions[i] = { x: 0, y: 0 };
+              return newPositions
+            });
+            return '';
+        };
 
         let fromIndex = i;
         let toIndex = i + Math.round(deltaX / squareLength) + Math.round(deltaY / squareLength) * 8;
