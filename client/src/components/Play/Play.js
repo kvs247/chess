@@ -16,42 +16,55 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
     const [moves, setMoves] = useState('');
     const [yourMoveGames, setYourMoveGames] = useState([]);
     const [theirMoveGames, setTheirMoveGames] = useState([]);
-
-    const activeGames = games.filter(game => {
-        const pgnObj = pgnToObj(game.pgn);
-        const inProgress = pgnObj['result'] === '*'
-        const isWhite = pgnObj['whiteUsername'] === user.username;
-        const isBlack = pgnObj['blackUsername'] === user.username;
-        return inProgress && (isWhite || isBlack);
-    });
-    const activeGamesUserIds = activeGames.map(game => {
-        return [game['white_user_id'], game['black_user_id']]
-    }).flat();
-    const activeGamesUsers = users.filter(user => {
-      return activeGamesUserIds.includes(user.id)
-    });
-
+    const [activeGamesUsers, setActiveGamesUsers] = useState([]);
     
     useEffect(() => {
         const game = games.find(game => game.id === parseInt(id));
         if (game && game.pgn) setMoves(pgnToObj(game.pgn)['moveList']);
+        const activeGames = games.filter(game => {
+            const pgnObj = pgnToObj(game.pgn);
+            const inProgress = pgnObj['result'] === '*'
+            const isWhite = pgnObj['whiteUsername'] === user.username;
+            const isBlack = pgnObj['blackUsername'] === user.username;
+            return inProgress && (isWhite || isBlack);
+          });
+        const activeGamesUserIds = activeGames.map(game => {
+          return [game['white_user_id'], game['black_user_id']]
+        }).flat();
+
+        // console.log('activeGames', activeGames)
+
+        setActiveGamesUsers(users.filter(user => {
+            return activeGamesUserIds.includes(user.id)
+        }));
 
         setYourMoveGames(activeGames.filter(game => {
-            // console.log(game);
             const whitesTurn = game.fen.split(' ')[1] === 'w' ? true : false;
             let result = false
             if (whitesTurn && user.id === game.white_user_id) result = true;
             if (!whitesTurn && user.id === game.black_user_id) result = true;
             return result
         }));
+
+        // console.log('yourMoveGames', yourMoveGames)
+
+        // setTheirMoveGames(activeGames.filter(game => {
+        //     const whitesTurn = game.fen.split(' ')[1] === 'w' ? true : false;
+        //     let result = false
+        //     if (whitesTurn && user.id !== game.white_user_id) result = true;
+        //     if (!whitesTurn && user.id !== game.black_user_id) result = true;
+        //     return result
+        // }));
+
         setTheirMoveGames(activeGames.filter(game => {
-            const whitesTurn = game.fen.split(' ')[1] === 'w' ? true : false;
-            let result = false
-            if (whitesTurn && user.id !== game.white_user_id) result = true;
-            if (!whitesTurn && user.id !== game.black_user_id) result = true;
-            return result
+            return !yourMoveGames.includes(game)
         }));
-    }, [games, id, user.id, activeGames]);
+
+        // console.log('theirMoveGames', theirMoveGames)
+        
+    // eslint-disable-next-
+    }, [games, id, user.id]);
+
 
     return (
         <BaseContainer>
@@ -70,7 +83,6 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
           {id ? 
             <MoveList moves={moves}/> :
             <ActiveGames
-              games={activeGames}
               yourMoveGames={yourMoveGames}
               theirMoveGames={theirMoveGames}
               users={activeGamesUsers}

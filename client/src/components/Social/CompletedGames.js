@@ -19,7 +19,10 @@ function CompletedGames({ games }) {
         const pgnObj = pgnToObj(game.pgn);
 
         const movesRegex = /\d+\./g;
-        const moveInts = pgnObj['moveList'].match(movesRegex).map(str => parseInt(str.slice(0,-1)));
+        let moveInts = [];
+        if (pgnObj['moveList'].match(movesRegex)) {
+            moveInts = pgnObj['moveList'].match(movesRegex).map(str => parseInt(str.slice(0,-1)));
+        }
         const numMoves = Math.max(...moveInts);
 
         return {

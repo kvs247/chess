@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import whiteKing from '../../assets/chess-pieces/white-king.png';
 import blackKing from '../../assets/chess-pieces/black-king.png';
 
-function ActiveGames({ games, users, yourMoveGames, theirMoveGames }) {
+function ActiveGames({ users, yourMoveGames, theirMoveGames }) {
 
     const history = useHistory();
     const handleClick = (gameId) => {
@@ -98,7 +98,7 @@ function ActiveGames({ games, users, yourMoveGames, theirMoveGames }) {
             >
                 Your Move
             </Typography>
-            {games && users[0] ? renderGames(yourMoveGames, users) :
+            {users[0] ? renderGames(yourMoveGames, users) :
               <Typography variant='h7'>
                 No active games
               </Typography>
@@ -117,7 +117,7 @@ function ActiveGames({ games, users, yourMoveGames, theirMoveGames }) {
             >
                 Their Move
             </Typography>
-            {games && users[0] ? renderGames(theirMoveGames, users) :
+            {users[0] ? renderGames(theirMoveGames, users) :
               <Typography variant='h7'>
                 No active games
               </Typography>
