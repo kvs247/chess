@@ -8,6 +8,15 @@ end_date = datetime.date(2015, 12, 31)
 
 user_dicts = [
     {
+        'id': 0,
+        'full_name': 'Guest',
+        'username': 'Guest',
+        'email': 'guest@fake.com',
+        'profile_image': 'https://github.com/kschneider0/chess/blob/main/server/assets/default.png?raw=true',
+        'date_joined': datetime.date(2020, 11, 23),
+        'password_hash': 'password'
+    },
+    {
         'id': 1,
         'full_name': 'Kyle Schneider',
         'username': 'Kye_Schnei',

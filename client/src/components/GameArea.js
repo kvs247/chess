@@ -107,7 +107,7 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
       blackUsername = pgnObj['blackUsername'];
       blackProfileImage = users.find(user => user.username === blackUsername).profile_image;
       
-      if (gameData.id === 1) {
+      if (gameData.id === 0) {
           whiteUsername = 'White';
           whiteProfileImage = guest;
           blackUsername = 'Black';
