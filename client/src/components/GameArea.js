@@ -41,13 +41,7 @@ const playerBox = (username, photo) => {
 
 function GameArea({ user, users, getGames, staticBoard, gameId }) {
 
-    // const initialGameData = {
-    //     id: 0,
-    //     white_user_id: 0,
-    //     black_user_id: 0,
-    //     pgn: '',
-    //     fen: ''
-    // };
+    const [isLoaded, setIsLoaded] = useState(false);
     const [rerender, setRerender] = useState(false);
     const [gameData, setGameData] = useState({});
     const [flippedBoard, setFlippedBoard] = useState(false);
@@ -69,12 +63,24 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
             return;
         };
 
-        setIndex(index + value);
+        setIndex(index => index + value);
+    };
+
+    const helper = (e) => {
+        if (e.key === 'ArrowLeft') handleSetIndex(-1);
+        if (e.key === 'ArrowRight') handleSetIndex(1);
     };
 
     useEffect(() => {
-        setIndex(-1);
-    }, []);
+        // setIndex(-1);
+        console.log('useffect indeex', index)
+        console.log('mounted')
+        document.removeEventListener('keydown', helper);
+        if (isLoaded) {
+            document.addEventListener('keydown', helper);
+            return () => document.removeEventListener('keydown', helper);
+        };
+    }, [gameData, index]);
 
     useEffect(() => {
         setFlippedBoard(user.id === gameData.black_user_id);
@@ -88,11 +94,12 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
         
         
     useEffect(() => {
-      setRerender(false);
-      fetch(`/games/${gameId ? gameId : 0}`)
-        .then(res => res.json())
-        .then(data => {
-            setGameData(data)
+        setRerender(false);
+        fetch(`/games/${gameId ? gameId : 0}`)
+          .then(res => res.json())
+          .then(data => {
+              setGameData(data)
+              setIsLoaded(true)
           });
     }, [gameId, rerender])
 
@@ -243,12 +250,12 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
             <Button
               onClick={() => handleSetIndex(1)}
             >
-              <ArrowForwardIosIcon />
+              <ArrowForwardIosIcon sx={{ fontSize: 24 }} />
             </Button>
             <Button
               onClick={() => handleSetIndex(2)}
             >
-              <LastPageIcon />
+              <LastPageIcon sx={{ fontSize: 24 }} />
             </Button>            
           </Box>
         </Box>
