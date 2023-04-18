@@ -32,7 +32,8 @@ function Attribution() {
               <a href="https://www.flaticon.com/free-icons/logout" title="logout icons">Logout icons created by Tempo_doloe - Flaticon</a>
               <br />
               <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Freepik - Flaticon</a>+
-              
+              <br />
+              <a href="https://www.flaticon.com/free-icons/sword" title="sword icons">Sword icons created by Freepik - Flaticon</a>
             </Box>
 
         </Box>

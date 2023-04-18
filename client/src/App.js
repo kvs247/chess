@@ -27,7 +27,7 @@ function App() {
     const [users, setUsers] = useState([]);
     const [games, setGames] = useState([]);
     const [movesToMake, setMovesToMake] = useState(0);
-    const [playComputer, setPlayComputer] = useState(true);
+    const [challenges, setChallenges] = useState(true);
 
     const authorize = () => {
         fetch('/authorized-session')
@@ -104,8 +104,8 @@ function App() {
         });
     };
 
-    const handleClickPlay = (playComputer) => {
-        setPlayComputer(playComputer);
+    const handleSwitchMode = (challenges) => {
+        setChallenges(challenges);
     };
 
     return (
@@ -118,7 +118,7 @@ function App() {
                 users={users}
                 movesToMake={movesToMake}
                 onLogout={handleLogout}
-                onClickPlay={handleClickPlay}
+                onClickPlay={handleSwitchMode}
               />
             </Route>
 
@@ -131,8 +131,8 @@ function App() {
                 setGames={setGames}
                 getGames={getGames}                
                 onLogout={handleLogout}
-                onClickPlay={handleClickPlay}
-                playComputer={playComputer}
+                onClickPlay={handleSwitchMode}
+                showChallenges={challenges}
               />
             </Route>
 
@@ -145,8 +145,8 @@ function App() {
                 setGames={setGames}
                 getGames={getGames}
                 onLogout={handleLogout}
-                onClickPlay={handleClickPlay}
-                playComputer={playComputer}
+                onClickPlay={handleSwitchMode}
+                showChallenges={challenges}
               />
             </Route>
 
@@ -157,7 +157,7 @@ function App() {
                 games={games}
                 movesToMake={movesToMake}
                 onLogout={handleLogout}
-                onClickPlay={handleClickPlay}
+                onClickPlay={handleSwitchMode}
               />
             </Route>
 
@@ -166,7 +166,7 @@ function App() {
                 user={user} 
                 movesToMake={movesToMake}
                 onLogout={handleLogout}
-                onClickPlay={handleClickPlay}
+                onClickPlay={handleSwitchMode}
               />
             </Route>            
 

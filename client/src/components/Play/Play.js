@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import { pgnToObj } from '../Util/pgnFenHandler.js';
 
@@ -8,17 +8,82 @@ import NavBar from '../NavBar.js';
 import GameArea from '../GameArea.js';
 import ActiveGames from './ActiveGames.js';
 import MoveList from './MoveList.js';
+import Challenges from './Challenges.js';
 
-function Play({ user, users, movesToMake, games, setGames, getGames, onLogout, onClickPlay, playComputer }) {
-
-    // console.log('Play.js: users', users)
+function Play({ user, users, movesToMake, games, setGames, getGames, onLogout, onClickPlay, showChallenges }) {
 
     const { id } = useParams();
+    const history = useHistory();    
 
     const [moves, setMoves] = useState('');
     const [yourMoveGames, setYourMoveGames] = useState([]);
     const [theirMoveGames, setTheirMoveGames] = useState([]);
     const [activeGamesUsers, setActiveGamesUsers] = useState([]);
+    const [receivedChallenges, setReceivedChallenges] = useState([]);
+    const [sentChallenges, setSentChallenges] = useState([]);
+
+    useEffect(() => {
+        fetch('/challenges') 
+          .then(res => res.json())
+          .then(data => {
+              const receivedUserChallenges = data.filter(challenge => challenge.challengee_id === user.id);
+              setReceivedChallenges(receivedUserChallenges)
+
+              const sentUserChallenges = data.filter(challenge => challenge.challenger_id === user.id);
+              setSentChallenges(sentUserChallenges)
+          }) 
+    }, [user])
+
+    const handleClickAccept = (id, username) => {
+        fetch('/games', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify([
+              { id: user.id, username: user.username}, 
+              { id, username }
+            ])
+        })
+          .then(res => res.json())
+          .then(data => {
+              history.push(`/play/${data.id}`)
+          });
+    };
+
+    const handleClickDecline = (challengeId) => {
+        fetch(`/challenges/${challengeId}`, {
+            method: 'DELETE'
+        })
+        const newReceivedChallenges = receivedChallenges.filter(
+            challenge => challenge.id !== challengeId
+        )
+        setReceivedChallenges(newReceivedChallenges)
+    };
+
+    const handleClickDelete = (challengeId) => {
+      fetch(`/challenges/${challengeId}`, {
+          method: 'DELETE'
+      })
+      const newSentChallenges = sentChallenges.filter(
+          challenge => challenge.id !== challengeId
+      )
+      setSentChallenges(newSentChallenges)
+    };
+
+
+    const receivedChallengeUsers = receivedChallenges.map(c => {
+        return {
+            challenge: c,
+            user: users.find(u => u.id === c.challenger_id)
+        }
+    });
+    const sentChallengeUsers = sentChallenges.map(c => {
+        return {
+            challenge: c,
+            user: users.find(u => u.id === c.challengee_id)
+        }
+    });
     
     useEffect(() => {
       getGames();
@@ -62,9 +127,7 @@ function Play({ user, users, movesToMake, games, setGames, getGames, onLogout, o
           return result
         }));
         
-        // setTheirMoveGames(activeGames.filter(game => {
-        //   return !yourMoveGames.includes(game)
-        //   }));
+
     // eslint-disable-next-line
     }, [games, users, id]);
           
@@ -89,12 +152,19 @@ function Play({ user, users, movesToMake, games, setGames, getGames, onLogout, o
           />
           {id ? 
             <MoveList moves={moves}/> :
+            showChallenges ? 
+            <Challenges 
+              receivedChallengeUsers={receivedChallengeUsers}
+              sentChallengeUsers={sentChallengeUsers}
+              onClickAccept={handleClickAccept}
+              onClickDecline={handleClickDecline}
+              onClickDelete={handleClickDelete}            
+            /> :
             <ActiveGames
               yourMoveGames={yourMoveGames}
               theirMoveGames={theirMoveGames}
               users={activeGamesUsers}
-            >
-            </ActiveGames>
+            />
           }
         </BaseContainer>
 

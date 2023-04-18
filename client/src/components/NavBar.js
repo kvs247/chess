@@ -8,6 +8,7 @@ import playComputer from '../assets/play-computer.png';
 import social from '../assets/social.png';
 import about from '../assets/about.png';
 import logout from '../assets/logout.png';
+import sword from '../assets/sword.png';
 
 
 function NavBar({ user, movesToMake, onLogout, onClickPlay }) {
@@ -21,10 +22,10 @@ function NavBar({ user, movesToMake, onLogout, onClickPlay }) {
               <Box 
                 onClick={() => {
                   switch (text) {
-                    case 'Play Friends':
+                    case 'Active Games':
                       onClickPlay(false);
                       break;
-                    case 'Play Computer':
+                    case 'Challenges':
                       onClickPlay(true);
                       break;
                     case 'Logout':
@@ -52,7 +53,7 @@ function NavBar({ user, movesToMake, onLogout, onClickPlay }) {
                 }}
               />
                 {`${text}`}
-                {text === 'Play Friends' && movesToMake > 0 ? 
+                {text === 'Active Games' && movesToMake > 0 ? 
                 <Box
                   sx={{ 
                     ml: 2, 
@@ -88,8 +89,8 @@ function NavBar({ user, movesToMake, onLogout, onClickPlay }) {
               Chess Is Hard
             </Typography>
           </CardActionArea>
-          {MenuItem('Play Friends', playFriends, '/play')}
-          {MenuItem('Play Computer', playComputer, '/play')}
+          {MenuItem('Active Games', playFriends, '/play')}
+          {MenuItem('Challenges', sword, '/play')}
           {MenuItem('Social', social, `/users/${user.id}`)}
           {MenuItem('About', about, '/about')}
           {MenuItem('Logout', logout, '/login')}
