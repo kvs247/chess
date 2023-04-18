@@ -22,7 +22,7 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
     
     useEffect(() => {
       getGames();
-
+    // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
