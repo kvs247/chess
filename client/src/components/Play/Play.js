@@ -52,7 +52,7 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
         setTheirMoveGames(activeGames.filter(game => {
           return !yourMoveGames.includes(game)
           }));
-            
+    // eslint-disable-next-line
     }, [games, users, id]);
           
           
