@@ -19,11 +19,21 @@ function getInitialPositions() {
   }
 const initialPositions = getInitialPositions();
   
-function Board({ length, staticBoard, flippedBoard, isUsersTurn, gameData, onMove }) {
+function Board({ length, index, staticBoard, flippedBoard, isUsersTurn, gameData, onMove }) {
 
     const history = useHistory();
 
-    let fen = gameData.fen
+    const initialGameData = {
+      id: 0,
+      white_user_id: 0,
+      black_user_id: 0,
+      pgn: '',
+      fen: '',
+      fen_list: ['rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1']
+    };
+    if (!gameData.fen_list) gameData = initialGameData;
+
+    let fen = gameData.fen_list.slice(index)[0];
 
     if (!fen) fen = ' w KQkq - 0 1'
     const fenArray = fenToArray(fen);
@@ -31,6 +41,8 @@ function Board({ length, staticBoard, flippedBoard, isUsersTurn, gameData, onMov
     if (flippedBoard) {
         fenArray.reverse();
     }
+
+    if (index !== -1) staticBoard = true;
 
     const [positions, setPositions] = useState(initialPositions);
 

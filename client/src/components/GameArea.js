@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
+import LastPageIcon from '@mui/icons-material/LastPage';
 
 import Board from './Board.js';
 import { pgnToObj } from './Util/pgnFenHandler.js';
@@ -48,23 +52,48 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
     const [gameData, setGameData] = useState({});
     const [flippedBoard, setFlippedBoard] = useState(false);
     const [isUsersTurn, setIsUsersTurn] = useState(false);
+    const [index, setIndex] = useState(-1);
+
+    const handleSetIndex = (value) => {
+        const startIndex = -gameData.fen_list.length;
+
+        if (index === -1 && value === 1) return;
+        if (index === startIndex && value === -1) return;
+
+        if (value === -2) {
+            setIndex(startIndex); 
+            return;
+        };
+        if (value === 2) {
+            setIndex(-1); 
+            return;
+        };
+
+        setIndex(index + value);
+    };
+
+    useEffect(() => {
+        setIndex(-1);
+    }, []);
 
     useEffect(() => {
         setFlippedBoard(user.id === gameData.black_user_id);
         if (gameData.fen) {
             const whitesTurn = gameData.fen.split(' ')[1] === 'w' ? true : false;
-            console.log('whitesTurn', whitesTurn);
             if (whitesTurn && user.id === gameData.white_user_id) setIsUsersTurn(true)
             else if (!whitesTurn && user.id === gameData.black_user_id) setIsUsersTurn(true)
             else setIsUsersTurn(false);
-        };
-    }, [user.id, gameData]);
-    
+          };
+        }, [user.id, gameData]);
+        
+        
     useEffect(() => {
       setRerender(false);
       fetch(`/games/${gameId ? gameId : 0}`)
         .then(res => res.json())
-        .then(data => setGameData(data));
+        .then(data => {
+            setGameData(data)
+          });
     }, [gameId, rerender])
 
     const handleMove = async (
@@ -129,6 +158,7 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
         }
     };
 
+
     return (
         <Box 
           bgcolor='primary.main' 
@@ -153,6 +183,7 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
           playerBox(blackUsername, blackProfileImage)} 
           <Board 
             length={length} 
+            index={index}
             staticBoard={staticBoard}
             flippedBoard={flippedBoard}
             isUsersTurn={isUsersTurn}
@@ -162,6 +193,7 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
           {flippedBoard ? 
           playerBox(blackUsername, blackProfileImage) :
           playerBox(whiteUsername, whiteProfileImage)}
+          {/* Bottom Menu */}
           <Box
             sx={{
               width: length,
@@ -173,6 +205,16 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
               bgcolor: 'secondary.main',
             }}               
           >
+            <Button
+              onClick={() => handleSetIndex(-2)}
+            >
+              <FirstPageIcon />
+            </Button>
+            <Button
+              onClick={() => handleSetIndex(-1)}
+            >
+              <ArrowBackIosIcon />
+            </Button>
             <Button
               variant='contained'
               sx ={{ m: 1, }}
@@ -198,6 +240,16 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
               </>
             : null
             }
+            <Button
+              onClick={() => handleSetIndex(1)}
+            >
+              <ArrowForwardIosIcon />
+            </Button>
+            <Button
+              onClick={() => handleSetIndex(2)}
+            >
+              <LastPageIcon />
+            </Button>            
           </Box>
         </Box>
     );

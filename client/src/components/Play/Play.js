@@ -11,7 +11,7 @@ import MoveList from './MoveList.js';
 
 function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, playComputer }) {
 
-    console.log('Play.js: users', users)
+    // console.log('Play.js: users', users)
 
     const { id } = useParams();
 
@@ -41,7 +41,7 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
           return [game['white_user_id'], game['black_user_id']]
         }).flat();
 
-        console.log('activeGames', activeGames)
+        // console.log('activeGames', activeGames)
         
         
         setActiveGamesUsers(users.filter(user => {
@@ -71,9 +71,9 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
     }, [games, users, id]);
           
           
-          console.log('games', games.sort((a, b) => a.id - b.id))
-          console.log('yourMoveGames', yourMoveGames)
-          console.log('theirMoveGames', theirMoveGames)
+          // console.log('games', games.sort((a, b) => a.id - b.id))
+          // console.log('yourMoveGames', yourMoveGames)
+          // console.log('theirMoveGames', theirMoveGames)
           return (
             <BaseContainer>
           <NavBar 

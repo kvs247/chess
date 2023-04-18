@@ -88,7 +88,9 @@ class GameById(Resource):
     def get(self, id):
         try:
             game = Game.query.filter_by(id=id).first()
-            return make_response(game.to_dict(), 200)
+            response = game.to_dict().copy()
+            response['fen_list'] = pgn_to_fen_store(game.pgn)
+            return make_response(response, 200)
         except Exception as e:
             return make_response({'error': str(e)}, 404)
     
@@ -105,6 +107,8 @@ class GameById(Resource):
         fen_dict = util.fen_to_dict(fen)
         pgn_dict = pgn_to_dict(pgn)
         chess = Chess(fen)
+
+        print(pgn_to_fen_store(game.pgn))
 
         if pgn_dict['result'] != '*':
             print('game ended')
@@ -185,8 +189,10 @@ class GameById(Resource):
 
             db.session.add(game)
             db.session.commit()
+
+        print(pgn_to_fen_store(game.pgn))
         
-        return make_response(jsonify(game.fen), 200)
+        return make_response(jsonify(pgn_to_fen_store(game.pgn)), 200)
 
 api.add_resource(GameById, '/games/<int:id>')
 
