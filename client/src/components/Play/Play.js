@@ -21,6 +21,13 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
     const [activeGamesUsers, setActiveGamesUsers] = useState([]);
     
     useEffect(() => {
+      getGames();
+
+    }, []);
+
+    useEffect(() => {
+
+
         const game = games.find(game => game.id === parseInt(id));
         if (game && game.pgn) setMoves(pgnToObj(game.pgn)['moveList']);
         const activeGames = games.filter(game => {
@@ -48,10 +55,18 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
           if (!whitesTurn && user.id === game.black_user_id) result = true;
           return result
         }));
-        
+
         setTheirMoveGames(activeGames.filter(game => {
-          return !yourMoveGames.includes(game)
-          }));
+          const whitesTurn = game.fen.split(' ')[1] === 'w' ? true : false;
+          let result = false
+          if (!whitesTurn && user.id === game.white_user_id) result = true;
+          if (whitesTurn && user.id === game.black_user_id) result = true;
+          return result
+        }));
+        
+        // setTheirMoveGames(activeGames.filter(game => {
+        //   return !yourMoveGames.includes(game)
+        //   }));
     // eslint-disable-next-line
     }, [games, users, id]);
           
