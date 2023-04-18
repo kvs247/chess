@@ -62,8 +62,8 @@ function Play({ user, users, games, setGames, getGames, onLogout, onClickPlay, p
 
         // console.log('theirMoveGames', theirMoveGames)
         
-    // eslint-disable-next-
-    }, [games, id, user.id]);
+    // eslint-disable-next-line
+    }, [games, id]);
 
 
     return (
