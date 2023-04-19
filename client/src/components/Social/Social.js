@@ -61,7 +61,6 @@ function Social({ user, users, games, movesToMake, numChallenges, onLogout, onCl
     useEffect(() => {
         const thisPageUser = users.filter(u => parseInt(u.id) === parseInt(id))[0];
         setProfileData(thisPageUser);
-        console.log('yo', thisPageUser)
         if (thisPageUser.friend_ids) {
             setFriends(users.filter(u => thisPageUser.friend_ids.includes(u.id)));
         };

@@ -23,6 +23,7 @@ function Play({
     showChallenges,
     selectedColor,
     onChangeColor, 
+    onChangeColorComplete 
 }) {
 
     const { id } = useParams();
@@ -121,10 +122,7 @@ function Play({
           });
         const activeGamesUserIds = activeGames.map(game => {
           return [game['white_user_id'], game['black_user_id']]
-        }).flat();
-
-        // console.log('activeGames', activeGames)
-        
+        }).flat(); 
         
         setActiveGamesUsers(users.filter(user => {
           return activeGamesUserIds.includes(user.id)
@@ -150,10 +148,6 @@ function Play({
     // eslint-disable-next-line
     }, [games, users, id]);
           
-          
-          // console.log('games', games.sort((a, b) => a.id - b.id))
-          // console.log('yourMoveGames', yourMoveGames)
-          // console.log('theirMoveGames', theirMoveGames)
           return (
             <BaseContainer>
           <NavBar 
@@ -164,6 +158,7 @@ function Play({
             onClickPlay={onClickPlay}
             selectedColor={selectedColor}
             onChangeColor={onChangeColor}
+            onChangeColorComplete={onChangeColorComplete}
           />
           <GameArea 
             user={user} 

@@ -138,7 +138,8 @@ function Login({ handleLogin }) {
                   cursor: 'pointer',
                 }}
                 >
-                Don't have an account? Sign Up
+                Don't have an account? 
+                Sign Up
               </Link>
             </Box>
             <Box sx={{ display: 'flex', mt: 2 }}>

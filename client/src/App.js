@@ -20,7 +20,8 @@ function App() {
         email: '',
         profile_image: '',
         date_joined: '',
-        friend_ids: []
+        friend_ids: [],
+        board_color: '#046920'
     };
     const [user, setUser] = useState(initialUserState);
     const [users, setUsers] = useState([]);
@@ -28,11 +29,21 @@ function App() {
     const [movesToMake, setMovesToMake] = useState(0);
     const [numChallenges, setNumChallenges] = useState(0);
     const [challenges, setChallenges] = useState(true);
-    const [selectedColor, setSelectedColor] = useState('#046920');
+    const [selectedColor, setSelectedColor] = useState(user.board_color);
 
     const handleColorChange = (color) => {
       setSelectedColor(color.hex);
     };            
+
+    const handleColorChangeComplete = (color) => {
+        fetch(`/users/${user.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ boardColor: color.hex })
+        })
+    };
 
     const authorize = () => {
         fetch('/authorized-session')
@@ -41,6 +52,11 @@ function App() {
             res.json().then(user => setUser(user));
           };
         });
+    };
+
+    const getUserBoardColor = () => {
+        const userBoardColor = user.board_color;
+        setSelectedColor(userBoardColor)
     };
 
     const getUsers = () => {
@@ -60,6 +76,10 @@ function App() {
       getUsers();
       getGames();
     }, []);
+
+    useEffect(() => {
+        getUserBoardColor();
+    }, [user]);
 
     useEffect(() => {
         const activeGames = games.filter(game => {
@@ -99,7 +119,6 @@ function App() {
     // route is either '/login' or '/signup'
     const handleLoginSignUp = (event, route) => {
         const dataObj = event
-        console.log(dataObj)
         return fetch(route, {
             method: 'POST',
             headers: {
@@ -148,6 +167,7 @@ function App() {
                 onClickPlay={handleSwitchMode}
                 selectedColor={selectedColor}
                 onChangeColor={handleColorChange}
+                onChangeColorComplete={handleColorChangeComplete}
               />
             </Route>
 

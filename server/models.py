@@ -15,6 +15,7 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String(), unique=True)
     email = db.Column(db.String(), unique=True)
     profile_image = db.Column(db.String())
+    board_color = db.Column(db.String(), default='#046920')
     date_joined = db.Column(db.DateTime(), server_default=db.func.now())
 
     friendships = db.relationship('Friendship', foreign_keys='Friendship.user_id', backref='user')

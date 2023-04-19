@@ -14,7 +14,16 @@ import logout from '../assets/logout.png';
 import sword from '../assets/sword.png';
 
 
-function NavBar({ user, movesToMake, numChallenges, onLogout, onClickPlay, selectedColor, onChangeColor }) {
+function NavBar({ 
+    user, 
+    movesToMake, 
+    numChallenges, 
+    onLogout, 
+    onClickPlay, 
+    selectedColor, 
+    onChangeColor, 
+    onChangeColorComplete 
+}) {
   
     const history = useHistory();
 
@@ -125,6 +134,7 @@ function NavBar({ user, movesToMake, numChallenges, onLogout, onClickPlay, selec
               <ChromePicker 
                 color={selectedColor} 
                 onChange={onChangeColor} 
+                onChangeComplete={onChangeColorComplete}
               /> : null}
               <Box
                 sx={{

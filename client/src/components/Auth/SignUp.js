@@ -37,7 +37,7 @@ function SignUp({ handleSignUp }) {
         onSubmit: (e) => {
             handleSignUp(e, '/signup')
               .catch(error => {
-                  console.log(error.error)
+
                   if (error.error.includes('UNIQUE constraint failed: users.email')) {
                     formik.setErrors({ login: 'email already in use' });
                   }

@@ -33,6 +33,15 @@ class UserById(Resource):
             return make_response(user.to_dict(), 200)
         except Exception as e:
             return make_response({'error': str(e)}, 400)
+        
+    def patch(self, id):
+        data = request.json
+        color_hex = data['boardColor']
+        user = User.query.filter_by(id=id).first()
+        user.board_color = color_hex
+        db.session.add(user)
+        db.session.commit()
+        return make_response(user.to_dict(), 200)
 api.add_resource(UserById, '/users/<int:id>')
 
 class Friendships(Resource):
