@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 
 import piecePngObj from './Util/piecePNGs';
 import { fenToArray } from './Util/pgnFenHandler.js'
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 
 function getInitialPositions() {
@@ -22,7 +22,7 @@ function Board({ length, index, selectedColor, staticBoard, flippedBoard, isUser
     const lightSquare = '#c4c4c4';
     const darkSquare = selectedColor;
 
-    const history = useHistory();
+    // const history = useHistory();
 
     const initialGameData = {
       id: 0,
