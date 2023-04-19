@@ -110,6 +110,7 @@ function App() {
           .then(res => {
               if (res.ok) {
                   history.push('/play');
+                  if (route === '/signup') getUsers();
                   return res.json().then(user => setUser(user));
               } else {
                   return res.json().then(errors => Promise.reject(errors));

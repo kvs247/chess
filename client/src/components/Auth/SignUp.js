@@ -19,7 +19,7 @@ const validationSchema = yup.object({
       .required('Password is required'),
 });
 
-function SignUp({ handleSignUp }) {
+function SignUp({ handleSignUp, getUsers }) {
 
     const formik = useFormik({
         initialValues: {
@@ -27,6 +27,7 @@ function SignUp({ handleSignUp }) {
             username: '',
             email: '',
             password: '',
+            friend_ids: [],
         },
         validationSchema: validationSchema,
         validateOnChange: false,
