@@ -213,12 +213,12 @@ function GameArea({ user, users, getGames, staticBoard, gameId, selectedColor })
             <Button
               onClick={() => handleSetIndex(-2)}
             >
-              <FirstPageIcon />
+              <FirstPageIcon sx={{ color: '#e1e1e1', fontSize: '3rem' }} />
             </Button>
             <Button
               onClick={() => handleSetIndex(-1)}
             >
-              <ArrowBackIosIcon />
+              <ArrowBackIosIcon sx={{ color: '#e1e1e1', fontSize: '2rem' }} />
             </Button>
             <Button
               variant='contained'
@@ -236,24 +236,24 @@ function GameArea({ user, users, getGames, staticBoard, gameId, selectedColor })
               >
                 Resign
               </Button> 
-              <Button
+              {/* <Button
                 variant='contained'
                 sx = {{ m: 1 }}
               >
                 Draw
-              </Button>
+              </Button> */}
               </>
             : null
             }
             <Button
               onClick={() => handleSetIndex(1)}
             >
-              <ArrowForwardIosIcon sx={{ fontSize: 24 }} />
+              <ArrowForwardIosIcon sx={{ color: '#e1e1e1', fontSize: '2rem' }} />
             </Button>
             <Button
               onClick={() => handleSetIndex(2)}
             >
-              <LastPageIcon sx={{ fontSize: 24 }} />
+              <LastPageIcon sx={{ color: '#e1e1e1', fontSize: '3rem' }} />
             </Button>            
           </Box>
         </Box>

@@ -38,7 +38,7 @@ function MoveList({ moves }) {
             align='center'
             sx={{
               mt: 1,
-              mb: 3,
+              mb: 3
             }}
           >
             Moves
@@ -47,7 +47,7 @@ function MoveList({ moves }) {
             {groupedMoves.map((text, index) => {
               return (
                 <ListItem key={index}>
-                  <ListItemText primary={text} sx={{ textAlign: 'center' }} />
+                  <ListItemText primary={text} sx={{ textAlign: 'center', color: '#e1e1e1' }} />
                 </ListItem>
               );
             })}

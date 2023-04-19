@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
+import Button from '@mui/material/Button';
 
 import { TwitterPicker, ChromePicker } from 'react-color';
 
@@ -18,7 +19,7 @@ function NavBar({ user, movesToMake, numChallenges, onLogout, onClickPlay, selec
   
     const history = useHistory();
 
-    // const selectedColor = null;
+    const [showColorPicker, setShowColorPicker] = useState(false);
 
     const MenuItem = (text, icon, route) => {
       
@@ -42,10 +43,10 @@ function NavBar({ user, movesToMake, numChallenges, onLogout, onClickPlay, selec
                   history.push(route);
                 }}
                 sx={{ 
-                color: '#e1e1e1', 
-                display: 'flex', 
-                alignItems: 'center',
-                pointer: 'cursor', 
+                  color: '#e1e1e1', 
+                  display: 'flex', 
+                  alignItems: 'center',
+                  pointer: 'cursor', 
               }}
               >
               <Box
@@ -97,19 +98,16 @@ function NavBar({ user, movesToMake, numChallenges, onLogout, onClickPlay, selec
         <Box 
         bgcolor='secondary.main'
         >
-          <CardActionArea disableRipple>
-            <Typography 
-              variant='h5' 
-              align='center'
-              sx={{
-                mt: 1,
-                mb: 3
-              }}
-              onClick={() => history.push('/home')}
-            >
-              Chess Is Hard
-            </Typography>
-          </CardActionArea>
+          <Typography 
+            variant='h5' 
+            align='center'
+            sx={{
+              mt: 1,
+              mb: 3
+            }}
+          >
+            Chess Is Hard
+          </Typography>
           {MenuItem('Active Games', playFriends, '/play')}
           {MenuItem('Challenges', sword, '/play')}
           {MenuItem('Social', social, `/users/${user.id}`)}
@@ -117,16 +115,34 @@ function NavBar({ user, movesToMake, numChallenges, onLogout, onClickPlay, selec
           {MenuItem('Logout', logout, '/login')}
           {selectedColor ? 
             <Box
-              sx={{
-                position: 'absolute',
-                bottom: 10,
-                // left: '50%',
-                // transform: 'translateX(-50%)',
-              }}
+            sx={{
+              position: 'absolute',
+              bottom: 0,
+              m: '1rem',
+              width: 200
+            }}
             >
-              <ChromePicker color={selectedColor} onChange={onChangeColor} />
-            </Box> : null          
-          }
+              {showColorPicker ? 
+              <ChromePicker 
+                color={selectedColor} 
+                onChange={onChangeColor} 
+              /> : null}
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  m: 2
+                }}
+              >
+                <Button
+                  variant='contained'
+                  // sx={{ mx: 'auto' }}
+                  onClick={() => setShowColorPicker(!showColorPicker)}
+                >
+                  {showColorPicker ? 'Hide Colors' : 'Show Colors'}
+                </Button>
+              </Box>
+            </Box> : null}
         </Box>
     );
 }

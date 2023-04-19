@@ -11,7 +11,7 @@ function BaseContainer({ children }) {
             width: '100vw',
             minWidth: '100%',
             display: 'grid',
-            gridTemplateColumns: '15% 70% 15%',
+            gridTemplateColumns: '16rem 1fr 20rem',
             padding: 0
           }}
         >

@@ -29,7 +29,7 @@ function App() {
     const [movesToMake, setMovesToMake] = useState(0);
     const [numChallenges, setNumChallenges] = useState(0);
     const [challenges, setChallenges] = useState(true);
-    const [selectedColor, setSelectedColor] = useState('#ffffff');
+    const [selectedColor, setSelectedColor] = useState('#046920');
 
     const handleColorChange = (color) => {
       setSelectedColor(color.hex);
@@ -108,7 +108,7 @@ function App() {
         })
           .then(res => {
               if (res.ok) {
-                  history.push('/home');
+                  history.push('/play');
                   return res.json().then(user => setUser(user));
               } else {
                   return res.json().then(errors => Promise.reject(errors));
@@ -131,17 +131,6 @@ function App() {
     return (
         <>
           <Switch>
-
-            <Route path="/home">
-              <Home 
-                user={user} 
-                users={users}
-                movesToMake={movesToMake}
-                numChallenges={numChallenges}
-                onLogout={handleLogout}
-                onClickPlay={handleSwitchMode}
-              />
-            </Route>
 
             <Route exact path='/play'>
               <Play 
@@ -172,6 +161,8 @@ function App() {
                 onLogout={handleLogout}
                 onClickPlay={handleSwitchMode}
                 showChallenges={challenges}
+                selectedColor={selectedColor}
+                onChangeColor={handleColorChange}
               />
             </Route>
 
