@@ -28,7 +28,7 @@ function App() {
     const [games, setGames] = useState([]);
     const [movesToMake, setMovesToMake] = useState(0);
     const [numChallenges, setNumChallenges] = useState(0);
-    const [challenges, setChallenges] = useState(true);
+    const [challenges, setChallenges] = useState(false);
     const [selectedColor, setSelectedColor] = useState(user.board_color);
 
     const handleColorChange = (color) => {

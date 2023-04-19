@@ -79,9 +79,9 @@ function Board({ length, index, selectedColor, staticBoard, flippedBoard, isUser
         const response = await onMove(fromIndex, toIndex);
         if (response !== fen) {
             // console.log('valid')
-            setTimeout(() => 
-                {history.push('/play');
-            }, 1500)
+            // setTimeout(() => 
+            //     {history.push('/play');
+            // }, 1500)
         } else {
             // console.log('invalid')
             setPositions((positions) => {
