@@ -84,7 +84,7 @@ function Social({ user, users, games, movesToMake, numChallenges, onLogout, onCl
             onRemoveFriend={handleRemoveFriend}
           />
           {showFriends ? 
-          <UserList users={users} onClickButton={handleClickButton}/> :
+          <UserList users={users.filter(u => u.id !== 0)} onClickButton={handleClickButton}/> :
           <FriendList users={friends} onClickButton={handleClickButton}/>
           }
         </BaseContainer>
