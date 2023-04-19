@@ -10,7 +10,20 @@ import ActiveGames from './ActiveGames.js';
 import MoveList from './MoveList.js';
 import Challenges from './Challenges.js';
 
-function Play({ user, users, movesToMake, numChallenges, games, setGames, getGames, onLogout, onClickPlay, showChallenges }) {
+function Play({ 
+    user, 
+    users, 
+    movesToMake, 
+    numChallenges, 
+    games, 
+    setGames, 
+    getGames, 
+    onLogout, 
+    onClickPlay, 
+    showChallenges,
+    selectedColor,
+    onChangeColor, 
+}) {
 
     const { id } = useParams();
     const history = useHistory();    
@@ -21,6 +34,11 @@ function Play({ user, users, movesToMake, numChallenges, games, setGames, getGam
     const [activeGamesUsers, setActiveGamesUsers] = useState([]);
     const [receivedChallenges, setReceivedChallenges] = useState([]);
     const [sentChallenges, setSentChallenges] = useState([]);
+    // const [selectedColor, setSelectedColor] = useState('#ffffff');
+
+    // const handleColorChange = (color) => {
+    //   setSelectedColor(color.hex);
+    // };        
     
     useEffect(() => {
       getGames();
@@ -144,6 +162,8 @@ function Play({ user, users, movesToMake, numChallenges, games, setGames, getGam
             numChallenges={numChallenges}
             onLogout={onLogout}
             onClickPlay={onClickPlay}
+            selectedColor={selectedColor}
+            onChangeColor={onChangeColor}
           />
           <GameArea 
             user={user} 
@@ -151,6 +171,7 @@ function Play({ user, users, movesToMake, numChallenges, games, setGames, getGam
             getGames={getGames}
             staticBoard={id ? false : true}
             gameId={id}
+            selectedColor={selectedColor}
           />
           {id ? 
             <MoveList moves={moves}/> :

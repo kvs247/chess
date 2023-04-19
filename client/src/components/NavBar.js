@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
+
+import { TwitterPicker, ChromePicker } from 'react-color';
 
 import playFriends from '../assets/play-friends.png';
 import playComputer from '../assets/play-computer.png';
@@ -11,9 +14,11 @@ import logout from '../assets/logout.png';
 import sword from '../assets/sword.png';
 
 
-function NavBar({ user, movesToMake, numChallenges, onLogout, onClickPlay }) {
+function NavBar({ user, movesToMake, numChallenges, onLogout, onClickPlay, selectedColor, onChangeColor }) {
   
     const history = useHistory();
+
+    // const selectedColor = null;
 
     const MenuItem = (text, icon, route) => {
       
@@ -110,6 +115,18 @@ function NavBar({ user, movesToMake, numChallenges, onLogout, onClickPlay }) {
           {MenuItem('Social', social, `/users/${user.id}`)}
           {MenuItem('About', about, '/about')}
           {MenuItem('Logout', logout, '/login')}
+          {selectedColor ? 
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: 10,
+                // left: '50%',
+                // transform: 'translateX(-50%)',
+              }}
+            >
+              <ChromePicker color={selectedColor} onChange={onChangeColor} />
+            </Box> : null          
+          }
         </Box>
     );
 }

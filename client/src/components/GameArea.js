@@ -39,7 +39,7 @@ const playerBox = (username, photo) => {
   );
 };
 
-function GameArea({ user, users, getGames, staticBoard, gameId }) {
+function GameArea({ user, users, getGames, staticBoard, gameId, selectedColor }) {
 
     const [isLoaded, setIsLoaded] = useState(false);
     const [rerender, setRerender] = useState(false);
@@ -188,6 +188,7 @@ function GameArea({ user, users, getGames, staticBoard, gameId }) {
           <Board 
             length={length} 
             index={index}
+            selectedColor={selectedColor}
             staticBoard={staticBoard}
             flippedBoard={flippedBoard}
             isUsersTurn={isUsersTurn}

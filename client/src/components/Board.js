@@ -7,19 +7,20 @@ import piecePngObj from './Util/piecePNGs';
 import { fenToArray } from './Util/pgnFenHandler.js'
 import { useHistory } from 'react-router-dom';
 
-const lightSquare = '#c4c4c4';
-const darkSquare = '#005c28';
 
 function getInitialPositions() {
   const positions = {};
-    for (let i = 0; i < 64; i++) {
-      positions[i] = { x: 0, y: 0 };
-    };
-    return positions;
-  }
+  for (let i = 0; i < 64; i++) {
+    positions[i] = { x: 0, y: 0 };
+  };
+  return positions;
+}
 const initialPositions = getInitialPositions();
+
+function Board({ length, index, selectedColor, staticBoard, flippedBoard, isUsersTurn, gameData, onMove }) {
   
-function Board({ length, index, staticBoard, flippedBoard, isUsersTurn, gameData, onMove }) {
+    const lightSquare = '#c4c4c4';
+    const darkSquare = selectedColor;
 
     const history = useHistory();
 

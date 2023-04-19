@@ -29,6 +29,11 @@ function App() {
     const [movesToMake, setMovesToMake] = useState(0);
     const [numChallenges, setNumChallenges] = useState(0);
     const [challenges, setChallenges] = useState(true);
+    const [selectedColor, setSelectedColor] = useState('#ffffff');
+
+    const handleColorChange = (color) => {
+      setSelectedColor(color.hex);
+    };            
 
     const authorize = () => {
         fetch('/authorized-session')
@@ -145,11 +150,13 @@ function App() {
                 movesToMake={movesToMake}
                 numChallenges={numChallenges}
                 games={games}
+                showChallenges={challenges}
                 setGames={setGames}
                 getGames={getGames}                
                 onLogout={handleLogout}
                 onClickPlay={handleSwitchMode}
-                showChallenges={challenges}
+                selectedColor={selectedColor}
+                onChangeColor={handleColorChange}
               />
             </Route>
 
