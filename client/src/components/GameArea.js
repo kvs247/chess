@@ -77,6 +77,7 @@ function GameArea({ user, users, getGames, staticBoard, gameId, selectedColor })
             document.addEventListener('keydown', helper);
             return () => document.removeEventListener('keydown', helper);
         };
+    // eslint-disable-next-line
     }, [gameData, index]);
 
     useEffect(() => {

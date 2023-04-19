@@ -3,7 +3,6 @@ import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 
 import Login from './components/Auth/Login.js';
 import SignUp from './components/Auth/SignUp.js';
-import Home from './components/Home/Home.js';
 import Play from './components/Play/Play.js';
 import Social from './components/Social/Social.js';
 import About from './components/About/About.js';
@@ -78,6 +77,7 @@ function App() {
             return result
         });
         setMovesToMake(yourMoveGames.length);
+    // eslint-disable-next-line
     }, [games]);
 
     useEffect(() => {
@@ -93,6 +93,7 @@ function App() {
             });
             setNumChallenges(receivedChallengeUsers.length);
         }) 
+    // eslint-disable-next-line
     }, [user])
 
     // route is either '/login' or '/signup'

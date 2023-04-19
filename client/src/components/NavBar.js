@@ -5,10 +5,9 @@ import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import Button from '@mui/material/Button';
 
-import { TwitterPicker, ChromePicker } from 'react-color';
+import { ChromePicker } from 'react-color';
 
 import playFriends from '../assets/play-friends.png';
-import playComputer from '../assets/play-computer.png';
 import social from '../assets/social.png';
 import about from '../assets/about.png';
 import logout from '../assets/logout.png';
