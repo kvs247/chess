@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useHistory } from 'react-router-dom';
 
 const validationSchema = yup.object({
     email: yup
@@ -20,6 +21,8 @@ const validationSchema = yup.object({
 });
 
 function Login({ handleLogin }) {
+
+    const history = useHistory();
 
     const formik = useFormik({
         initialValues: {
@@ -127,15 +130,29 @@ function Login({ handleLogin }) {
                 Log In
             </Button>
             <Box sx={{ mt: 2 }}>
-              <Link href='/signup' sx={{ color: '#ffffff', p: 2 }}>
+              <Link 
+                onClick={() => history.push('/signup')} 
+                sx={{ 
+                  color: '#ffffff', 
+                  p: 2,
+                  cursor: 'pointer',
+                }}
+                >
                 Don't have an account? Sign Up
               </Link>
             </Box>
             <Box sx={{ display: 'flex', mt: 2 }}>
               <br />
-              <Link href='/home' sx={{ color: '#ffffff', mx: 'auto' }}>
+              {/* <Link 
+                onClick={() => history.push('/play')} 
+                sx={{ 
+                  color: '#ffffff', 
+                  mx: 'auto',
+                  cursor: 'pointer',
+                }}
+              >
                 Log In As Guest
-              </Link>
+              </Link> */}
             </Box>
           </Box>
         </Container>
