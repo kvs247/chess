@@ -79,6 +79,7 @@ function App() {
 
     useEffect(() => {
         getUserBoardColor();
+    // eslint-disable-next-line
     }, [user]);
 
     useEffect(() => {
