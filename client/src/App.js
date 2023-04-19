@@ -27,6 +27,7 @@ function App() {
     const [users, setUsers] = useState([]);
     const [games, setGames] = useState([]);
     const [movesToMake, setMovesToMake] = useState(0);
+    const [numChallenges, setNumChallenges] = useState(0);
     const [challenges, setChallenges] = useState(true);
 
     const authorize = () => {
@@ -74,7 +75,21 @@ function App() {
         setMovesToMake(yourMoveGames.length);
     }, [games]);
 
-    
+    useEffect(() => {
+      fetch('/challenges') 
+        .then(res => res.json())
+        .then(data => {
+            const receivedChallenges = data.filter(challenge => challenge.challengee_id === user.id);
+            const receivedChallengeUsers = receivedChallenges.map(c => {
+              return {
+                  challenge: c,
+                  user: users.find(u => u.id === c.challenger_id)
+              }
+            });
+            setNumChallenges(receivedChallengeUsers.length);
+        }) 
+    }, [user])
+
     // route is either '/login' or '/signup'
     const handleLoginSignUp = (event, route) => {
         const dataObj = event
@@ -117,6 +132,7 @@ function App() {
                 user={user} 
                 users={users}
                 movesToMake={movesToMake}
+                numChallenges={numChallenges}
                 onLogout={handleLogout}
                 onClickPlay={handleSwitchMode}
               />
@@ -127,6 +143,7 @@ function App() {
                 user={user}
                 users={users}
                 movesToMake={movesToMake}
+                numChallenges={numChallenges}
                 games={games}
                 setGames={setGames}
                 getGames={getGames}                
@@ -141,6 +158,7 @@ function App() {
                 user={user}
                 users={users}
                 movesToMake={movesToMake}
+                numChallenges={numChallenges}
                 games={games}
                 setGames={setGames}
                 getGames={getGames}
@@ -156,6 +174,7 @@ function App() {
                 users={users}
                 games={games}
                 movesToMake={movesToMake}
+                numChallenges={numChallenges}
                 onLogout={handleLogout}
                 onClickPlay={handleSwitchMode}
               />
@@ -165,6 +184,7 @@ function App() {
               <About 
                 user={user} 
                 movesToMake={movesToMake}
+                numChallenges={numChallenges}
                 onLogout={handleLogout}
                 onClickPlay={handleSwitchMode}
               />

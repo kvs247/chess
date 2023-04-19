@@ -11,7 +11,7 @@ import logout from '../assets/logout.png';
 import sword from '../assets/sword.png';
 
 
-function NavBar({ user, movesToMake, onLogout, onClickPlay }) {
+function NavBar({ user, movesToMake, numChallenges, onLogout, onClickPlay }) {
   
     const history = useHistory();
 
@@ -53,6 +53,7 @@ function NavBar({ user, movesToMake, onLogout, onClickPlay }) {
                 }}
               />
                 {`${text}`}
+                {/* your move */}
                 {text === 'Active Games' && movesToMake > 0 ? 
                 <Box
                   sx={{ 
@@ -67,6 +68,21 @@ function NavBar({ user, movesToMake, onLogout, onClickPlay }) {
                 >
                   {movesToMake}
                 </Box> : null}
+                {/* challenges */}
+                {text === 'Challenges' && numChallenges > 0 ? 
+                <Box
+                  sx={{ 
+                    ml: 2, 
+                    bgcolor: 'red',
+                    borderRadius: '25%',
+                    width: 15,
+                    height: 15,
+                    display: 'flex',
+                    justifyContent: 'center',                
+                  }}
+                >
+                  {numChallenges}
+                </Box> : null}    
               </Box>
             </CardActionArea>
         );

@@ -10,7 +10,7 @@ import ActiveGames from './ActiveGames.js';
 import MoveList from './MoveList.js';
 import Challenges from './Challenges.js';
 
-function Play({ user, users, movesToMake, games, setGames, getGames, onLogout, onClickPlay, showChallenges }) {
+function Play({ user, users, movesToMake, numChallenges, games, setGames, getGames, onLogout, onClickPlay, showChallenges }) {
 
     const { id } = useParams();
     const history = useHistory();    
@@ -21,6 +21,11 @@ function Play({ user, users, movesToMake, games, setGames, getGames, onLogout, o
     const [activeGamesUsers, setActiveGamesUsers] = useState([]);
     const [receivedChallenges, setReceivedChallenges] = useState([]);
     const [sentChallenges, setSentChallenges] = useState([]);
+    
+    useEffect(() => {
+      getGames();
+    // eslint-disable-next-line
+    }, []);
 
     useEffect(() => {
         fetch('/challenges') 
@@ -66,12 +71,12 @@ function Play({ user, users, movesToMake, games, setGames, getGames, onLogout, o
           method: 'DELETE'
       })
       const newSentChallenges = sentChallenges.filter(
-          challenge => challenge.id !== challengeId
-      )
-      setSentChallenges(newSentChallenges)
-    };
-
-
+        challenge => challenge.id !== challengeId
+        )
+        setSentChallenges(newSentChallenges)
+      };
+      
+      
     const receivedChallengeUsers = receivedChallenges.map(c => {
         return {
             challenge: c,
@@ -85,10 +90,6 @@ function Play({ user, users, movesToMake, games, setGames, getGames, onLogout, o
         }
     });
     
-    useEffect(() => {
-      getGames();
-    // eslint-disable-next-line
-    }, []);
 
     useEffect(() => {
         const game = games.find(game => game.id === parseInt(id));
@@ -140,6 +141,7 @@ function Play({ user, users, movesToMake, games, setGames, getGames, onLogout, o
           <NavBar 
             user={user}
             movesToMake={movesToMake}
+            numChallenges={numChallenges}
             onLogout={onLogout}
             onClickPlay={onClickPlay}
           />
