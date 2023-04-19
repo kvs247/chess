@@ -64,6 +64,8 @@ function Social({ user, users, games, movesToMake, numChallenges, onLogout, onCl
         console.log('data:', profileData)
 
         setFriends(users.filter(u => thisPageUser.friend_ids.includes(u.id)));
+
+    // eslint-disable-next-line
     }, [id, users]);   
 
     return (
