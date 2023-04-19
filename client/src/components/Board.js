@@ -36,7 +36,7 @@ function Board({ length, index, selectedColor, staticBoard, flippedBoard, isUser
 
     let fen = gameData.fen_list.slice(index)[0];
 
-    if (!fen) fen = ' w KQkq - 0 1'
+    if (!fen) fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
     const fenArray = fenToArray(fen);
 
     if (flippedBoard) {

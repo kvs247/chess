@@ -16,7 +16,7 @@ function BaseUserList({ children, users }) {
     }, [users]);
     
     const handleClickUser = (user) => {
-      history.push(`/users/${user.id}`);
+      history.push(`/profile/${user.id}`);
     };
     
     // search functionality

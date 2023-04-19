@@ -118,7 +118,7 @@ function NavBar({
           </Typography>
           {MenuItem('Active Games', playFriends, '/play')}
           {MenuItem('Challenges', sword, '/play')}
-          {MenuItem('Social', social, `/users/${user.id}`)}
+          {MenuItem('Social', social, `/profile/${user.id}`)}
           {MenuItem('About', about, '/about')}
           {MenuItem('Logout', logout, '/login')}
           {selectedColor ? 

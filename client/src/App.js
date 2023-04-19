@@ -189,7 +189,7 @@ function App() {
               />
             </Route>
 
-            <Route path='/users/:id'>
+            <Route path='/profile/:id'>
               <Social 
                 user={user}
                 users={users}

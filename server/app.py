@@ -13,6 +13,13 @@ from chess.pgn_to_fen import pgn_to_fen, pgn_to_fen_store, pgn_to_dict, update_f
 from chess import util
 from chess.new_pgn import new_pgn
 
+@app.route('/play')
+@app.route('/play/<int:id>')
+@app.route('/profile')
+@app.route('/profile/<int:id>')
+@app.route('/about')
+@app.route('/login')
+@app.route('/signup')
 @app.route('/')
 @app.route('/<int:id>')
 def index(id=0):
