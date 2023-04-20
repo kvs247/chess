@@ -96,13 +96,14 @@ function Board({ length, index, selectedColor, staticBoard, flippedBoard, isUser
         };
 
         const response = await onMove(fromIndex, toIndex);
-        if (response !== fen) {
+        const response_fen = response.slice(-1)[0];
+        if (response_fen !== fen) {
             // console.log('valid')
             // setTimeout(() => 
             //     {history.push('/play');
             // }, 1500)
         } else {
-            // console.log('invalid')
+            console.log('invalid')
             setPositions((positions) => {
                 const newPositions = { ...positions };
                 newPositions[i] = { x: 0, y: 0 };
