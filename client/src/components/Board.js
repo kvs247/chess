@@ -33,29 +33,25 @@ function Board({ length, index, selectedColor, staticBoard, flippedBoard, isUser
     };
     if (!gameData.fen_list) gameData = initialGameData;
 
-    // const [fen, setFen] = useState(() => {
-    //     const storedFen = localStorage.getItem('fen');
-    //     console.log('loaded', storedFen)
-    //     return storedFen ? storedFen : gameData.fen_list.slice(index)[0];
-    // });
+    const [fen, setFen] = useState(() => {
+        const storedFen = localStorage.getItem('fen');
+        return storedFen ? storedFen : gameData.fen_list.slice(index)[0];
+    });
+    if (!fen) setFen('');
 
-    // useEffect(() => {
-    //     console.log('saved', fen)
-    //     localStorage.setItem('fen', fen);
-    // }, [fen, index]);
+    useEffect(() => {
+      const fen = gameData.fen_list.slice(index)[0];
+      if (fen !== '8/8/8/8/8/8/8/8 w KQkq - 0 1') localStorage.setItem('fen', fen);
+    }, [fen, index]);
 
-    // useEffect(() => {
-    //   const storedFen = localStorage.getItem('fen');
-    //   console.log('loaded', storedFen);
-    //   const defaultFen = gameData.fen_list.slice(index)[0] || '8/8/8/8/8/8/8/8 w KQkq - 0 1';
-    //   setFen(storedFen || defaultFen);
-    // }, [gameData.fen_list, index]);    
+    useEffect(() => {
+      const storedFen = localStorage.getItem('fen');
+      console.log('loaded', storedFen);
+      const defaultFen = gameData.fen_list.slice(index)[0];
+      setFen(storedFen || defaultFen);
+    }, [gameData, index]);    
 
-    let fen = gameData.fen_list.slice(index)[0];
-    // setFen(gameData.fen_list.slice(index)[0]);
-
-    if (!fen) fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
-    // if (!fen) setFen('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
+    if (!fen) setFen('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
     const fenArray = fenToArray(fen);
 
     if (flippedBoard) {

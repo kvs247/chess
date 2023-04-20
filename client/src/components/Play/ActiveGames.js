@@ -9,7 +9,8 @@ import blackKing from '../../assets/chess-pieces/black-king.png';
 function ActiveGames({ users, yourMoveGames, theirMoveGames }) {
 
     const history = useHistory();
-    const handleClick = (gameId) => {
+    const handleClick = (gameId, fen) => {
+        localStorage.setItem('fen', fen);
         history.push(`/play/${gameId}`);
     };
 
@@ -20,7 +21,7 @@ function ActiveGames({ users, yourMoveGames, theirMoveGames }) {
             return (
                 <CardActionArea key={game.id}>
                   <Box
-                    onClick={() => handleClick(game.id)}
+                    onClick={() => handleClick(game.id, game.fen)}
                     sx={{
                       bgcolor: 'primary.main',
                       color: '#e1e1e1',

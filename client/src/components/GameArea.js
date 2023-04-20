@@ -46,15 +46,15 @@ function GameArea({ user, users, getGames, staticBoard, flippedBoard, onClickFli
     const [gameData, setGameData] = useState({});
     // eslint-disable-next-line
     const [isUsersTurn, setIsUsersTurn] = useState(false);
-    const [index, setIndex] = useState(-1);
-    // const [flippedBoard, setFlippedBoard] = useState(() => {
-    //     const storedFlippedBoard = localStorage.getItem('flippedBoard');
-    //     return storedFlippedBoard ? storedFlippedBoard : false;
-    // });
+    // const [index, setIndex] = useState(-1);
+    const [index, setIndex] = useState(() => {
+        const storedIndex = localStorage.getItem('index');
+        return storedIndex ? parseInt(storedIndex) : -1;
+    });
 
-    // useEffect(() => {
-    //     localStorage.setItem('flippedBoard', flippedBoard);
-    // }, [flippedBoard]);
+    useEffect(() => {
+        localStorage.setItem('index', index);
+    }, [index])
 
     const handleSetIndex = (value) => {
         const startIndex = -gameData.fen_list.length;
@@ -72,6 +72,7 @@ function GameArea({ user, users, getGames, staticBoard, flippedBoard, onClickFli
         };
 
         setIndex(index => index + value);
+        localStorage.setItem('index', index+value);
     };
 
     const helper = (e) => {

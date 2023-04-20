@@ -35,6 +35,9 @@ function NavBar({
             <CardActionArea>
               <Box 
                 onClick={() => {
+                  if (route === '/play') {
+                      localStorage.setItem('fen', 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
+                  }
                   switch (text) {
                     case 'Active Games':
                       onClickPlay(false);
@@ -47,6 +50,7 @@ function NavBar({
                       break;
                     default:
                       break;
+
                   };
                   history.push(route);
                 }}
