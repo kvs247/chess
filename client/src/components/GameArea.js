@@ -92,6 +92,7 @@ function GameArea({ user, users, getGames, staticBoard, flippedBoard, onClickFli
     }, [gameData, index]);
         
     useEffect(() => {
+        console.log('fire')
         setRerender(false);
         fetch(`/games/${gameId ? gameId : 0}`)
           .then(res => res.json())
@@ -190,6 +191,7 @@ function GameArea({ user, users, getGames, staticBoard, flippedBoard, onClickFli
           <Board 
             length={length} 
             index={index}
+            setIndex={setIndex}
             selectedColor={selectedColor}
             staticBoard={staticBoard}
             flippedBoard={flippedBoard}

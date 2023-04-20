@@ -112,7 +112,7 @@ class GameById(Resource):
     
     def patch(self, id):
         request_data = request.json
-        print(request_data)
+        # print(request_data)
         from_index = request_data['fromIndex']
         to_index = request_data['toIndex']
 
@@ -124,7 +124,7 @@ class GameById(Resource):
         pgn_dict = pgn_to_dict(pgn)
         chess = Chess(fen)
 
-        print(pgn_to_fen_store(game.pgn))
+        # print(pgn_to_fen_store(game.pgn))
 
         if pgn_dict['result'] != '*':
             print('game ended')
@@ -173,7 +173,6 @@ class GameById(Resource):
             if stalemate:
                 new_pgn = new_pgn.replace('*', '1/2-1/2')
 
-
             # checkmate
             if '#' in move:
                 win_string = '1-0' if fen_dict['active_color'] == 'w' else '0-1'
@@ -193,11 +192,11 @@ class GameById(Resource):
             fen_list = list(map(lambda x: x.split(' ')[0], fen_list))
             game_fen_string = game.fen.split(' ')[0]
             if game_fen_string in fen_list[:-1]:
-                print('repeated once')
+                # print('repeated once')
                 temp_fen_list = fen_list[:-1]
                 temp_fen_list.remove(game_fen_string)
                 if game_fen_string in temp_fen_list:
-                    print('repeated twice')
+                    # print('repeated twice')
                     game.pgn = game.pgn.replace('*', '1/2-1/2')
 
             # insufficient material
