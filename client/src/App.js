@@ -29,7 +29,15 @@ function App() {
     const [movesToMake, setMovesToMake] = useState(0);
     const [numChallenges, setNumChallenges] = useState(0);
     const [challenges, setChallenges] = useState(false);
-    const [selectedColor, setSelectedColor] = useState(user.board_color);
+    const [selectedColor, setSelectedColor] = useState(() => {
+        const storedColor = localStorage.getItem('boardColor');
+        return storedColor ? storedColor : '#046920';
+    });
+
+    useEffect(() => {
+        localStorage.setItem('boardColor', selectedColor);
+    }, [selectedColor]);
+
 
     const handleColorChange = (color) => {
       setSelectedColor(color.hex);
@@ -54,11 +62,6 @@ function App() {
         });
     };
 
-    const getUserBoardColor = () => {
-        const userBoardColor = user.board_color;
-        setSelectedColor(userBoardColor)
-    };
-
     const getUsers = () => {
         fetch('/users')
           .then(res => res.json())
@@ -76,11 +79,6 @@ function App() {
       getUsers();
       getGames();
     }, []);
-
-    useEffect(() => {
-        getUserBoardColor();
-    // eslint-disable-next-line
-    }, [user]);
 
     useEffect(() => {
         const activeGames = games.filter(game => {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // import { useHistory } from 'react-router-dom';
 import Draggable from 'react-draggable';
 import Box from '@mui/material/Box';
@@ -18,11 +18,9 @@ function getInitialPositions() {
 const initialPositions = getInitialPositions();
 
 function Board({ length, index, selectedColor, staticBoard, flippedBoard, isUsersTurn, gameData, onMove }) {
-  
+
     const lightSquare = '#c4c4c4';
     const darkSquare = selectedColor;
-
-    // const history = useHistory();
 
     const initialGameData = {
       id: 0,
@@ -38,6 +36,15 @@ function Board({ length, index, selectedColor, staticBoard, flippedBoard, isUser
 
     if (!fen) fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
     const fenArray = fenToArray(fen);
+
+    // const [fenArray, setFenArray] = useState(() => {
+    //     const storedFenArray = localStorage.getItem('fenArray');
+    //     return storedFenArray ? JSON.parse(storedFenArray) : fenToArray(fen);
+    // });
+
+    // useEffect(() => {
+    //     localStorage.setItem('fenArray', JSON.stringify(fenArray));
+    // }, [fenArray])
 
     if (flippedBoard) {
         fenArray.reverse();

@@ -35,12 +35,20 @@ function Play({
     const [activeGamesUsers, setActiveGamesUsers] = useState([]);
     const [receivedChallenges, setReceivedChallenges] = useState([]);
     const [sentChallenges, setSentChallenges] = useState([]);
-    // const [selectedColor, setSelectedColor] = useState('#ffffff');
+    const [flippedBoard, setFlippedBoard] = useState(() => {
+      const storedFlippedBoard = localStorage.getItem('flippedBoard');
+      return storedFlippedBoard ? storedFlippedBoard == 'true' : false;
+    });
 
-    // const handleColorChange = (color) => {
-    //   setSelectedColor(color.hex);
-    // };        
-    
+    useEffect(() => {
+        localStorage.setItem('flippedBoard', flippedBoard);
+    }, [flippedBoard]);
+
+    const handleClickFlip = () => {
+        setFlippedBoard(!flippedBoard);
+        localStorage.setItem('flippedBoard', flippedBoard); 
+    };
+
     useEffect(() => {
       getGames();
     // eslint-disable-next-line
@@ -165,6 +173,8 @@ function Play({
             users={users}
             getGames={getGames}
             staticBoard={id ? false : true}
+            flippedBoard={flippedBoard}
+            onClickFlip={handleClickFlip}
             gameId={id}
             selectedColor={selectedColor}
           />

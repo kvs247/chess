@@ -39,14 +39,21 @@ const playerBox = (username, photo) => {
   );
 };
 
-function GameArea({ user, users, getGames, staticBoard, gameId, selectedColor }) {
+function GameArea({ user, users, getGames, staticBoard, flippedBoard, onClickFlip, gameId, selectedColor }) {
 
     const [isLoaded, setIsLoaded] = useState(false);
     const [rerender, setRerender] = useState(false);
     const [gameData, setGameData] = useState({});
-    const [flippedBoard, setFlippedBoard] = useState(false);
     const [isUsersTurn, setIsUsersTurn] = useState(false);
     const [index, setIndex] = useState(-1);
+    // const [flippedBoard, setFlippedBoard] = useState(() => {
+    //     const storedFlippedBoard = localStorage.getItem('flippedBoard');
+    //     return storedFlippedBoard ? storedFlippedBoard : false;
+    // });
+
+    // useEffect(() => {
+    //     localStorage.setItem('flippedBoard', flippedBoard);
+    // }, [flippedBoard]);
 
     const handleSetIndex = (value) => {
         const startIndex = -gameData.fen_list.length;
@@ -80,15 +87,15 @@ function GameArea({ user, users, getGames, staticBoard, gameId, selectedColor })
     // eslint-disable-next-line
     }, [gameData, index]);
 
-    useEffect(() => {
-        setFlippedBoard(user.id === gameData.black_user_id);
-        if (gameData.fen) {
-            const whitesTurn = gameData.fen.split(' ')[1] === 'w' ? true : false;
-            if (whitesTurn && user.id === gameData.white_user_id) setIsUsersTurn(true)
-            else if (!whitesTurn && user.id === gameData.black_user_id) setIsUsersTurn(true)
-            else setIsUsersTurn(false);
-          };
-        }, [user.id, gameData]);
+    // useEffect(() => {
+    //     setFlippedBoard(user.id === gameData.black_user_id);
+    //     if (gameData.fen) {
+    //         const whitesTurn = gameData.fen.split(' ')[1] === 'w' ? true : false;
+    //         if (whitesTurn && user.id === gameData.white_user_id) setIsUsersTurn(true)
+    //         else if (!whitesTurn && user.id === gameData.black_user_id) setIsUsersTurn(true)
+    //         else setIsUsersTurn(false);
+    //       };
+    //     }, [user.id, gameData]);
         
         
     useEffect(() => {
@@ -225,7 +232,7 @@ function GameArea({ user, users, getGames, staticBoard, gameId, selectedColor })
             <Button
               variant='contained'
               sx ={{ m: 1, }}
-              onClick={() => setFlippedBoard(!flippedBoard)}
+              onClick={() => onClickFlip()}
             >
               Flip Board
             </Button> 
