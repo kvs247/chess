@@ -28,23 +28,34 @@ function Board({ length, index, selectedColor, staticBoard, flippedBoard, isUser
       black_user_id: 0,
       pgn: '',
       fen: '',
-      fen_list: ['rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1']
+      fen_list: ['8/8/8/8/8/8/8/8 w KQkq - 0 1']
     };
     if (!gameData.fen_list) gameData = initialGameData;
 
-    let fen = gameData.fen_list.slice(index)[0];
-
-    if (!fen) fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
-    const fenArray = fenToArray(fen);
-
-    // const [fenArray, setFenArray] = useState(() => {
-    //     const storedFenArray = localStorage.getItem('fenArray');
-    //     return storedFenArray ? JSON.parse(storedFenArray) : fenToArray(fen);
+    // const [fen, setFen] = useState(() => {
+    //     const storedFen = localStorage.getItem('fen');
+    //     console.log('loaded', storedFen)
+    //     return storedFen ? storedFen : gameData.fen_list.slice(index)[0];
     // });
 
     // useEffect(() => {
-    //     localStorage.setItem('fenArray', JSON.stringify(fenArray));
-    // }, [fenArray])
+    //     console.log('saved', fen)
+    //     localStorage.setItem('fen', fen);
+    // }, [fen, index]);
+
+    // useEffect(() => {
+    //   const storedFen = localStorage.getItem('fen');
+    //   console.log('loaded', storedFen);
+    //   const defaultFen = gameData.fen_list.slice(index)[0] || '8/8/8/8/8/8/8/8 w KQkq - 0 1';
+    //   setFen(storedFen || defaultFen);
+    // }, [gameData.fen_list, index]);    
+
+    let fen = gameData.fen_list.slice(index)[0];
+    // setFen(gameData.fen_list.slice(index)[0]);
+
+    if (!fen) fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+    // if (!fen) setFen('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
+    const fenArray = fenToArray(fen);
 
     if (flippedBoard) {
         fenArray.reverse();
@@ -66,14 +77,14 @@ function Board({ length, index, selectedColor, staticBoard, flippedBoard, isUser
         const deltaX = positions[i].x;
         const deltaY = positions[i].y;
 
-        if (!isUsersTurn) {
-            setPositions((positions) => {
-              const newPositions = { ...positions };
-              newPositions[i] = { x: 0, y: 0 };
-              return newPositions
-            });
-            return '';
-        };
+        // if (!isUsersTurn) {
+        //     setPositions((positions) => {
+        //       const newPositions = { ...positions };
+        //       newPositions[i] = { x: 0, y: 0 };
+        //       return newPositions
+        //     });
+        //     return '';
+        // };
 
         let fromIndex = i;
         let toIndex = i + Math.round(deltaX / squareLength) + Math.round(deltaY / squareLength) * 8;
