@@ -39,7 +39,7 @@ function Board({ length, index, selectedColor, staticBoard, flippedBoard, isUser
     });
     if (!fen) setFen('');
 
-    // eslint-disable-next-lin
+    // eslint-disable-next-line
     const [numMoves, setNumMoves] = useState(() => {
       const storedNumMoves = localStorage.getItem('numMoves');
       console.log('numMoves1', storedNumMoves)
@@ -50,7 +50,7 @@ function Board({ length, index, selectedColor, staticBoard, flippedBoard, isUser
         const numMoves = gameData.fen_list.length;
         console.log('numMoves2', numMoves)
         localStorage.setItem('numMoves', numMoves);
-    // eslint-disable-next-lin
+    // eslint-disable-next-line
     }, [gameData])
 
     useEffect(() => {
