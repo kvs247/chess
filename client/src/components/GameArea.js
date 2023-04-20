@@ -52,6 +52,8 @@ function GameArea({ user, users, getGames, staticBoard, flippedBoard, onClickFli
         return storedIndex ? parseInt(storedIndex) : -1;
     });
 
+    // console.log('moves', gameData.fen_list.length)
+
     useEffect(() => {
         localStorage.setItem('index', index);
     }, [index])
@@ -88,17 +90,6 @@ function GameArea({ user, users, getGames, staticBoard, flippedBoard, onClickFli
         };
     // eslint-disable-next-line
     }, [gameData, index]);
-
-    // useEffect(() => {
-    //     setFlippedBoard(user.id === gameData.black_user_id);
-    //     if (gameData.fen) {
-    //         const whitesTurn = gameData.fen.split(' ')[1] === 'w' ? true : false;
-    //         if (whitesTurn && user.id === gameData.white_user_id) setIsUsersTurn(true)
-    //         else if (!whitesTurn && user.id === gameData.black_user_id) setIsUsersTurn(true)
-    //         else setIsUsersTurn(false);
-    //       };
-    //     }, [user.id, gameData]);
-        
         
     useEffect(() => {
         setRerender(false);

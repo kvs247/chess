@@ -39,6 +39,20 @@ function Board({ length, index, selectedColor, staticBoard, flippedBoard, isUser
     });
     if (!fen) setFen('');
 
+    // eslint-disable-next-lin
+    const [numMoves, setNumMoves] = useState(() => {
+      const storedNumMoves = localStorage.getItem('numMoves');
+      console.log('numMoves1', storedNumMoves)
+      return storedNumMoves ? parseInt(storedNumMoves) : 0;
+    });
+
+    useEffect(() => {
+        const numMoves = gameData.fen_list.length;
+        console.log('numMoves2', numMoves)
+        localStorage.setItem('numMoves', numMoves);
+    // eslint-disable-next-lin
+    }, [gameData])
+
     useEffect(() => {
       const fen = gameData.fen_list.slice(index)[0];
       if (fen !== '8/8/8/8/8/8/8/8 w KQkq - 0 1') localStorage.setItem('fen', fen);
@@ -47,7 +61,6 @@ function Board({ length, index, selectedColor, staticBoard, flippedBoard, isUser
 
     useEffect(() => {
       const storedFen = localStorage.getItem('fen');
-      console.log('loaded', storedFen);
       const defaultFen = gameData.fen_list.slice(index)[0];
       setFen(storedFen || defaultFen);
     }, [gameData, index]);    
