@@ -37,7 +37,7 @@ function Play({
     const [sentChallenges, setSentChallenges] = useState([]);
     const [flippedBoard, setFlippedBoard] = useState(() => {
       const storedFlippedBoard = localStorage.getItem('flippedBoard');
-      return storedFlippedBoard ? storedFlippedBoard == 'true' : false;
+      return storedFlippedBoard ? storedFlippedBoard === 'true' : false;
     });
 
     useEffect(() => {
