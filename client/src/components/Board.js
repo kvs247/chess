@@ -42,6 +42,7 @@ function Board({ length, index, selectedColor, staticBoard, flippedBoard, isUser
     useEffect(() => {
       const fen = gameData.fen_list.slice(index)[0];
       if (fen !== '8/8/8/8/8/8/8/8 w KQkq - 0 1') localStorage.setItem('fen', fen);
+    // eslint-disable-next-line
     }, [fen, index]);
 
     useEffect(() => {
