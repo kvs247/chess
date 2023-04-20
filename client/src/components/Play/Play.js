@@ -42,6 +42,7 @@ function Play({
 
     useEffect(() => {
         localStorage.setItem('flippedBoard', flippedBoard);
+    // eslint-disable-next-line
     }, [flippedBoard]);
 
     const handleClickFlip = () => {

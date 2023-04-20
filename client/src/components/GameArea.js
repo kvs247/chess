@@ -44,6 +44,7 @@ function GameArea({ user, users, getGames, staticBoard, flippedBoard, onClickFli
     const [isLoaded, setIsLoaded] = useState(false);
     const [rerender, setRerender] = useState(false);
     const [gameData, setGameData] = useState({});
+    // eslint-disable-next-line
     const [isUsersTurn, setIsUsersTurn] = useState(false);
     const [index, setIndex] = useState(-1);
     // const [flippedBoard, setFlippedBoard] = useState(() => {
