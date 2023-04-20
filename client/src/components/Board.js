@@ -42,15 +42,15 @@ function Board({ length, index, setIndex, selectedColor, staticBoard, flippedBoa
     // eslint-disable-next-line
     const [numMoves, setNumMoves] = useState(() => {
       const storedNumMoves = localStorage.getItem('numMoves');
-      console.log('loaded moves', storedNumMoves)
+      // console.log('loaded moves', storedNumMoves)
       return storedNumMoves ? parseInt(storedNumMoves) : 0;
     });
 
     useEffect(() => {
         const numMoves = gameData.fen_list.length;
         const storedNumMoves = localStorage.getItem('numMoves');
-        console.log('stored moves', storedNumMoves)
-        console.log('saved moves', numMoves)
+        // console.log('stored moves', storedNumMoves)
+        // console.log('saved moves', numMoves)
         localStorage.setItem('numMoves', numMoves);
     // eslint-disable-next-line
     }, [gameData])
@@ -108,16 +108,19 @@ function Board({ length, index, setIndex, selectedColor, staticBoard, flippedBoa
         };
 
         const response = await onMove(fromIndex, toIndex);
-        if (response !== fen) {
+        const response_fen = response.slice(-1)[0];
+        if (response_fen !== fen) {
             // console.log('valid')
+            // console.log(response.slice(-1)[0])
+            setFen(response_fen);
             // setTimeout(() => 
             //     {history.push('/play');
             // }, 1500)
-            gameData.fen_list.push(response)
+            gameData.fen_list.push(response_fen)
             setIndex(-1);
             localStorage.setItem('index', -1);
         } else {
-            // console.log('invalid')
+            console.log('invalid')
             setPositions((positions) => {
                 const newPositions = { ...positions };
                 newPositions[i] = { x: 0, y: 0 };

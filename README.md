@@ -3,8 +3,7 @@
 ## need to do
 - cant resign fresh game (remove stuff 22-25 CompletedGames)
 - setup os.environ()
-- fix flipped board starting value when loading new game
-- set current fen to most recent on new move
+- ambiguous move rook/knight (quen/bishop?)
 
 ## could do
 - sounds

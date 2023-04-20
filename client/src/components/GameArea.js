@@ -92,7 +92,7 @@ function GameArea({ user, users, getGames, staticBoard, flippedBoard, onClickFli
     }, [gameData, index]);
         
     useEffect(() => {
-        console.log('fire')
+        // console.log('fire')
         setRerender(false);
         fetch(`/games/${gameId ? gameId : 0}`)
           .then(res => res.json())
