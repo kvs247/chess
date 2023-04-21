@@ -257,27 +257,41 @@ def algebraic_to_index(fen, move):
 
     whites_turn = True if fen_dict['active_color'] == 'w' else False
 
+    # promotion
+    if '=' in move:
+        # capture
+        if 'x' in move:
+            to_file = ord(move[2]) - 96
+            to_rank = int(move[3])
+            to_index = filerank_to_index(to_file, to_rank)
+            from_file = ord(move[0]) - 96
+            if whites_turn:
+                from_rank = to_rank - 1
+            else:
+                from_rank = to_rank + 1
+            from_index = filerank_to_index(from_file, from_rank)
+            promotion_type = move[5]
+        # non capture
+        else:
+            to_file = ord(move[0]) - 96
+            to_rank = int(move[1])
+            to_index = filerank_to_index(to_file, to_rank)
+            if whites_turn:
+                from_index = to_index + 8
+            else:
+                from_index = to_index - 8
+            promotion_type = move[3]
+
+        if not whites_turn:
+            promotion_type = promotion_type.lower()
+
+        return (from_index, to_index), promotion_type
+    
     # remove check, checkmate and capture
     move = move.replace('+', '')
     move = move.replace('#', '')
     move = move.replace('x', '')
 
-    # promotion
-    if '=' in move:
-        print('util.py', move)
-        to_file = ord(move[0]) - 96
-        to_rank = int(move[1])
-        to_index = filerank_to_index(to_file, to_rank)
-        if whites_turn:
-            from_index = to_index + 8
-        else:
-            from_index = to_index - 8
-
-        promotion_type = move[3]
-        if not whites_turn:
-            promotion_type = promotion_type.lower()
-
-        return (from_index, to_index), promotion_type
 
     # castling
     if move == 'O-O':
