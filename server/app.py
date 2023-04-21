@@ -188,16 +188,17 @@ class GameById(Resource):
                 game.pgn = game.pgn.replace('*', '1/2-1/2')
 
             # threefold repetition
-            fen_list  = pgn_to_fen_store(game.pgn)
-            fen_list = list(map(lambda x: x.split(' ')[0], fen_list))
-            game_fen_string = game.fen.split(' ')[0]
-            if game_fen_string in fen_list[:-1]:
-                print('repeated once')
-                temp_fen_list = fen_list[:-1]
-                temp_fen_list.remove(game_fen_string)
-                if game_fen_string in temp_fen_list:
-                    print('repeated twice')
-                    game.pgn = game.pgn.replace('*', '1/2-1/2')
+            if promotion_type == None:
+                fen_list  = pgn_to_fen_store(game.pgn)
+                fen_list = list(map(lambda x: x.split(' ')[0], fen_list))
+                game_fen_string = game.fen.split(' ')[0]
+                if game_fen_string in fen_list[:-1]:
+                    print('repeated once')
+                    temp_fen_list = fen_list[:-1]
+                    temp_fen_list.remove(game_fen_string)
+                    if game_fen_string in temp_fen_list:
+                        print('repeated twice')
+                        game.pgn = game.pgn.replace('*', '1/2-1/2')
 
             # insufficient material
             fen_list = util.piece_placement_to_list(fen_dict['piece_placement'])

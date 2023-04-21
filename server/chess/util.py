@@ -264,6 +264,7 @@ def algebraic_to_index(fen, move):
 
     # promotion
     if '=' in move:
+        print('util.py', move)
         to_file = ord(move[0]) - 96
         to_rank = int(move[1])
         to_index = filerank_to_index(to_file, to_rank)
@@ -448,6 +449,7 @@ def index_to_algebraic(fen, from_index, to_index):
             from_file_char = chr(from_file + 96)
             file, rank = index_to_filerank(to_index)
             file_char = chr(file + 96)
+            # print('yo', f'{from_file_char}x{file_char}{rank}')
             return f'{from_file_char}x{file_char}{rank}'
         # not pawn
         else:

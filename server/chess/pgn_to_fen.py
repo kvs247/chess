@@ -150,6 +150,7 @@ def pgn_to_fen_store(pgn):
     move_list = [m for m in move_list if m[0].isalpha()]
 
     for move in move_list:
+        # print('pgn_to_fen.py:', move)
         from_index, to_index = util.algebraic_to_index(fen, move)
         # promotion
         if type(from_index) == tuple:
