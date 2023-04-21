@@ -25,6 +25,7 @@ class Chess:
             'K': King
         }
 
+        print(piece)
         # correct turn
         if color == 'w' and piece.islower():
             return None

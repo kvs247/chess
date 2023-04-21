@@ -379,6 +379,25 @@ def index_to_algebraic(fen, from_index, to_index):
     # need to implement check/checkmate +/#
 
     # ambiguos move for knight and rook
+    # rook
+    if piece.upper() == 'R':
+        color = 'w' if piece == 'R' else 'b'
+        if color == 'w':
+            rook_indexes = [i for i, x in enumerate(fen_list) if x == 'R']
+        else:
+            rook_indexes = [i for i, x in enumerate(fen_list) if x == 'r']
+        if len(rook_indexes) > 1:
+            valid_rook_moves = rook_moves(to_index, fen, color == 'w')
+            rook_indexes = [index for index in rook_indexes if index in valid_rook_moves]
+            if len(rook_indexes) > 1:
+                file, rank = index_to_filerank(to_index)
+                to_square_algebraic = str(chr(file + 96)) + str(rank)
+                # moved on file
+                if abs(from_index - to_index) % 8 == 0:
+                    return 'R' + str(index_to_filerank(from_index)[1]) + to_square_algebraic
+                # moved on rank
+                else:
+                    return 'R' + str(chr(index_to_filerank(from_index)[0] + 96)) + to_square_algebraic
 
     # en passant
 
@@ -429,52 +448,68 @@ def index_to_algebraic(fen, from_index, to_index):
             file_char = chr(file + 96)
             return f'{piece_type}{file_char}{rank}'
 
-# # tests
-# if __name__ == '__main__':
-#     # test index_to_algebraic
-#     print('\n')
-#     print('index_to_algebraic tests:')
-#     # pawn move
-#     test = index_to_algebraic(
-#         'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-#         52, 36
-#         )
-#     print('e4:', test)
-#     # regular move
-#     test = index_to_algebraic(
-#         'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-#         62, 45
-#         )
-#     print('Nf3:', test)
-#     # pawn capture
-#     test = index_to_algebraic(
-#         'rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 2',
-#         36, 27
-#         )
-#     print('exd4:', test)
-#     # regular capture
-#     test = index_to_algebraic(
-#         'r1bqkbnr/pppppppp/2n5/4P3/8/8/PPPP1PPP/RNBQKBNR b KQkq - 0 2',
-#         18, 28
-#         )
-#     print('Nxe5:', test)
-#     # castling
-#     test = index_to_algebraic(
-#         'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-#         60, 63
-#         )
-#     print('O-O:', test)
-#     test = index_to_algebraic(
-#         'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-#         4, 2
-#         )
-#     print('O-O-O:', test)
-#     test = index_to_algebraic(
-#         'rnbqkb1r/pppppppp/7n/8/4P3/8/PPPPKPPP/RNBQNB1R b kq - 6 4',
-#         60, 58
-#         )
-#     print('Nxc1:', test)
 
-#     print('\n')
+# tests
+if __name__ == '__main__':
+    # test index_to_algebraic
+    print('\n')
+    print('index_to_algebraic tests:')
+    # pawn move
+    test = index_to_algebraic(
+        'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+        52, 36
+        )
+    print('e4:', test)
+    # regular move
+    test = index_to_algebraic(
+        'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+        62, 45
+        )
+    print('Nf3:', test)
+    # pawn capture
+    test = index_to_algebraic(
+        'rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 2',
+        36, 27
+        )
+    print('exd4:', test)
+    # regular capture
+    test = index_to_algebraic(
+        'r1bqkbnr/pppppppp/2n5/4P3/8/8/PPPP1PPP/RNBQKBNR b KQkq - 0 2',
+        18, 28
+        )
+    print('Nxe5:', test)
+    # castling
+    test = index_to_algebraic(
+        'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+        60, 63
+        )
+    print('O-O:', test)
+    test = index_to_algebraic(
+        'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+        4, 2
+        )
+    print('O-O-O:', test)
+    test = index_to_algebraic(
+        'rnbqkb1r/pppppppp/7n/8/4P3/8/PPPPKPPP/RNBQNB1R b kq - 6 4',
+        60, 58
+        )
+    print('Nxc1:', test)
+    test = index_to_algebraic(
+        'r6r/pppppppp/n1n2k2/8/8/N1N2K2/PPPPPPPP/R6R w - - 0 1',
+        56, 58
+    )
+    print('Rac1:', test)
+    test = index_to_algebraic(
+        'r6r/pppppppp/n1n2k2/8/8/N1N2K2/PPPPPPPP/R6R w - - 0 1',
+        63, 60
+    )
+    print('Rhe1:', test)    
+    test = index_to_algebraic(
+        'k7/p1r3r1/8/8/2r3r1/8/P5r1/K7 b - - 0 1',
+        10, 26
+    )
+    print('R7c5:', test)
+
+    print('\n')
 
     
