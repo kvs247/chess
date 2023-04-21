@@ -192,7 +192,9 @@ function Play({
             <ActiveGames
               yourMoveGames={yourMoveGames}
               theirMoveGames={theirMoveGames}
+              user={user}
               users={activeGamesUsers}
+              setFlippedBoard={setFlippedBoard}
             />
           }
         </BaseContainer>

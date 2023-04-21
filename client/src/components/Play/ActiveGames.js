@@ -6,11 +6,18 @@ import Typography from '@mui/material/Typography';
 import whiteKing from '../../assets/chess-pieces/white-king.png';
 import blackKing from '../../assets/chess-pieces/black-king.png';
 
-function ActiveGames({ users, yourMoveGames, theirMoveGames }) {
+function ActiveGames({ user, users, yourMoveGames, theirMoveGames, setFlippedBoard }) {
 
     const history = useHistory();
-    const handleClick = (gameId) => {
-        history.push(`/play/${gameId}`);
+    const handleClick = (game) => {
+        if (user.id === game.black_user_id) {
+            setFlippedBoard(true)
+            localStorage.setItem('flippedBoard', true);
+        } else {
+            setFlippedBoard(false)
+            localStorage.setItem('flippedBoard', false);
+        };
+        history.push(`/play/${game.id}`);
     };
 
     const renderGames = (games, users) => {
@@ -18,9 +25,9 @@ function ActiveGames({ users, yourMoveGames, theirMoveGames }) {
             const whiteUser = users.find(user => user.id === game.white_user_id);
             const blackUser = users.find(user => user.id === game.black_user_id);
             return (
-                <CardActionArea key={game.id}>
+              <CardActionArea key={game.id}>
                   <Box
-                    onClick={() => handleClick(game.id)}
+                    onClick={() => {handleClick(game)}}
                     sx={{
                       bgcolor: 'primary.main',
                       color: '#e1e1e1',
