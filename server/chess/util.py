@@ -398,6 +398,27 @@ def index_to_algebraic(fen, from_index, to_index):
                 # moved on rank
                 else:
                     return 'R' + str(chr(index_to_filerank(from_index)[0] + 96)) + to_square_algebraic
+    # knight
+    if piece.upper() == 'N':
+        color = 'w' if piece == 'N' else 'b'
+        if color == 'w':
+            knight_indexes = [i for i, x in enumerate(fen_list) if x == 'N']
+        else:
+            knight_indexes = [i for i, x in enumerate(fen_list) if x == 'n']
+        if len(knight_indexes) > 1:
+            valid_knight_moves = knight_moves(to_index)
+            knight_indexes = [index for index in knight_indexes if index in valid_knight_moves]
+            if len(knight_indexes) > 1:
+                to_file, to_rank = index_to_filerank(to_index)
+                to_square_algebraic = str(chr(to_file + 96)) + str(to_rank)                
+                # assuing there are only 2 knights
+                # on same file
+                if index_to_filerank(knight_indexes[0])[0] == index_to_filerank(knight_indexes[1])[0]:
+                    return 'N' + str(index_to_filerank(from_index)[1]) + to_square_algebraic
+                # on same rank
+                else:
+                    return 'N' + str(chr(index_to_filerank(from_index)[0] + 96)) + to_square_algebraic
+
 
     # en passant
 
@@ -509,6 +530,16 @@ if __name__ == '__main__':
         10, 26
     )
     print('R7c5:', test)
+    test = index_to_algebraic(
+        'rnbqkbnr/pppppppp/8/8/8/2N1N3/PPPPPPPP/R1BQKB1R w KQkq - 0 1',
+        44, 27
+    )
+    print('Ned5:', test)
+    test = index_to_algebraic(
+        'r1bqkb1r/pppppppp/6n1/8/6n1/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1',
+        22, 28
+    )
+    print('N6e5:', test)
 
     print('\n')
 

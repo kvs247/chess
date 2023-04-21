@@ -112,7 +112,6 @@ class GameById(Resource):
     
     def patch(self, id):
         request_data = request.json
-        print(request_data)
         from_index = request_data['fromIndex']
         to_index = request_data['toIndex']
 
@@ -124,7 +123,7 @@ class GameById(Resource):
         pgn_dict = pgn_to_dict(pgn)
         chess = Chess(fen)
 
-        print(pgn_to_fen_store(game.pgn))
+        # print(pgn_to_fen_store(game.pgn))
 
         if pgn_dict['result'] != '*':
             print('game ended')
@@ -206,7 +205,7 @@ class GameById(Resource):
             db.session.add(game)
             db.session.commit()
 
-        print(pgn_to_fen_store(game.pgn))
+        # print(pgn_to_fen_store(game.pgn))
         
         return make_response(jsonify(pgn_to_fen_store(game.pgn)), 200)
 
