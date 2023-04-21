@@ -2,9 +2,11 @@ import BaseContainer from '../BaseContainer.js';
 import NavBar from '../NavBar.js';
 import Attribution from './Attribution.js';
 
+import Content from './Content.js';
+
 function About({ user, movesToMake, numChallenges, onLogout, onClickPlay }) {
     return (
-        <BaseContainer>
+        <BaseContainer columns={'16rem 1fr 25rem'}>
           <NavBar 
             user={user}
             movesToMake={movesToMake}
@@ -12,7 +14,7 @@ function About({ user, movesToMake, numChallenges, onLogout, onClickPlay }) {
             onLogout={onLogout} 
             onClickPlay={onClickPlay}
           />  
-          <h1>About</h1>
+          <Content />
           <Attribution />
         </BaseContainer>
     );

@@ -3,6 +3,7 @@
 ## need to do
 - cant resign fresh game (remove stuff 22-25 CompletedGames)
 - setup os.environ()
+- cant castle out of check
 
 ## could do
 - sounds

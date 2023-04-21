@@ -80,6 +80,13 @@ function Play({
         })
           .then(res => res.json())
           .then(data => {
+              if (user.id === data.black_user_id) {
+                  setFlippedBoard(true)
+                  localStorage.setItem('flippedBoard', true);
+              } else {
+                  setFlippedBoard(false)
+                  localStorage.setItem('flippedBoard', false);
+              };
               history.push(`/play/${data.id}`)
           });
     };

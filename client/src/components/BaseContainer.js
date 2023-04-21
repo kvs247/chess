@@ -1,7 +1,7 @@
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 
-function BaseContainer({ children }) {
+function BaseContainer({ children, columns='16rem 1fr 20rem' }) {
     return (
         <Container 
           disableGutters
@@ -11,7 +11,7 @@ function BaseContainer({ children }) {
             width: '100vw',
             minWidth: '100%',
             display: 'grid',
-            gridTemplateColumns: '16rem 1fr 20rem',
+            gridTemplateColumns: columns,
             padding: 0
           }}
         >
