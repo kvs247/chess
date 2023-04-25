@@ -1,6 +1,6 @@
 # Chess Is Hard
 
-![alt](https://github.com/kschneider0/chess/blob/presentation-dev/server/assets/screenshot1.png?raw=true)
+![alt](https://github.com/kschneider0/chess/blob/main/server/assets/screenshot1.png?raw=true)
 
 This app is live at https://www.chess.kvschneider.com.
 
