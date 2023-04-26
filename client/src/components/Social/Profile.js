@@ -32,6 +32,23 @@ function Profile({ user, profileData, games, onAddFriend, onRemoveFriend }) {
             setIsFriend(user.friend_ids.includes(profileData.id));
         }
     }, [profileData, user.friend_ids]);
+
+    if (profileData.id === 0 && user.id === 0) {
+        return (
+          <Box
+            sx={{
+              bgcolor: 'secondary.main',
+              align: 'center',
+              m: 'auto',          
+              p: 3,
+              display: 'inline-block'
+            }}
+            
+          >
+            <Typography variant='h1'>Login To See Your Profile</Typography>
+          </Box>
+        );
+    };
     
     const onSendChallenge = () => {
         fetch('/challenges', {
@@ -115,7 +132,7 @@ function Profile({ user, profileData, games, onAddFriend, onRemoveFriend }) {
           </Box>
 
           {/* Challenge/Friend Button */}
-          {user.id !== profileData.id ? <Box>
+          {user.id !== profileData.id && user.id !==0 ? <Box>
             <Button
               variant='contained'
               sx={{ mr: 2 }}

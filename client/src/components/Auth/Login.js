@@ -144,8 +144,15 @@ function Login({ handleLogin }) {
             </Box>
             <Box sx={{ display: 'flex', mt: 2 }}>
               <br />
-              {/* <Link 
-                onClick={() => history.push('/play')} 
+              <Link 
+                onClick={() => {
+                    history.push('/play');
+                    const guestLogin = {
+                        email: 'guest@fake.com',
+                        password: 'password'
+                    };
+                    handleLogin(guestLogin, '/login');
+                }} 
                 sx={{ 
                   color: '#ffffff', 
                   mx: 'auto',
@@ -153,7 +160,7 @@ function Login({ handleLogin }) {
                 }}
               >
                 Log In As Guest
-              </Link> */}
+              </Link>
             </Box>
           </Box>
         </Container>
