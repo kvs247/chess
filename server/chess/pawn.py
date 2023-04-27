@@ -18,9 +18,10 @@ class Pawn(Piece):
         # 2 ranks
         index = util.filerank_to_index(self.file, self.rank + (2 * sign))
         if 0 <= index <= 63:
-            empty = not self.piece_list[index]
+            empty = not self.piece_list[index] and not self.piece_list[index + (8 * sign)]
             first_move = (self.rank == 2 or self.rank == 7)
             boolean = empty and first_move
+            # check that the square in between is empty
             if boolean and self.can_move(self.file, self.rank + (2 * sign)):
                 moves.append(util.filerank_to_index(self.file, self.rank + (2 * sign)))
         # capture
