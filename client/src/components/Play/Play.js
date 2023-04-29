@@ -181,7 +181,6 @@ function Play({
             user={user} 
             users={users}
             getGames={getGames}
-            // staticBoard={id ? false : true}
             flippedBoard={flippedBoard}
             onClickFlip={handleClickFlip}
             onClickReset={onClickReset}

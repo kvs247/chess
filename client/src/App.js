@@ -34,25 +34,26 @@ function App() {
         return storedColor ? storedColor : '#046920';
     });
 
+    // maintain board color through refresh
+    const handleColorChange = (color) => {
+      setSelectedColor(color.hex);
+    };            
+    
+    const handleColorChangeComplete = (color) => {
+      fetch(`/users/${user.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ boardColor: color.hex })
+      })
+    };
+    
     useEffect(() => {
         localStorage.setItem('boardColor', selectedColor);
     }, [selectedColor]);
 
-
-    const handleColorChange = (color) => {
-      setSelectedColor(color.hex);
-    };            
-
-    const handleColorChangeComplete = (color) => {
-        fetch(`/users/${user.id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ boardColor: color.hex })
-        })
-    };
-
+    // authorize user, get users and games
     const authorize = () => {
         fetch('/authorized-session')
         .then(res => {
@@ -79,17 +80,8 @@ function App() {
       getUsers();
       getGames();
     }, []);
-
-    const resetHomeBoard = (id) => {
-        fetch('/games', {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id, })
-      })      
-    };
-
+    
+    // get active games and pending challenges
     useEffect(() => {
         const activeGames = games.filter(game => {
             const pgnObj = pgnToObj(game.pgn);
@@ -125,8 +117,20 @@ function App() {
     // eslint-disable-next-line
     }, [user])
 
-    // route is either '/login' or '/signup'
+    // reset home board
+    const resetHomeBoard = (id) => {
+        fetch('/games', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id, })
+      })      
+    };
+
+    // handle login and signup
     const handleLoginSignUp = (event, route) => {
+        // route is either '/login' or '/signup'
         const dataObj = event
         return fetch(route, {
             method: 'POST',
@@ -147,7 +151,7 @@ function App() {
           })
     };
 
-      
+    // handle logout
     const handleLogout = () => {
         fetch('/logout', { method: 'DELETE' })
         .then(res => {
@@ -156,6 +160,7 @@ function App() {
         resetHomeBoard(0);
     };
 
+    // handle switch between play and challenges
     const handleSwitchMode = (challenges) => {
         setChallenges(challenges);
     };
