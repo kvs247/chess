@@ -165,48 +165,47 @@ function Play({
     // eslint-disable-next-line
     }, [games, users, id]);
           
-          return (
-            <BaseContainer>
-          <NavBar 
+    return (
+      <BaseContainer>
+        <NavBar 
+          user={user}
+          movesToMake={movesToMake}
+          numChallenges={numChallenges}
+          onLogout={onLogout}
+          onClickPlay={onClickPlay}
+          selectedColor={selectedColor}
+          onChangeColor={onChangeColor}
+          onChangeColorComplete={onChangeColorComplete}
+        />
+        <GameArea 
+          user={user} 
+          users={users}
+          getGames={getGames}
+          flippedBoard={flippedBoard}
+          onClickFlip={handleClickFlip}
+          onClickReset={onClickReset}
+          gameId={id}
+          selectedColor={selectedColor}
+        />
+        {id ? 
+          <MoveList moves={moves}/> :
+          showChallenges ? 
+          <Challenges 
+            receivedChallengeUsers={receivedChallengeUsers}
+            sentChallengeUsers={sentChallengeUsers}
+            onClickAccept={handleClickAccept}
+            onClickDecline={handleClickDecline}
+            onClickDelete={handleClickDelete}            
+          /> :
+          <ActiveGames
+            yourMoveGames={yourMoveGames}
+            theirMoveGames={theirMoveGames}
             user={user}
-            movesToMake={movesToMake}
-            numChallenges={numChallenges}
-            onLogout={onLogout}
-            onClickPlay={onClickPlay}
-            selectedColor={selectedColor}
-            onChangeColor={onChangeColor}
-            onChangeColorComplete={onChangeColorComplete}
+            users={activeGamesUsers}
+            setFlippedBoard={setFlippedBoard}
           />
-          <GameArea 
-            user={user} 
-            users={users}
-            getGames={getGames}
-            flippedBoard={flippedBoard}
-            onClickFlip={handleClickFlip}
-            onClickReset={onClickReset}
-            gameId={id}
-            selectedColor={selectedColor}
-          />
-          {id ? 
-            <MoveList moves={moves}/> :
-            showChallenges ? 
-            <Challenges 
-              receivedChallengeUsers={receivedChallengeUsers}
-              sentChallengeUsers={sentChallengeUsers}
-              onClickAccept={handleClickAccept}
-              onClickDecline={handleClickDecline}
-              onClickDelete={handleClickDelete}            
-            /> :
-            <ActiveGames
-              yourMoveGames={yourMoveGames}
-              theirMoveGames={theirMoveGames}
-              user={user}
-              users={activeGamesUsers}
-              setFlippedBoard={setFlippedBoard}
-            />
-          }
-        </BaseContainer>
-
+        }
+      </BaseContainer>
     );
 }
 

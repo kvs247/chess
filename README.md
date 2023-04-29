@@ -21,10 +21,28 @@ To start a new game, go to the Social page, where you can find a list of all the
             
 Once a challenge is accepted, a new game will be automatically created and accessible on the Active Games page. For testing purposes, both players can move both sets of pieces. However, normal chess rules apply, such as castling, en passant capture, pawn promotion, and most win/draw scenarios. The game of chess is complex with many rules, so the logic is not 100% complete, but it will allow legal moves and disallow illegal ones for the majority of board positions. Pawn promotion is implemented (only to queen status), but may cause issues.
 
-<!-- ## Structure
+## Structure
+### Front End
+- App
+  - About
+    - NavBar
+    - Content
+    - Attribution
+  - Social
+    - NavBar
+    - Profile
+      - CompletedGames
+    - UserList/FriendList
+  - Play
+    - NavBar
+    - GameArea
+      - Board
+    - MoveList/Challenges/ActiveGames
+    
+
 
 ## Dependencies
 
 ## Features
 
-##  -->
+## 
