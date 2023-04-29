@@ -5,7 +5,7 @@ import { pgnToObj } from '../Util/pgnFenHandler.js';
 
 import BaseContainer from '../BaseContainer.js';
 import NavBar from '../NavBar.js';
-import GameArea from '../GameArea.js';
+import GameArea from './GameArea.js';
 import ActiveGames from './ActiveGames.js';
 import MoveList from './MoveList.js';
 import Challenges from './Challenges.js';

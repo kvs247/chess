@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom';
 import Draggable from 'react-draggable';
 import Box from '@mui/material/Box';
 
-import piecePngObj from './Util/piecePNGs';
-import { fenToArray } from './Util/pgnFenHandler.js'
+import piecePngObj from '../Util/piecePNGs';
+import { fenToArray } from '../Util/pgnFenHandler.js'
 // import { useHistory } from 'react-router-dom';
 
 

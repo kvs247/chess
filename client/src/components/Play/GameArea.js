@@ -8,9 +8,9 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import LastPageIcon from '@mui/icons-material/LastPage';
 
 import Board from './Board.js';
-import { pgnToObj } from './Util/pgnFenHandler.js';
+import { pgnToObj } from '../Util/pgnFenHandler.js';
 
-import guest from '../assets/profile-image.png';
+import guest from '../../assets/profile-image.png';
 
 const length = '75vh';
 
