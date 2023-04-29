@@ -97,6 +97,16 @@ class Games(Resource):
         db.session.add(game)
         db.session.commit()
         return(make_response(game.to_dict(), 201))
+    
+    # reset game to starting position
+    def patch(self):
+        data = request.json
+        game = Game.query.filter_by(id=data['id']).first()
+        game.pgn = '[Date \"1980.06.18\"]\n[Result \"*\"]\n[White \"Kye_Schnei\"]\n[Black \"topherLud\"]\n\n*'
+        game.fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+        db.session.add(game)
+        db.session.commit()
+        return make_response({}, 204)
         
 api.add_resource(Games, '/games')
 

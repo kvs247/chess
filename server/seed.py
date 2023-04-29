@@ -54,7 +54,7 @@ with app.app_context():
         id=0,
         white_user_id=0,
         black_user_id=0,
-        pgn = '"[Date \"1980.06.18\"]\n[Result \"*\"]\n[White \"Kye_Schnei\"]\n[Black \"topherLud\"]\n\n*"',
+        pgn = '[Date \"1980.06.18\"]\n[Result \"*\"]\n[White \"Kye_Schnei\"]\n[Black \"topherLud\"]\n\n*',
         fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
     )
     games.append(game)

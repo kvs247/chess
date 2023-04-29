@@ -80,6 +80,16 @@ function App() {
       getGames();
     }, []);
 
+    const resetHomeBoard = (id) => {
+        fetch('/games', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id, })
+      })      
+    };
+
     useEffect(() => {
         const activeGames = games.filter(game => {
             const pgnObj = pgnToObj(game.pgn);
@@ -127,6 +137,7 @@ function App() {
         })
           .then(res => {
               if (res.ok) {
+                  resetHomeBoard(0);
                   history.push('/play');
                   if (route === '/signup') getUsers();
                   return res.json().then(user => setUser(user));
@@ -142,6 +153,7 @@ function App() {
         .then(res => {
             if (res.ok) setUser(initialUserState);
         });
+        resetHomeBoard(0);
     };
 
     const handleSwitchMode = (challenges) => {
@@ -164,6 +176,7 @@ function App() {
                 getGames={getGames}                
                 onLogout={handleLogout}
                 onClickPlay={handleSwitchMode}
+                onClickReset={resetHomeBoard}
                 selectedColor={selectedColor}
                 onChangeColor={handleColorChange}
                 onChangeColorComplete={handleColorChangeComplete}
@@ -181,6 +194,7 @@ function App() {
                 getGames={getGames}
                 onLogout={handleLogout}
                 onClickPlay={handleSwitchMode}
+                onClickReset={resetHomeBoard}
                 showChallenges={challenges}
                 selectedColor={selectedColor}
                 onChangeColor={handleColorChange}

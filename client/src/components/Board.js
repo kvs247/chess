@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import { useEffect, useState } from 'react';
-// import { useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Draggable from 'react-draggable';
 import Box from '@mui/material/Box';
 
@@ -18,7 +18,11 @@ function getInitialPositions() {
 }
 const initialPositions = getInitialPositions();
 
-function Board({ length, index, selectedColor, staticBoard, flippedBoard, isUsersTurn, gameData, onMove }) {
+function Board({ length, index, resetBoard, selectedColor, staticBoard, flippedBoard, isUsersTurn, gameData, onMove }) {
+
+    const { id } = useParams();
+
+    if (!resetBoard) resetBoard = false;
 
     const lightSquare = '#c4c4c4';
     const darkSquare = selectedColor;
@@ -66,6 +70,10 @@ function Board({ length, index, selectedColor, staticBoard, flippedBoard, isUser
 
     const [positions, setPositions] = useState(initialPositions);
 
+    useEffect(() => {
+        setPositions(initialPositions);
+    }, [resetBoard])
+
     const squareLength = (window.innerHeight * (length.replace('vh', '') / 100)) / 8;
     const squares = [];
 
@@ -78,14 +86,14 @@ function Board({ length, index, selectedColor, staticBoard, flippedBoard, isUser
         const deltaX = positions[i].x;
         const deltaY = positions[i].y;
 
-        // if (!isUsersTurn) {
-        //     setPositions((positions) => {
-        //       const newPositions = { ...positions };
-        //       newPositions[i] = { x: 0, y: 0 };
-        //       return newPositions
-        //     });
-        //     return '';
-        // };
+        if (!isUsersTurn && id) {
+            setPositions((positions) => {
+              const newPositions = { ...positions };
+              newPositions[i] = { x: 0, y: 0 };
+              return newPositions
+            });
+            return '';
+        };
 
         let fromIndex = i;
         let toIndex = i + Math.round(deltaX / squareLength) + Math.round(deltaY / squareLength) * 8;

@@ -20,6 +20,7 @@ function Play({
     getGames, 
     onLogout, 
     onClickPlay, 
+    onClickReset,
     showChallenges,
     selectedColor,
     onChangeColor, 
@@ -180,9 +181,10 @@ function Play({
             user={user} 
             users={users}
             getGames={getGames}
-            staticBoard={id ? false : true}
+            // staticBoard={id ? false : true}
             flippedBoard={flippedBoard}
             onClickFlip={handleClickFlip}
+            onClickReset={onClickReset}
             gameId={id}
             selectedColor={selectedColor}
           />

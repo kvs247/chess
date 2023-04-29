@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -39,22 +40,27 @@ const playerBox = (username, photo) => {
   );
 };
 
-function GameArea({ user, users, getGames, staticBoard, flippedBoard, onClickFlip, gameId, selectedColor }) {
+function GameArea({ 
+    user, 
+    users, 
+    getGames, 
+    staticBoard, 
+    flippedBoard, 
+    onClickFlip, 
+    onClickReset,
+    gameId, 
+    selectedColor 
+}) {
+
+    const { id } = useParams();
 
     const [isLoaded, setIsLoaded] = useState(false);
     const [rerender, setRerender] = useState(false);
+    const [resetBoard, setResetBoard] = useState(false);
     const [gameData, setGameData] = useState({});
     // eslint-disable-next-line
     const [isUsersTurn, setIsUsersTurn] = useState(false);
     const [index, setIndex] = useState(-1);
-    // const [flippedBoard, setFlippedBoard] = useState(() => {
-    //     const storedFlippedBoard = localStorage.getItem('flippedBoard');
-    //     return storedFlippedBoard ? storedFlippedBoard : false;
-    // });
-
-    // useEffect(() => {
-    //     localStorage.setItem('flippedBoard', flippedBoard);
-    // }, [flippedBoard]);
 
     const handleSetIndex = (value) => {
         const startIndex = -gameData.fen_list.length;
@@ -88,26 +94,25 @@ function GameArea({ user, users, getGames, staticBoard, flippedBoard, onClickFli
     // eslint-disable-next-line
     }, [gameData, index]);
 
-    // useEffect(() => {
-    //     setFlippedBoard(user.id === gameData.black_user_id);
-    //     if (gameData.fen) {
-    //         const whitesTurn = gameData.fen.split(' ')[1] === 'w' ? true : false;
-    //         if (whitesTurn && user.id === gameData.white_user_id) setIsUsersTurn(true)
-    //         else if (!whitesTurn && user.id === gameData.black_user_id) setIsUsersTurn(true)
-    //         else setIsUsersTurn(false);
-    //       };
-    //     }, [user.id, gameData]);
-        
-        
+    useEffect(() => {
+        if (gameData.fen) {
+            const whitesTurn = gameData.fen.split(' ')[1] === 'w' ? true : false;
+            if (whitesTurn && user.id === gameData.white_user_id) setIsUsersTurn(true)
+            else if (!whitesTurn && user.id === gameData.black_user_id) setIsUsersTurn(true)
+            else setIsUsersTurn(false);
+          };
+        }, [user.id, gameData]);
+         
     useEffect(() => {
         setRerender(false);
+        setResetBoard(false);
         fetch(`/games/${gameId ? gameId : 0}`)
           .then(res => res.json())
           .then(data => {
               setGameData(data)
               setIsLoaded(true)
           });
-    }, [gameId, rerender])
+    }, [gameId, rerender, resetBoard])
 
     const handleMove = async (
       fromIndex, 
@@ -116,6 +121,7 @@ function GameArea({ user, users, getGames, staticBoard, flippedBoard, onClickFli
       resign=null, 
       draw=null
     ) => {
+        if (!gameId) gameId = 0;
         const response = await fetch(`/games/${gameId}`, {
             method: 'PATCH',
             headers: {
@@ -136,10 +142,10 @@ function GameArea({ user, users, getGames, staticBoard, flippedBoard, onClickFli
         return response;
     };
 
-    let whiteUsername = 'White';
-    let whiteProfileImage = guest;
-    let blackUsername = 'Black';
-    let blackProfileImage = guest;
+    let whiteUsername;
+    let whiteProfileImage;
+    let blackUsername;
+    let blackProfileImage;
     if (gameData.pgn && users.length > 0) {
       const pgnObj = pgnToObj(gameData.pgn);
 
@@ -154,7 +160,6 @@ function GameArea({ user, users, getGames, staticBoard, flippedBoard, onClickFli
           whiteProfileImage = guest;
           blackUsername = 'Black';
           blackProfileImage = guest;
-          gameData.fen_list = ['rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'];
       }
           
     };
@@ -198,6 +203,7 @@ function GameArea({ user, users, getGames, staticBoard, flippedBoard, onClickFli
           <Board 
             length={length} 
             index={index}
+            resetBoard={resetBoard}
             selectedColor={selectedColor}
             staticBoard={staticBoard}
             flippedBoard={flippedBoard}
@@ -237,6 +243,18 @@ function GameArea({ user, users, getGames, staticBoard, flippedBoard, onClickFli
             >
               Flip Board
             </Button> 
+            {id ? null : 
+              <Button
+                variant='contained'
+                sx ={{ m: 1, }}
+                onClick={() => {
+                  onClickReset(0);
+                  setResetBoard(true);
+                }}
+              >
+                Reset Board
+              </Button>
+            }
             {user.username === whiteUsername || user.username === blackUsername ? 
               <>
               <Button
