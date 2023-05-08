@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import CardActionArea from '@mui/material/CardActionArea';
-import Button from '@mui/material/Button';
-
 import { ChromePicker } from 'react-color';
+import { useHistory } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import CardActionArea from '@mui/material/CardActionArea';
+import Typography from '@mui/material/Typography';
+
+import { AppContext } from '../App.js';
 
 import playFriends from '../assets/play-friends.png';
 import social from '../assets/social.png';
@@ -13,18 +14,13 @@ import about from '../assets/about.png';
 import logout from '../assets/logout.png';
 import sword from '../assets/sword.png';
 
-
 function NavBar({ 
-    user, 
-    movesToMake, 
-    numChallenges, 
-    onLogout, 
-    onClickPlay, 
     selectedColor, 
     onChangeColor, 
     onChangeColorComplete 
 }) {
-  
+
+    const { user, numChallenges, movesToMake, handleLogout, handleSwitchMode  } = useContext(AppContext);
     const history = useHistory();
 
     const [showColorPicker, setShowColorPicker] = useState(false);
@@ -37,13 +33,13 @@ function NavBar({
                 onClick={() => {
                   switch (text) {
                     case 'Active Games':
-                      onClickPlay(false);
+                      handleSwitchMode(false);
                       break;
                     case 'Challenges':
-                      onClickPlay(true);
+                      handleSwitchMode(true);
                       break;
                     case 'Logout':
-                      onLogout();
+                      handleLogout();
                       break;
                     default:
                       break;
