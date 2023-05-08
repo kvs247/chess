@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 
 import Login from './components/Auth/Login.js';
@@ -9,9 +9,12 @@ import About from './components/About/About.js';
 
 import { pgnToObj } from './components/Util/pgnFenHandler.js';
 
+export const AppContext = createContext();
+
 function App() {
 
     const history = useHistory();
+
 
     const initialUserState = {
         id: null,
@@ -167,78 +170,80 @@ function App() {
 
     return (
         <>
-          <Switch>
+          <AppContext.Provider
+            value={{
+              user,
+              movesToMake,
+              numChallenges,
+              handleLogout,
+              handleSwitchMode,
+            }}
+          >
+            <Switch>
+              <Route exact path='/play'>
+                <Play 
+                  user={user}
+                  users={users}
+                  movesToMake={movesToMake}
+                  numChallenges={numChallenges}
+                  games={games}
+                  showChallenges={challenges}
+                  setGames={setGames}
+                  getGames={getGames}                
+                  onLogout={handleLogout}
+                  onClickPlay={handleSwitchMode}
+                  onClickReset={resetHomeBoard}
+                  selectedColor={selectedColor}
+                  onChangeColor={handleColorChange}
+                  onChangeColorComplete={handleColorChangeComplete}
+                />
+              </Route>
+              <Route path='/play/:id'>
+                <Play 
+                  user={user}
+                  users={users}
+                  movesToMake={movesToMake}
+                  numChallenges={numChallenges}
+                  games={games}
+                  setGames={setGames}
+                  getGames={getGames}
+                  onLogout={handleLogout}
+                  onClickPlay={handleSwitchMode}
+                  onClickReset={resetHomeBoard}
+                  showChallenges={challenges}
+                  selectedColor={selectedColor}
+                  onChangeColor={handleColorChange}
+                />
+              </Route>
+              <Route path='/profile/:id'>
+                <Social 
+                  user={user}
+                  users={users}
+                  games={games}
+                  movesToMake={movesToMake}
+                  numChallenges={numChallenges}
+                  onLogout={handleLogout}
+                  onClickPlay={handleSwitchMode}
+                />
+              </Route>
+              <Route path='/about'>
+                <About 
+                  // movesToMake={movesToMake}
+                  // numChallenges={numChallenges}
+                  // onLogout={handleLogout}
+                  // onClickPlay={handleSwitchMode}
+                />
+              </Route>            
+              <Route path="/login">
+                <Login handleLogin={handleLoginSignUp} />
+              </Route>
+              <Route path="/signup">
+                <SignUp handleSignUp={handleLoginSignUp} />
+              </Route>
+              <Redirect from='/' to='/login' />
+            </Switch>
+          </AppContext.Provider>
 
-            <Route exact path='/play'>
-              <Play 
-                user={user}
-                users={users}
-                movesToMake={movesToMake}
-                numChallenges={numChallenges}
-                games={games}
-                showChallenges={challenges}
-                setGames={setGames}
-                getGames={getGames}                
-                onLogout={handleLogout}
-                onClickPlay={handleSwitchMode}
-                onClickReset={resetHomeBoard}
-                selectedColor={selectedColor}
-                onChangeColor={handleColorChange}
-                onChangeColorComplete={handleColorChangeComplete}
-              />
-            </Route>
-
-            <Route path='/play/:id'>
-              <Play 
-                user={user}
-                users={users}
-                movesToMake={movesToMake}
-                numChallenges={numChallenges}
-                games={games}
-                setGames={setGames}
-                getGames={getGames}
-                onLogout={handleLogout}
-                onClickPlay={handleSwitchMode}
-                onClickReset={resetHomeBoard}
-                showChallenges={challenges}
-                selectedColor={selectedColor}
-                onChangeColor={handleColorChange}
-              />
-            </Route>
-
-            <Route path='/profile/:id'>
-              <Social 
-                user={user}
-                users={users}
-                games={games}
-                movesToMake={movesToMake}
-                numChallenges={numChallenges}
-                onLogout={handleLogout}
-                onClickPlay={handleSwitchMode}
-              />
-            </Route>
-
-            <Route path='/about'>
-              <About 
-                user={user} 
-                movesToMake={movesToMake}
-                numChallenges={numChallenges}
-                onLogout={handleLogout}
-                onClickPlay={handleSwitchMode}
-              />
-            </Route>            
-
-            <Route path="/login">
-              <Login handleLogin={handleLoginSignUp} />
-            </Route>
-
-            <Route path="/signup">
-              <SignUp handleSignUp={handleLoginSignUp} />
-            </Route>
-
-            <Redirect from='/' to='/login' />
-
-          </Switch>
         </>
     );
 }

@@ -4,16 +4,10 @@ import Attribution from './Attribution.js';
 
 import Content from './Content.js';
 
-function About({ user, movesToMake, numChallenges, onLogout, onClickPlay }) {
+function About() {
     return (
         <BaseContainer columns={'16rem 1fr 25rem'}>
-          <NavBar 
-            user={user}
-            movesToMake={movesToMake}
-            numChallenges={numChallenges}
-            onLogout={onLogout} 
-            onClickPlay={onClickPlay}
-          />  
+          <NavBar />  
           <Content />
           <Attribution />
         </BaseContainer>
