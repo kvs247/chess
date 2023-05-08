@@ -7,7 +7,6 @@ import CardActionArea from '@mui/material/CardActionArea';
 import Typography from '@mui/material/Typography';
 
 import { AppContext } from '../App.js';
-
 import playFriends from '../assets/play-friends.png';
 import social from '../assets/social.png';
 import about from '../assets/about.png';

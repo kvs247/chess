@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -6,16 +6,18 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Fade from '@mui/material/Fade';
 
+import { AppContext } from '../../App.js';
 import { pgnToObj } from '../Util/pgnFenHandler.js'
-
 import CompletedGames from './CompletedGames.js';
 
 const length = '80%';
 
-function Profile({ user, profileData, games, onAddFriend, onRemoveFriend }) {
+function Profile({ profileData, games, onAddFriend, onRemoveFriend }) {
   
     const [isFriend, setIsFriend] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
+
+    const { user } = useContext(AppContext);
 
     if (!profileData) profileData = {
         id: 0,

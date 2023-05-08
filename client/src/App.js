@@ -173,6 +173,8 @@ function App() {
           <AppContext.Provider
             value={{
               user,
+              users,
+              games,
               movesToMake,
               numChallenges,
               handleLogout,
@@ -216,23 +218,10 @@ function App() {
                 />
               </Route>
               <Route path='/profile/:id'>
-                <Social 
-                  user={user}
-                  users={users}
-                  games={games}
-                  movesToMake={movesToMake}
-                  numChallenges={numChallenges}
-                  onLogout={handleLogout}
-                  onClickPlay={handleSwitchMode}
-                />
+                <Social />
               </Route>
               <Route path='/about'>
-                <About 
-                  // movesToMake={movesToMake}
-                  // numChallenges={numChallenges}
-                  // onLogout={handleLogout}
-                  // onClickPlay={handleSwitchMode}
-                />
+                <About />
               </Route>            
               <Route path="/login">
                 <Login handleLogin={handleLoginSignUp} />
