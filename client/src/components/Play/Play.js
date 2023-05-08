@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
 import { pgnToObj } from '../Util/pgnFenHandler.js';
 
+import { AppContext } from '../../App.js';
 import BaseContainer from '../BaseContainer.js';
 import NavBar from '../NavBar.js';
 import GameArea from './GameArea.js';
@@ -10,22 +11,9 @@ import ActiveGames from './ActiveGames.js';
 import MoveList from './MoveList.js';
 import Challenges from './Challenges.js';
 
-function Play({ 
-    user, 
-    users, 
-    movesToMake, 
-    numChallenges, 
-    games, 
-    setGames, 
-    getGames, 
-    onLogout, 
-    onClickPlay, 
-    onClickReset,
-    showChallenges,
-    selectedColor,
-    onChangeColor, 
-    onChangeColorComplete 
-}) {
+function Play() {
+
+    const { user, users, games, challenges, selectedColor, getGames } = useContext(AppContext);
 
     const { id } = useParams();
     const history = useHistory();    
@@ -167,29 +155,19 @@ function Play({
           
     return (
       <BaseContainer>
-        <NavBar 
-          user={user}
-          movesToMake={movesToMake}
-          numChallenges={numChallenges}
-          onLogout={onLogout}
-          onClickPlay={onClickPlay}
-          selectedColor={selectedColor}
-          onChangeColor={onChangeColor}
-          onChangeColorComplete={onChangeColorComplete}
-        />
+        <NavBar />
         <GameArea 
           user={user} 
           users={users}
           getGames={getGames}
           flippedBoard={flippedBoard}
           onClickFlip={handleClickFlip}
-          onClickReset={onClickReset}
           gameId={id}
           selectedColor={selectedColor}
         />
         {id ? 
           <MoveList moves={moves}/> :
-          showChallenges ? 
+          challenges ? 
           <Challenges 
             receivedChallengeUsers={receivedChallengeUsers}
             sentChallengeUsers={sentChallengeUsers}

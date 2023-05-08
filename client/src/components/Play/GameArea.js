@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -7,6 +7,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import LastPageIcon from '@mui/icons-material/LastPage';
 
+import { AppContext } from '../../App.js';
 import Board from './Board.js';
 import { pgnToObj } from '../Util/pgnFenHandler.js';
 
@@ -47,11 +48,11 @@ function GameArea({
     staticBoard, 
     flippedBoard, 
     onClickFlip, 
-    onClickReset,
     gameId, 
     selectedColor 
 }) {
 
+    const { resetHomeBoard } = useContext(AppContext);
     const { id } = useParams();
 
     const [isLoaded, setIsLoaded] = useState(false);
@@ -177,7 +178,6 @@ function GameArea({
         }
     };
 
-
     return (
         <Box 
           bgcolor='primary.main' 
@@ -248,7 +248,7 @@ function GameArea({
                 variant='contained'
                 sx ={{ m: 1, }}
                 onClick={() => {
-                  onClickReset(0);
+                  resetHomeBoard(0);
                   setResetBoard(true);
                 }}
               >

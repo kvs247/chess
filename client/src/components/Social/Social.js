@@ -1,15 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import BaseContainer from '../BaseContainer';
 import NavBar from '../NavBar';
 
+import { AppContext } from '../../App.js';
 import Profile from './Profile';
 import UserList from './UserList';
 import FriendList from './FriendList';
 
-function Social({ user, users, games, movesToMake, numChallenges, onLogout, onClickPlay }) {
+function Social() {
 
     const { id } = useParams();
+    const { user, users, games } = useContext(AppContext);
 
     const initialUserState = {
       id: 0,
@@ -70,15 +72,8 @@ function Social({ user, users, games, movesToMake, numChallenges, onLogout, onCl
 
     return (
         <BaseContainer>
-          <NavBar 
-            user={user}
-            movesToMake={movesToMake}
-            numChallenges={numChallenges}
-            onLogout={onLogout} 
-            onClickPlay={onClickPlay}
-          />
+          <NavBar />
           <Profile 
-            user={user}   
             profileData={profileData}
             games={filteredGames}
             onAddFriend={handleAddFriend}

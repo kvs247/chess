@@ -117,6 +117,8 @@ function App() {
             });
             setNumChallenges(receivedChallengeUsers.length);
         }) 
+      localStorage.setItem('boardColor', user.board_color);
+      setSelectedColor(user.board_color);
     // eslint-disable-next-line
     }, [user])
 
@@ -145,6 +147,9 @@ function App() {
           .then(res => {
               if (res.ok) {
                   resetHomeBoard(0);
+                  console.log('yo', user.board_color)
+                  localStorage.setItem('boardColor', user.board_color);
+                  setSelectedColor(user.board_color);
                   history.push('/play');
                   if (route === '/signup') getUsers();
                   return res.json().then(user => setUser(user));
@@ -173,66 +178,32 @@ function App() {
           <AppContext.Provider
             value={{
               user,
+              users,
+              games,
               movesToMake,
+              challenges,
               numChallenges,
+              selectedColor,
+              getGames,
               handleLogout,
               handleSwitchMode,
+              resetHomeBoard,
+              handleColorChange,
+              handleColorChangeComplete
             }}
           >
             <Switch>
               <Route exact path='/play'>
-                <Play 
-                  user={user}
-                  users={users}
-                  movesToMake={movesToMake}
-                  numChallenges={numChallenges}
-                  games={games}
-                  showChallenges={challenges}
-                  setGames={setGames}
-                  getGames={getGames}                
-                  onLogout={handleLogout}
-                  onClickPlay={handleSwitchMode}
-                  onClickReset={resetHomeBoard}
-                  selectedColor={selectedColor}
-                  onChangeColor={handleColorChange}
-                  onChangeColorComplete={handleColorChangeComplete}
-                />
+                <Play />
               </Route>
               <Route path='/play/:id'>
-                <Play 
-                  user={user}
-                  users={users}
-                  movesToMake={movesToMake}
-                  numChallenges={numChallenges}
-                  games={games}
-                  setGames={setGames}
-                  getGames={getGames}
-                  onLogout={handleLogout}
-                  onClickPlay={handleSwitchMode}
-                  onClickReset={resetHomeBoard}
-                  showChallenges={challenges}
-                  selectedColor={selectedColor}
-                  onChangeColor={handleColorChange}
-                />
+                <Play />
               </Route>
               <Route path='/profile/:id'>
-                <Social 
-                  user={user}
-                  users={users}
-                  games={games}
-                  movesToMake={movesToMake}
-                  numChallenges={numChallenges}
-                  onLogout={handleLogout}
-                  onClickPlay={handleSwitchMode}
-                />
+                <Social />
               </Route>
               <Route path='/about'>
-                <About 
-                  // movesToMake={movesToMake}
-                  // numChallenges={numChallenges}
-                  // onLogout={handleLogout}
-                  // onClickPlay={handleSwitchMode}
-                />
+                <About />
               </Route>            
               <Route path="/login">
                 <Login handleLogin={handleLoginSignUp} />

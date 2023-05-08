@@ -1,8 +1,7 @@
-import BaseContainer from '../BaseContainer.js';
-import NavBar from '../NavBar.js';
 import Attribution from './Attribution.js';
-
+import BaseContainer from '../BaseContainer.js';
 import Content from './Content.js';
+import NavBar from '../NavBar.js';
 
 function About() {
     return (
