@@ -86,14 +86,14 @@ function Board({ length, index, resetBoard, selectedColor, staticBoard, flippedB
         const deltaX = positions[i].x;
         const deltaY = positions[i].y;
 
-        if (!isUsersTurn && id) {
-            setPositions((positions) => {
-              const newPositions = { ...positions };
-              newPositions[i] = { x: 0, y: 0 };
-              return newPositions
-            });
-            return '';
-        };
+        // if (!isUsersTurn && id) {
+        //     setPositions((positions) => {
+        //       const newPositions = { ...positions };
+        //       newPositions[i] = { x: 0, y: 0 };
+        //       return newPositions
+        //     });
+        //     return '';
+        // };
 
         let fromIndex = i;
         let toIndex = i + Math.round(deltaX / squareLength) + Math.round(deltaY / squareLength) * 8;

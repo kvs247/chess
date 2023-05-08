@@ -5,6 +5,7 @@
 - setup os.environ()
 - cant castle out of check
 - reload social page when logged in as guest
+- only show color palatte when on /play
 
 ## could do
 - sounds

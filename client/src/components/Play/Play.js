@@ -11,18 +11,9 @@ import ActiveGames from './ActiveGames.js';
 import MoveList from './MoveList.js';
 import Challenges from './Challenges.js';
 
-function Play({ 
-    getGames, 
-    onLogout, 
-    onClickPlay, 
-    onClickReset,
-    showChallenges,
-    selectedColor,
-    onChangeColor, 
-    onChangeColorComplete 
-}) {
+function Play() {
 
-    const { user, users, games } = useContext(AppContext);
+    const { user, users, games, challenges, selectedColor, getGames } = useContext(AppContext);
 
     const { id } = useParams();
     const history = useHistory();    
@@ -164,24 +155,19 @@ function Play({
           
     return (
       <BaseContainer>
-        <NavBar 
-          selectedColor={selectedColor}
-          onChangeColor={onChangeColor}
-          onChangeColorComplete={onChangeColorComplete}
-        />
+        <NavBar />
         <GameArea 
           user={user} 
           users={users}
           getGames={getGames}
           flippedBoard={flippedBoard}
           onClickFlip={handleClickFlip}
-          onClickReset={onClickReset}
           gameId={id}
           selectedColor={selectedColor}
         />
         {id ? 
           <MoveList moves={moves}/> :
-          showChallenges ? 
+          challenges ? 
           <Challenges 
             receivedChallengeUsers={receivedChallengeUsers}
             sentChallengeUsers={sentChallengeUsers}

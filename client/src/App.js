@@ -176,46 +176,23 @@ function App() {
               users,
               games,
               movesToMake,
+              challenges,
               numChallenges,
+              selectedColor,
+              getGames,
               handleLogout,
               handleSwitchMode,
+              resetHomeBoard,
+              handleColorChange,
+              handleColorChangeComplete
             }}
           >
             <Switch>
               <Route exact path='/play'>
-                <Play 
-                  user={user}
-                  users={users}
-                  movesToMake={movesToMake}
-                  numChallenges={numChallenges}
-                  games={games}
-                  showChallenges={challenges}
-                  setGames={setGames}
-                  getGames={getGames}                
-                  onLogout={handleLogout}
-                  onClickPlay={handleSwitchMode}
-                  onClickReset={resetHomeBoard}
-                  selectedColor={selectedColor}
-                  onChangeColor={handleColorChange}
-                  onChangeColorComplete={handleColorChangeComplete}
-                />
+                <Play />
               </Route>
               <Route path='/play/:id'>
-                <Play 
-                  user={user}
-                  users={users}
-                  movesToMake={movesToMake}
-                  numChallenges={numChallenges}
-                  games={games}
-                  setGames={setGames}
-                  getGames={getGames}
-                  onLogout={handleLogout}
-                  onClickPlay={handleSwitchMode}
-                  onClickReset={resetHomeBoard}
-                  showChallenges={challenges}
-                  selectedColor={selectedColor}
-                  onChangeColor={handleColorChange}
-                />
+                <Play />
               </Route>
               <Route path='/profile/:id'>
                 <Social />
