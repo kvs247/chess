@@ -117,6 +117,8 @@ function App() {
             });
             setNumChallenges(receivedChallengeUsers.length);
         }) 
+      localStorage.setItem('boardColor', user.board_color);
+      setSelectedColor(user.board_color);
     // eslint-disable-next-line
     }, [user])
 
@@ -145,6 +147,9 @@ function App() {
           .then(res => {
               if (res.ok) {
                   resetHomeBoard(0);
+                  console.log('yo', user.board_color)
+                  localStorage.setItem('boardColor', user.board_color);
+                  setSelectedColor(user.board_color);
                   history.push('/play');
                   if (route === '/signup') getUsers();
                   return res.json().then(user => setUser(user));

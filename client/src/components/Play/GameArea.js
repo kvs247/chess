@@ -178,7 +178,6 @@ function GameArea({
         }
     };
 
-
     return (
         <Box 
           bgcolor='primary.main' 
