@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import BaseContainer from '../BaseContainer';
 import NavBar from '../NavBar';
 
-import { AppContext } from '../../App.js';
+import { useAppContext } from '../../AppContext.js';
 import Profile from './Profile';
 import UserList from './UserList';
 import FriendList from './FriendList';
@@ -11,7 +11,7 @@ import FriendList from './FriendList';
 function Social() {
 
     const { id } = useParams();
-    const { user, users, games } = useContext(AppContext);
+    const { user, users, games } = useAppContext();
 
     const initialUserState = {
       id: 0,

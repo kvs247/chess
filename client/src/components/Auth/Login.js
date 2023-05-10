@@ -10,7 +10,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useHistory } from 'react-router-dom';
 
-import { AppContext } from '../../App.js';
+import { useAppContext } from '../../AppContext.js';
 
 const validationSchema = yup.object({
     email: yup
@@ -27,7 +27,7 @@ function Login() {
 
     const history = useHistory();
 
-    const { handleLoginSignUp } = useContext(AppContext);
+    const { handleLoginSignUp } = useAppContext();
 
     const formik = useFormik({
         initialValues: {

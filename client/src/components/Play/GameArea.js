@@ -7,7 +7,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import LastPageIcon from '@mui/icons-material/LastPage';
 
-import { AppContext } from '../../App.js';
+import { useAppContext } from '../../AppContext.js';
 import Board from './Board.js';
 import { pgnToObj } from '../Util/pgnFenHandler.js';
 
@@ -52,7 +52,7 @@ function GameArea({
     selectedColor 
 }) {
 
-    const { resetHomeBoard } = useContext(AppContext);
+    const { resetHomeBoard } = useAppContext();
     const { id } = useParams();
 
     const [isLoaded, setIsLoaded] = useState(false);

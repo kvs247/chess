@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Fade from '@mui/material/Fade';
 
-import { AppContext } from '../../App.js';
+import { useAppContext } from '../../AppContext.js';
 import { pgnToObj } from '../Util/pgnFenHandler.js'
 import CompletedGames from './CompletedGames.js';
 
@@ -17,7 +17,7 @@ function Profile({ profileData, games, onAddFriend, onRemoveFriend }) {
     const [isFriend, setIsFriend] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
 
-    const { user } = useContext(AppContext);
+    const { user } = useAppContext();
 
     if (!profileData) profileData = {
         id: 0,

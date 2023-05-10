@@ -3,7 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 
 import { pgnToObj } from '../Util/pgnFenHandler.js';
 
-import { AppContext } from '../../App.js';
+import { useAppContext } from '../../AppContext.js';
 import BaseContainer from '../BaseContainer.js';
 import NavBar from '../NavBar.js';
 import GameArea from './GameArea.js';
@@ -13,7 +13,7 @@ import Challenges from './Challenges.js';
 
 function Play() {
 
-    const { user, users, games, challenges, selectedColor, getGames } = useContext(AppContext);
+    const { user, users, games, challenges, selectedColor, getGames } = useAppContext();
 
     const { id } = useParams();
     const history = useHistory();    
