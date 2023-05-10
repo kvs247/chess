@@ -9,3 +9,5 @@
 - replace implementations of util.fen_to_list() with util.fen_to_dict()
 - choose piece to promote to (modal)
 - refactor Profile.js
+- refactor GameArea.js
+- agree to draw
