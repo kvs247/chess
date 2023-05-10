@@ -73,7 +73,6 @@ function App() {
   // eslint-disable-next-line
   }, [user])
 
-
   return (
       <>
         <Switch>
