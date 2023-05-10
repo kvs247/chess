@@ -8,6 +8,9 @@ import Link from '@mui/material/Link';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useHistory } from 'react-router-dom';
+import { useContext } from 'react';
+
+import { useAppContext } from '../../AppContext.js';
 
 const validationSchema = yup.object({
   email: yup
@@ -20,9 +23,11 @@ const validationSchema = yup.object({
       .required('Password is required'),
 });
 
-function SignUp({ handleSignUp }) {
+function SignUp() {
 
     const history = useHistory();  
+
+    const { handleLoginSignUp } = useAppContext();
 
     const formik = useFormik({
         initialValues: {
@@ -35,7 +40,7 @@ function SignUp({ handleSignUp }) {
         validationSchema: validationSchema,
         validateOnChange: false,
         onSubmit: (e) => {
-            handleSignUp(e, '/signup')
+            handleLoginSignUp(e, '/signup')
               .catch(error => {
 
                   if (error.error.includes('UNIQUE constraint failed: users.email')) {

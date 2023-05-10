@@ -4,6 +4,9 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material';
 
+
+import AppContextProvider, { useAppContext } from './AppContext.js';
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -43,8 +46,10 @@ const theme = createTheme({
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter basename='/'>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
+    <AppContextProvider>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </AppContextProvider>
   </BrowserRouter>
 );

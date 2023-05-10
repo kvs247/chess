@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import CardActionArea from '@mui/material/CardActionArea';
 import Typography from '@mui/material/Typography';
 
-import { AppContext } from '../App.js';
+import { useAppContext } from '../AppContext.js';
 import playFriends from '../assets/play-friends.png';
 import social from '../assets/social.png';
 import about from '../assets/about.png';
@@ -24,10 +24,11 @@ function NavBar() {
     selectedColor,
     handleColorChange,
     handleColorChangeComplete  
-  } = useContext(AppContext);
+  } = useAppContext();
+  const [showColorPicker, setShowColorPicker] = useState(false);
+
   const history = useHistory();
 
-  const [showColorPicker, setShowColorPicker] = useState(false);
 
   const MenuItem = (text, icon, route) => {
     
