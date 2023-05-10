@@ -1,43 +1,40 @@
-import { useState, useEffect, createContext, useContext } from 'react';
-import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
-
-import Login from './components/Auth/Login.js';
-import SignUp from './components/Auth/SignUp.js';
-import Play from './components/Play/Play.js';
-import Social from './components/Social/Social.js';
-import About from './components/About/About.js';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import { pgnToObj } from './components/Util/pgnFenHandler.js';
-
-import AppContextProvider, { useAppContext } from './AppContext.js';
+import { useAppContext } from './AppContext.js';
+import About from './components/About/About.js';
+import Login from './components/Auth/Login.js';
+import Play from './components/Play/Play.js';
+import SignUp from './components/Auth/SignUp.js';
+import Social from './components/Social/Social.js';
 
 function App() {
 
-  const history = useHistory();
-
   const {
-    selectedColor,
-    authorize,
-    getUsers,
-    getGames,
-    games,
     user,
     users,
+    getUsers,
+    games,
+    getGames,
+    authorize,
+    selectedColor,
+    setSelectedColor,
     setMovesToMake,
     setNumChallenges,
-    setSelectedColor
   } = useAppContext();
 
-  useEffect(() => {
-      localStorage.setItem('boardColor', selectedColor);
-    }, [selectedColor]);
-    
   useEffect(() => {
     authorize();
     getUsers();
     getGames();
   }, []);
+
+  useEffect(() => {
+      localStorage.setItem('boardColor', selectedColor);
+    }, [selectedColor]);
   
+  // get active games
   useEffect(() => {
       const activeGames = games.filter(game => {
           const pgnObj = pgnToObj(game.pgn);
@@ -57,6 +54,7 @@ function App() {
   // eslint-disable-next-line
   }, [games]);
 
+  // get challenges
   useEffect(() => {
     fetch('/challenges') 
       .then(res => res.json())
@@ -78,30 +76,27 @@ function App() {
 
   return (
       <>
-        {/* <AppContextProvider> */}
-          <Switch>
-            <Route exact path='/play'>
-              <Play />
-            </Route>
-            <Route path='/play/:id'>
-              <Play />
-            </Route>
-            <Route path='/profile/:id'>
-              <Social />
-            </Route>
-            <Route path='/about'>
-              <About />
-            </Route>            
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/signup">
-              <SignUp />
-            </Route>
-            <Redirect from='/' to='/login' />
-          </Switch>
-        {/* </AppContextProvider> */}
-
+        <Switch>
+          <Route exact path='/play'>
+            <Play />
+          </Route>
+          <Route path='/play/:id'>
+            <Play />
+          </Route>
+          <Route path='/profile/:id'>
+            <Social />
+          </Route>
+          <Route path='/about'>
+            <About />
+          </Route>            
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/signup">
+            <SignUp />
+          </Route>
+          <Redirect from='/' to='/login' />
+        </Switch>
       </>
   );
 }
