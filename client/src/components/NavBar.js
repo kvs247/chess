@@ -25,9 +25,10 @@ function NavBar() {
     handleColorChange,
     handleColorChangeComplete  
   } = useContext(AppContext);
+  const [showColorPicker, setShowColorPicker] = useState(false);
+
   const history = useHistory();
 
-  const [showColorPicker, setShowColorPicker] = useState(false);
 
   const MenuItem = (text, icon, route) => {
     

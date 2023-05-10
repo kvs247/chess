@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -8,6 +9,8 @@ import Link from '@mui/material/Link';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useHistory } from 'react-router-dom';
+
+import { AppContext } from '../../App.js';
 
 const validationSchema = yup.object({
     email: yup
@@ -20,9 +23,11 @@ const validationSchema = yup.object({
         .required('Password is required'),
 });
 
-function Login({ handleLogin }) {
+function Login() {
 
     const history = useHistory();
+
+    const { handleLoginSignUp } = useContext(AppContext);
 
     const formik = useFormik({
         initialValues: {
@@ -32,7 +37,7 @@ function Login({ handleLogin }) {
         validationSchema: validationSchema,
         validateOnChange: false,
         onSubmit: (e) => {
-            handleLogin(e, '/login')
+            handleLoginSignUp(e, '/login')
               .catch(error => {
                   formik.setErrors({ login: error.error });
               });
@@ -151,7 +156,7 @@ function Login({ handleLogin }) {
                         email: 'guest@fake.com',
                         password: 'password'
                     };
-                    handleLogin(guestLogin, '/login');
+                    handleLoginSignUp(guestLogin, '/login');
                 }} 
                 sx={{ 
                   color: '#ffffff', 

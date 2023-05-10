@@ -6,7 +6,6 @@ import TextField from '@mui/material/TextField';
 
 function BaseUserList({ children, users }) {
 
-  
     const history = useHistory();
     
     const [filteredUsers, setFilteredUsers] = useState([]);
