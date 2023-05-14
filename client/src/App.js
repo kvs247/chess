@@ -28,6 +28,7 @@ function App() {
     authorize();
     getUsers();
     getGames();
+  // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
