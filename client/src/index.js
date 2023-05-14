@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material';
 
 
-import AppContextProvider, { useAppContext } from './AppContext.js';
+import AppContextProvider from './AppContext.js';
 
 const theme = createTheme({
   palette: {

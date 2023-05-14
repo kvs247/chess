@@ -41,7 +41,7 @@ const playerBox = (username, photo) => {
 };
 
 function GameArea({ staticBoard, flippedBoard, onClickFlip, gameId }) {
-  const { user, users, getGames, resetHomeBoard, selectedColor } = useAppContext();
+  const { user, users, getGames, resetHomeBoard } = useAppContext();
   const { id } = useParams();
   const [isLoaded, setIsLoaded] = useState(false);
   const [rerender, setRerender] = useState(false);

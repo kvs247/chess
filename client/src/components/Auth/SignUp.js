@@ -8,7 +8,6 @@ import Link from '@mui/material/Link';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useHistory } from 'react-router-dom';
-import { useContext } from 'react';
 
 import { useAppContext } from '../../AppContext.js';
 

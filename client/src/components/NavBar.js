@@ -1,6 +1,6 @@
 import { ChromePicker } from 'react-color';
 import { useHistory } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CardActionArea from '@mui/material/CardActionArea';

@@ -25,6 +25,7 @@ const AppContextProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [games, setGames] = useState([]);
   const [movesToMake, setMovesToMake] = useState(0);
+  // eslint-disable-next-line
   const [numChallenges, setNumChallenges] = useState(0);
   const [challenges, setChallenges] = useState(false);
   const [selectedColor, setSelectedColor] = useState(() => {
