@@ -15,6 +15,8 @@ for f in pgn_files:
 
 with app.app_context():
 
+    db.create_all()
+
     Challenge.query.delete()
     Game.query.delete()
     Friendship.query.delete()
