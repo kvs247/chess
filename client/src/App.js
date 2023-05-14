@@ -32,6 +32,7 @@ function App() {
 
   useEffect(() => {
       localStorage.setItem('boardColor', selectedColor);
+    // eslint-disable-next-line
     }, [selectedColor]);
   
   // get active games
