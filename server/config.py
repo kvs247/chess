@@ -21,8 +21,8 @@ app = Flask(
 CORS(app)
 bcrypt = Bcrypt(app)
 # os.environ.get('DATABASE_URI')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db' # development
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://chess_database_n447_user:Xcl94ojrXeWxsvARhKnFxs1Qwed0mvuN@dpg-cgthvdo2qv2fde9490a0-a.oregon-postgres.render.com/chess_database_n447'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db' # development
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://chess_db_30un_user:gZ7L2y8CaxEsV9fedv9JTPgDxlr55HZ9@dpg-cgk4m7seoogkndh25el0-a.oregon-postgres.render.com/chess_db_30un'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 
